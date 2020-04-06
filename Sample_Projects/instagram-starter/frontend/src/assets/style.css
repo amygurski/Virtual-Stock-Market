@@ -1,0 +1,96 @@
+:root {
+  --primary-color: #00adee;
+  --error: rgb(242, 222, 222);
+}
+
+* {
+  font-family: "Open Sans", sans-serif;
+  box-sizing: border-box;
+  transition: 0.15s;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  margin: 0;
+  background-color: rgb(250, 250, 250);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+p {
+  margin: 0.5rem;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+p {
+  font-size: 1.1rem;
+}
+
+button,
+input {
+  font-size: 1rem;
+}
+
+a,
+button {
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+  color: #000;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+button {
+  border: 0;
+  outline: 0;
+}
+
+/* Container Styles for Auto Margins */
+.container {
+  max-width: 576px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.profile-photo {
+  border-radius: 50%;
+}
+
+.profile-photo.small {
+  height: 40px;
+  width: 40px;
+}
+
+@media screen and (min-width: 768px) {
+  .container {
+    max-width: 720px;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .container {
+    max-width: 940px;
+  }
+}
+
+@media screen and (min-width: 1220px) {
+  .container {
+    max-width: 980px;
+  }
+}

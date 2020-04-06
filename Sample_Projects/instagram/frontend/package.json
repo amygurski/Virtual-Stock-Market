@@ -1,0 +1,36 @@
+{
+  "name": "tegram",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "test:e2e": "vue-cli-service test:e2e",
+    "test:unit": "vue-cli-service test:unit"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.17",
+    "@fortawesome/free-solid-svg-icons": "^5.8.1",
+    "@fortawesome/vue-fontawesome": "^0.1.6",
+    "vue": "^2.6.6",
+    "vue-router": "^3.0.1",
+    "vue2-dropzone": "^3.5.8"
+  },
+  "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.8.1",
+    "@fortawesome/free-regular-svg-icons": "^5.8.1",
+    "@vue/cli-plugin-babel": "^3.5.0",
+    "@vue/cli-plugin-e2e-cypress": "^3.5.0",
+    "@vue/cli-plugin-eslint": "^3.5.0",
+    "@vue/cli-plugin-unit-mocha": "^3.5.0",
+    "@vue/cli-service": "^3.5.0",
+    "@vue/eslint-config-prettier": "^4.0.1",
+    "@vue/test-utils": "1.0.0-beta.29",
+    "babel-eslint": "^10.0.1",
+    "chai": "^4.1.2",
+    "eslint": "^5.8.0",
+    "eslint-plugin-vue": "^5.0.0",
+    "vue-template-compiler": "^2.5.21"
+  }
+}

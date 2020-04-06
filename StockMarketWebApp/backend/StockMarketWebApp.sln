@@ -15,7 +15,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B612E8E2-338D-4D48-BA43-17586CED3CDD}"
 	ProjectSection(SolutionItems) = preProject
 		database\data.sql = database\data.sql
-		database\schema.sql = database\schema.sql
+		database\DatabaseSetup.sql = database\DatabaseSetup.sql
 	EndProjectSection
 EndProject
 Global

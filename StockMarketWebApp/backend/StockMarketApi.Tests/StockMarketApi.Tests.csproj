@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SampleApi\StockMarketApi.csproj" />
+    <ProjectReference Include="..\StockMarketApi\StockMarketApi.csproj" />
   </ItemGroup>
 
 </Project>

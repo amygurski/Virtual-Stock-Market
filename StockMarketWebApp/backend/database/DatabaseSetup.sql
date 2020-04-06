@@ -21,6 +21,8 @@ BEGIN TRANSACTION;
 CREATE TABLE users
 (
 	id			int			identity(1,1),
+	firstname   varchar(50) not null,
+	email		varchar(50) not null,
 	username	varchar(50)	not null,
 	password	varchar(50)	not null,
 	salt		varchar(50)	not null,

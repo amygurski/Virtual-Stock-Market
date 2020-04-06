@@ -17,6 +17,16 @@ namespace StockMarketApi.Models
         public int Id { get; set; }
 
         /// <summary>
+        /// The user's first name.
+        /// </summary>        
+        public string Firstname { get; set; }
+
+        /// <summary>
+        /// The user's email address.
+        /// </summary>        
+        public string Email { get; set; }
+
+        /// <summary>
         /// The user's username.
         /// </summary>        
         public string Username { get; set; }

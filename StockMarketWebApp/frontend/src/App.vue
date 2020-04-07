@@ -38,6 +38,6 @@ export default {
 
 <style>
 html {
-  background-color: #343a40;
+  background-color: lightgrey;
 }
 </style>

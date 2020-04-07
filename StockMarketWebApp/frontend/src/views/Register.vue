@@ -120,8 +120,11 @@ export default {
 
 <style scoped>
 #register-container {
-  background-color: grey;
+  background: url(/Images/register-login-background.jpg) no-repeat center center fixed;
   padding: 25px 0px 25px 0px;
+  position: fixed;
+  width: 100%;
+  height: 100%;
 }
 
 #register {

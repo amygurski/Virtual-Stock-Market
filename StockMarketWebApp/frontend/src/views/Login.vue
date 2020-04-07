@@ -1,4 +1,5 @@
 <template>
+<div id="login-container">
   <div id="login" class="text-center">
     <form class="form-signin" @submit.prevent="login">
         <h1 class="h3 mb-3 font-weight-normal">Please Sign In</h1>
@@ -43,9 +44,9 @@
         <div class="text-center mt-4 form-group">
           <router-link :to="{ name: 'register' }">Need an account?</router-link>
         </div>
-
     </form>
   </div>
+</div>
 </template>
 
 <script>
@@ -96,9 +97,22 @@ export default {
 </script>
 
 <style>
-.form-signin{
-  max-width: 500px;
+
+#login {
+  width: 25%;
+  padding: 25px;
   margin: auto;
-  padding: 2rem;
+  border-radius: 25px;
+  border: 2px solid rgba(0,0,0,0.05);
+  background-color: white;
 }
+
+#login-container {
+  background: url(/Images/register-login-background.jpg) no-repeat center center fixed;
+  padding: 25px 0px 50px 0px;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
+
 </style>

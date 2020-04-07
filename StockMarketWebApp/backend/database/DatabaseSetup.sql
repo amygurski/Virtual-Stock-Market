@@ -31,6 +31,21 @@ CREATE TABLE users
 	constraint pk_users primary key (id)
 );
 
+COMMIT TRANSACTION;
+
+BEGIN TRANSACTION;
+CREATE TABLE games
+(
+	gameId int identity(1653, 1),
+	creatorId int not null,
+	gameName varchar(50) not null,
+	dateCreated date not null,
+	endDate date not null,
+
+	constraint pk_games primary key (gameId)
+
+);
+
 
 COMMIT TRANSACTION;
 
@@ -39,8 +54,22 @@ BEGIN TRANSACTION;
 
 -- default username of 'user' and default password of 'greatwall'
 INSERT INTO users
-  (username,password,salt,role)
+  (firstname, email, username, password, salt, role)
 VALUES
-  ('user', 'jUE98uhvS5tdIlxRsmz1W7/Qaqo=', '9CWPUTvXqQ4=', 'User');
+  ('john', 'email@email.com', 'user', 'jUE98uhvS5tdIlxRsmz1W7/Qaqo=', '9CWPUTvXqQ4=', 'User');
+
+COMMIT TRANSACTION;
+
+--Seed database section
+BEGIN TRANSACTION;
+
+--default games for testing
+INSERT INTO games
+	(creatorId, gameName, dateCreated, endDate)
+VALUES
+	(1, 'testGame1', '2020-04-07', '2020-04-08'),
+	(2, 'testGame2', '2020-03-09', '2020-04-09'),
+	(3, 'testGame3', '2020-04-07', '2020-04-07'),
+	(4, 'testGame4', '2020-03-10', '2020-04-15');
 
 COMMIT TRANSACTION;

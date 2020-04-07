@@ -39,14 +39,17 @@ export default {
 
 div{
   background-color: darkgray;
-  padding: 10%;
+  background-image: url(/images/Rules-Page-Background.jpg);
+  padding: 8%;
 }
 #text-container{
   border: 2px solid black;
   border-radius: 25px;
+  background-image: none;
   background-color: white;
   margin: auto;
   padding: 25px;
+  width: 60%;
 }
 
 </style>

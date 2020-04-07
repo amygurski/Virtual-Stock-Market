@@ -23,9 +23,9 @@
 
 <template>
 
-  <div class="text-center">
+  <div class="text-center welcome-container">
 
-    <div id="text-container">
+    <div id="welcome">
     
       <H1 id="h1">Welcome to the <strong>Virtual Stock Market!</strong></H1>
       
@@ -54,13 +54,20 @@ export default {
 </script>
 
 <style scoped>
-div{
-  background-color: darkgray;
-  background-image: url(/images/WallStreet.jfif);
-  padding: 10%;
+.welcome-container{
+  /* background-color: darkgray; */
+  background: url(/images/WallStreet.jfif) no-repeat center center fixed;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+  padding-top: 5%;
+  /* padding: 200px 0px 25px 0px; */
 }
 
-#text-container{
+
+
+#welcome{
   border: 2px solid black;
   border-radius: 25px;
   background-image: none;

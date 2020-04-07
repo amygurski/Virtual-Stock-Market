@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StockMarketApi.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,6 +15,6 @@ namespace StockMarketApi.DAL
         /// Returns all games
         /// </summary>
         /// <returns></returns>
-        IList<Game> GetAllGames();
+        IList<Game> GetAllActiveGames();
     }
 }

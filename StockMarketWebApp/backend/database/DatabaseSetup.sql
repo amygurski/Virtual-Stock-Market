@@ -68,8 +68,8 @@ INSERT INTO games
 	(creatorId, gameName, dateCreated, endDate)
 VALUES
 	(1, 'testGame1', '2020-04-07', '2020-04-08'),
-	(2, 'testGame2', '2020-03-09', '2020-04-09'),
-	(3, 'testGame3', '2020-04-07', '2020-04-07'),
-	(4, 'testGame4', '2020-03-10', '2020-04-15');
+	(1, 'testGame2', '2020-03-09', '2020-04-09'),
+	(1, 'testGame3', '2020-04-07', '2020-04-07'),
+	(1, 'testGame4', '2020-03-10', '2020-04-15');
 
 COMMIT TRANSACTION;

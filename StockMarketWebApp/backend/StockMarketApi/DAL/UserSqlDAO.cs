@@ -111,6 +111,38 @@ namespace StockMarketApi.DAL
         }
 
         /// <summary>
+        /// Gets the user from the database.
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
+        public User GetUser(int id)
+        {
+            User user = null;
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("SELECT * FROM USERS WHERE id = @id;", conn);
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        user = MapRowToUser(reader);
+                    }
+                }
+
+                return user;
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+        }
+
+        /// <summary>
         /// Updates the user in the database.
         /// </summary>
         /// <param name="user"></param>

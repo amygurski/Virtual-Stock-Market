@@ -82,6 +82,7 @@ namespace StockMarketApi
             services.AddSingleton<ITokenGenerator>(tk => new JwtGenerator(Configuration["JwtSecret"]));
             services.AddSingleton<IPasswordHasher>(ph => new PasswordHasher());
             services.AddTransient<IUserDAO>(m => new UserSqlDAO(Configuration.GetConnectionString("Default")));
+            services.AddTransient<IGameDAO>(m => new GameSqlDAO(Configuration.GetConnectionString("Default")));
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

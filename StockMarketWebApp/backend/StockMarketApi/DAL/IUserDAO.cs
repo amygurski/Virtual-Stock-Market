@@ -19,6 +19,13 @@ namespace StockMarketApi.DAL
         User GetUser(string username);
 
         /// <summary>
+        /// Retrieves a user from the system by id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        User GetUser(int id);
+
+        /// <summary>
         /// Creates a new user.
         /// </summary>
         /// <param name="user"></param>

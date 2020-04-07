@@ -4,6 +4,8 @@ import auth from './auth'
 import Home from './views/Home.vue'
 import Login from './views/Login.vue'
 import Register from './views/Register.vue'
+import Rules from '@/views/Rules.vue'
+// import { RuleTester } from 'eslint'
 
 Vue.use(Router)
 
@@ -40,6 +42,14 @@ const router = new Router({
       path: "/register",
       name: "register",
       component: Register,
+      meta: {
+        requiresAuth: false
+      }
+    },
+    {
+      path: "/rules",
+      name: "game-rules",
+      component: Rules,
       meta: {
         requiresAuth: false
       }

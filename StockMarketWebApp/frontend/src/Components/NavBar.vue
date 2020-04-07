@@ -43,7 +43,7 @@
         </li>
       </ul>
       <ul v-if="user" class="navbar-nav ml-auto">
-        <li><button v-on:click="logout">Logout</button></li>
+        <li class="nav-item"><a v-on:click="logout" class="nav-link" id="logout-button">Logout</a></li>
       </ul>
       <ul v-else class="navbar-nav ml-auto">
         <li class="nav-item"><router-link :to="{name: 'register'}" class="nav-link">Register</router-link></li>
@@ -53,8 +53,30 @@
 </template>
 
 <script>
+import auth from "@/auth.js";
+
 export default {
-    name: 'navbar'
+    name: 'navbar',
+  data() {
+    return {
+      user: null
+    };
+  },
+  methods: {
+    logout() {
+      auth.logout();
+      this.$router.push("/login");
+      this.user = null;
+    }
+  },
+  created() {
+    this.user = auth.getUser();
+  },
+  watch: {
+    $route: function() {
+      this.user = auth.getUser();
+    }
+  }
 }
 </script>
 
@@ -63,7 +85,12 @@ export default {
   width: 36px;
 }
 
-ul > li.router-link-exact-active {
-  color: red;
+/* a.nav-link :hover {
+    cursor: pointer;
+} */
+
+#logout-button :hover {
+    cursor: pointer;
 }
+
 </style>

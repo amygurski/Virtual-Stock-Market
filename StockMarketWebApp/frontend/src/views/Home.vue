@@ -6,18 +6,45 @@
   </div>
 </template> --->
 
-<template>
+<!---<template>
 
-<div class="container" >
-  <div class="intro text">
+<div class="container">
+  <div id="intro text">
      <h1>Welcome to the <em><strong>Virtual Stock Market!</strong></em></h1>
-  <img src="/images/WallStreet.jfif" id="img-wall-street" />
-   <!-- add require later. I want this to be the background image...eventually -->
+   <img src="/images/WallStreet.jfif" id="img-wall-street" /> 
+    add require later. I want this to be the background image...eventually 
    
     <h2>Want to practice trading, but don't want to risk your own money?</h2>
     <h3>Play games and practice with us! You can play 'lone-wolf' style or compete with friends.</h3>
   </div>
 </div>
+
+</template> -->
+
+<template>
+
+  <div class="text-center">
+
+    <div id="text-container">
+    
+      <H1 id="h1">Welcome to the <strong>Virtual Stock Market!</strong></H1>
+      
+      <p class="spacer"></p>
+
+      <h3 id="question">
+        &nbsp;&nbsp;&nbsp;&nbsp; Want to practice trading, but don't want to risk your own money?
+        </h3>
+
+        <h3 id="summary">
+        &nbsp;&nbsp;&nbsp;&nbsp;Play games and practice with us!
+      </h3>
+      <h3 id="howto">
+        &nbsp;&nbsp;&nbsp;&nbsp;You can play by yourself or compete with friends.
+      </h3>
+    
+  </div>
+
+  </div>
 
 </template>
 <script>
@@ -26,25 +53,24 @@ export default {
 }
 </script>
 
-<style>
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    text-align: center;
-    padding: 7rem;
-    font-size: 20px;
-  
+<style scoped>
+div{
+  background-color: darkgray;
+  background-image: url(/images/WallStreet.jfif);
+  padding: 10%;
 }
 
+#text-container{
+  border: 2px solid black;
+  border-radius: 25px;
+  background-image: none;
+  background-color: white;
+  margin: auto;
+  padding: 20px;
+  width: 65%;
+}
 h1 {
-  padding-bottom: 30px;
-}
-
-h2 {
-  padding: 15px;
-}
-img {
-  opacity: 0.7;
+  padding-bottom: 25px;
 }
 
 

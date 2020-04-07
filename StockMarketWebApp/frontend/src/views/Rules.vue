@@ -1,6 +1,8 @@
 <template>
-  
+
   <div class="text-center">
+
+    <div id="text-container">
     
       <H1 id="h1">Game Rules</H1>
       
@@ -21,6 +23,8 @@
         each player their final cash totals. The player with the most money at the end, wins.
       </p>
     
+    </div>
+
   </div>
 
 </template>
@@ -34,7 +38,18 @@ export default {
 <style scoped>
 
 div{
-  margin: 10%;
+  background-color: darkgray;
+  background-image: url(/images/Rules-Page-Background-2.jpg);
+  padding: 8%;
+}
+#text-container{
+  border: 2px solid black;
+  border-radius: 25px;
+  background-image: none;
+  background-color: white;
+  margin: auto;
+  padding: 25px;
+  width: 60%;
 }
 
 </style>

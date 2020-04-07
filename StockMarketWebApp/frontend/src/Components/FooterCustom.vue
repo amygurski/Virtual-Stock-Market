@@ -1,7 +1,6 @@
 <template>
     <div id="footer-container">
         <footer id="footer-body">
-            <img id="footer-img" src="/images/StockMarketLogo.png"/>
             <p>&copy;2020 Team Tilde. All rights reserved.</p>
             <p>Site designed by Team Tilde</p>
         </footer>
@@ -19,7 +18,7 @@ export default {
     align-items: flex-end;
     flex-basis: auto;
     width: 100%;
-    height: 8%;
+    height: 90px;
     background-color: #343a40;
     position: absolute;
     bottom: 0;
@@ -28,11 +27,5 @@ export default {
     width: 100%;
     text-align: center;
     color: white;
-}
-#footer-img{
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 75px;
 }
 </style>

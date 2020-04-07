@@ -36,5 +36,8 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
+html {
+  background-color: #343a40;
+}
 </style>

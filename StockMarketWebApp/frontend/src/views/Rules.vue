@@ -1,6 +1,8 @@
 <template>
-  
+
   <div class="text-center">
+
+    <div id="text-container">
     
       <H1 id="h1">Game Rules</H1>
       
@@ -23,6 +25,8 @@
     
   </div>
 
+  </div>
+
 </template>
 
 <script>
@@ -34,7 +38,15 @@ export default {
 <style scoped>
 
 div{
-  margin: 10%;
+  background-color: darkgray;
+  padding: 10%;
+}
+#text-container{
+  border: 2px solid black;
+  border-radius: 25px;
+  background-color: white;
+  margin: auto;
+  padding: 25px;
 }
 
 </style>

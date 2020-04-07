@@ -56,12 +56,12 @@ export default {
 <style scoped>
 .welcome-container{
   /* background-color: darkgray; */
-  background: url(/images/WallStreet.jfif) no-repeat center center fixed;
+  background: linear-gradient(rgba(255,255,255,.25), rgba(255,255,255,.25)), url(/images/WallStreet.jfif) no-repeat center center fixed;
   position: fixed;
   height: 100%;
   width: 100%;
   background-size: cover;
-  padding-top: 5%;
+  padding-top: 8%;
   /* padding: 200px 0px 25px 0px; */
 }
 

@@ -1,6 +1,6 @@
 <template>
 
-  <div class="text-center">
+  <div class="text-center rules-background">
 
     <div id="text-container">
     
@@ -37,10 +37,13 @@ export default {
 
 <style scoped>
 
-div{
+.rules-background{
   background-color: darkgray;
   background-image: url(/images/Rules-Page-Background-2.jpg);
-  padding: 8%;
+  padding-top: 8%;
+  position: fixed;
+  height: 100%;
+  width: 100%;
 }
 #text-container{
   border: 2px solid black;

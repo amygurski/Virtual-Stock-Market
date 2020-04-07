@@ -1,26 +1,3 @@
-<!---<template>
-  <div class="home">
-    <h1>Welcome to the <strong>Virtual Stock Market Game</strong>!</h1>
-    <h3>Want to practice your trading skills, but don't want to risk your own money? 
-      Play games to practice with us! You can play 'lone-wolf' style or compete with friends.</h3>
-  </div>
-</template> --->
-
-<!---<template>
-
-<div class="container">
-  <div id="intro text">
-     <h1>Welcome to the <em><strong>Virtual Stock Market!</strong></em></h1>
-   <img src="/images/WallStreet.jfif" id="img-wall-street" /> 
-    add require later. I want this to be the background image...eventually 
-   
-    <h2>Want to practice trading, but don't want to risk your own money?</h2>
-    <h3>Play games and practice with us! You can play 'lone-wolf' style or compete with friends.</h3>
-  </div>
-</div>
-
-</template> -->
-
 <template>
 
   <div class="text-center welcome-container">

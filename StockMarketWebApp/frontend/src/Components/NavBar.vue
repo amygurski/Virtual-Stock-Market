@@ -1,6 +1,6 @@
 <template>
    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <router-link to="/" class="navbar-brand">
+      <router-link :to="{name: 'home'}" class="navbar-brand">
         <!-- Logo attribution: logo PNG Designed By haris99 from "https://pngtree.com/" Pngtree.com  -->
         <img src="/images/StockMarketLogo.png" id="img-logo-nav" />
         Virtual Stock Market
@@ -17,11 +17,8 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">
-            Home
-            <span class="sr-only">(current)</span>
-          </a>
+        <li class="nav-item">
+          <router-link :to="{name: 'home'}" class="nav-link"> Home</router-link>
         </li>
         <li class="nav-item">
           <router-link :to="{name: 'game-rules'}" class="nav-link">Rules</router-link>
@@ -64,5 +61,9 @@ export default {
 <style scoped>
 #img-logo-nav {
   width: 36px;
+}
+
+ul > li.router-link-exact-active {
+  color: red;
 }
 </style>

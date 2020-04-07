@@ -10,11 +10,16 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-bind:key="game" v-for="game in list">
+                <tr v-bind:key="game" v-for="game in data">
                     <td>{{ game.creator }}></td>
                     <td>{{ game.gameName }}></td>
                     <td>{{ game.dateCreated }}></td>
                     <td>{{ game.endDate }}></td>
+                    <td>
+                        <button type="button" class="btn btn-teal btn-rounded btn-sm m-0">
+                            Join Game
+                        </button>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -26,7 +31,7 @@ export default {
     name: 'join-game',
 data() {
     return {
-        data: null
+        data: []
     };
 },
 
@@ -47,14 +52,7 @@ methods: {
         });
     }
 },
-//  computed: {
-//     "columns": function columns() {
-//       if (Date.now() > game.endDate) {
-//         return [];
-//       }
-//       return Object.keys(this.rows[0])
-//     }
-//   }
+
 };
 
 </script>

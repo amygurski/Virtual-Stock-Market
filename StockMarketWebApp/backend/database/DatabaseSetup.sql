@@ -21,9 +21,9 @@ BEGIN TRANSACTION;
 CREATE TABLE users
 (
 	id			int			identity(1,1),
+	username	varchar(50)	not null,
 	firstname   varchar(50) not null,
 	email		varchar(50) not null,
-	username	varchar(50)	not null,
 	password	varchar(50)	not null,
 	salt		varchar(50)	not null,
 	role		varchar(50)	default('user'),
@@ -39,8 +39,8 @@ BEGIN TRANSACTION;
 
 -- default username of 'user' and default password of 'greatwall'
 INSERT INTO users
-  (username,password,salt,role)
+  (username, firstname, email, password, salt, role)
 VALUES
-  ('user', 'jUE98uhvS5tdIlxRsmz1W7/Qaqo=', '9CWPUTvXqQ4=', 'User');
+  ('user', 'John', 'user@user.com', 'jUE98uhvS5tdIlxRsmz1W7/Qaqo=', '9CWPUTvXqQ4=', 'User');
 
 COMMIT TRANSACTION;

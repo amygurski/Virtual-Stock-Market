@@ -41,10 +41,11 @@ namespace StockMarketApi.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost("register")]
-        public IActionResult Register(AuthenticationModel model)
-        {            
+        public IActionResult Register(RegisterModel model)
+        {
             // Does user already exist
-            if (userDao.GetUser(model.Username) != null)
+            User test = userDao.GetUser(model.Username);
+            if (test != null)
             {
                 return BadRequest(new
                 {
@@ -56,7 +57,7 @@ namespace StockMarketApi.Controllers
             var passwordHash = passwordHasher.ComputeHash(model.Password);
 
             // Create a user object
-            var user = new User { Password = passwordHash.Password, Salt = passwordHash.Salt, Role = "User", Username = model.Username };
+            var user = new User { Password = passwordHash.Password, Salt = passwordHash.Salt, Role = "User", Username = model.Username, Firstname = model.FirstName, Email = model.Email};
 
             // Save the user
             userDao.CreateUser(user);

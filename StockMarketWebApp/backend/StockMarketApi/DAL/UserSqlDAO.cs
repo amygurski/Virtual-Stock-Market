@@ -34,8 +34,10 @@ namespace StockMarketApi.DAL
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand("INSERT INTO users VALUES (@username, @password, @salt, @role);", conn);
+                    SqlCommand cmd = new SqlCommand("INSERT INTO users (username, firstname, email, password, salt, role) VALUES (@username, @firstname, @email, @password, @salt, @role);", conn);
                     cmd.Parameters.AddWithValue("@username", user.Username);
+                    cmd.Parameters.AddWithValue("@firstname", user.Firstname);
+                    cmd.Parameters.AddWithValue("@email", user.Email);
                     cmd.Parameters.AddWithValue("@password", user.Password);
                     cmd.Parameters.AddWithValue("@salt", user.Salt);
                     cmd.Parameters.AddWithValue("@role", user.Role);
@@ -142,6 +144,8 @@ namespace StockMarketApi.DAL
             {
                 Id = Convert.ToInt32(reader["id"]),
                 Username = Convert.ToString(reader["username"]),
+                Firstname = Convert.ToString(reader["firstname"]),
+                Email = Convert.ToString(reader["email"]),
                 Password = Convert.ToString(reader["password"]),
                 Salt = Convert.ToString(reader["salt"]),
                 Role = Convert.ToString(reader["role"])

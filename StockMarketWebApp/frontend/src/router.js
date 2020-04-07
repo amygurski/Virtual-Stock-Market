@@ -6,6 +6,9 @@ import Login from './views/Login.vue'
 import Register from './views/Register.vue'
 import Rules from '@/views/Rules.vue'
 import JoinGame from '@/views/JoinGame.vue'
+import MyGames from '@/views/MyGames.vue'
+import CreateGame from '@/views/CreateGame.vue'
+
 // import { RuleTester } from 'eslint'
 
 Vue.use(Router)
@@ -59,6 +62,22 @@ const router = new Router({
       path: "/games/join",
       name: "join-game",
       component: JoinGame,
+      meta: {
+        requiresAuth: false
+      }
+    },
+    {
+      path: "/games/mygames",
+      name: "my-games",
+      component: MyGames,
+      meta: {
+        requiresAuth: false
+      }
+    },
+    {
+      path: "/games/create",
+      name: "create-game",
+      component: CreateGame,
       meta: {
         requiresAuth: false
       }

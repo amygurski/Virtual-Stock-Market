@@ -1,4 +1,5 @@
 <template>
+<div id="register-container">
   <div id="register" class="text-center">
     <form class="form-register" @submit.prevent="register">
       <h1 class="h3 mb-3 font-weight-normal">Create Account</h1>
@@ -16,6 +17,28 @@
         v-model="user.username"
         required
         autofocus
+      />
+      </div>
+      <div class="form-group">
+      <label for="firstname" class="sr-only">First Name</label>
+      <input
+        type="text"
+        id="firstname"
+        class="form-control"
+        placeholder="First Name"
+        v-model="user.firstname"
+        required
+      />
+      </div>
+      <div class="form-group">
+      <label for="email" class="sr-only">Email</label>
+      <input
+        type="email"
+        id="email"
+        class="form-control"
+        placeholder="Email"
+        v-model="user.email"
+        required
       />
       </div>
       <div class="form-group">
@@ -52,6 +75,7 @@
 
     </form>
   </div>
+</div>
 </template>
 
 <script>
@@ -61,6 +85,8 @@ export default {
     return {
       user: {
         username: '',
+        firstname: '',
+        email: '',
         password: '',
         confirmPassword: '',
         role: 'user',
@@ -92,10 +118,19 @@ export default {
 };
 </script>
 
-<style>
-  .form-register{
-    max-width: 500px;
-    margin: auto;
-    padding: 2rem;
-  }
+<style scoped>
+#register-container {
+  background-color: grey;
+  padding: 25px 0px 25px 0px;
+}
+
+#register {
+  width: 25%;
+  padding: 25px;
+  margin: auto;
+  border-radius: 25px;
+  border: 2px solid rgba(0,0,0,0.05);
+  background-color: white;
+}
+
 </style>

@@ -23,7 +23,7 @@
         each player their final cash totals. The player with the most money at the end, wins.
       </p>
     
-  </div>
+    </div>
 
   </div>
 
@@ -39,7 +39,7 @@ export default {
 
 div{
   background-color: darkgray;
-  background-image: url(/images/Rules-Page-Background.jpg);
+  background-image: url(/images/Rules-Page-Background-2.jpg);
   padding: 8%;
 }
 #text-container{

@@ -31,7 +31,6 @@ namespace StockMarketApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("currentgames")]
-        //[Authorize]
         public IActionResult AllActiveGames()
         {
             IList<Game> unformattedCurrentGames = gameDao.GetAllActiveGames();

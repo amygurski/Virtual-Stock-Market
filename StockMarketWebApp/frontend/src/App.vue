@@ -2,16 +2,19 @@
   <div id="app">
     <nav-bar></nav-bar>
     <router-view />
+    <footer-custom></footer-custom>
   </div>
 </template>
 
 <script>
 import auth from "@/auth.js";
 import NavBar from "@/Components/NavBar.vue"
+import FooterCustom from "@/Components/FooterCustom.vue"
 
 export default {
   components: {
-          NavBar
+          NavBar,
+          FooterCustom
   },
   data() {
     return {

@@ -14,7 +14,7 @@
                     <td>{{ game.creator }}></td>
                     <td>{{ game.gameName }}></td>
                     <td>{{ game.dateCreated }}></td>
-                    <td>{{ game.dateEnd }}></td>
+                    <td>{{ game.endDate }}></td>
                 </tr>
             </tbody>
         </table>
@@ -46,7 +46,15 @@ methods: {
             console.log('Error', e);
         });
     }
-}
+},
+//  computed: {
+//     "columns": function columns() {
+//       if (Date.now() > game.endDate) {
+//         return [];
+//       }
+//       return Object.keys(this.rows[0])
+//     }
+//   }
 };
 
 </script>

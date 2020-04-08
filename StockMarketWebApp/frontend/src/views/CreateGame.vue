@@ -60,19 +60,23 @@
 <script>
 export default {
   name: "creategame",
+  props: {
+    user: Object
+  },
   data() {
     return {
       game: {
         name: "",
         startDate: "",
         endDate: "",
-        description: ""
+        description: "",
+        userName: this.user.sub
       }
     };
   },
   methods: {
     creategame() {
-      fetch(`${process.env.VUE_APP_REMOTE_API}/creategame`, {
+      fetch(`${process.env.VUE_APP_REMOTE_API}/games/newgame`, {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -83,7 +87,7 @@ export default {
         .then(response => {
           if (response.ok) {
             this.$router.push({
-              path: "/login",
+              path: "/",
               query: { gameCreation: "success" }
             });
           } else {

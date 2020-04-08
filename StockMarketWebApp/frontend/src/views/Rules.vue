@@ -49,7 +49,8 @@ export default {
   border: 2px solid black;
   border-radius: 25px;
   background-image: none;
-  background-color: white;
+  background-color: #343a40;
+  color: white;
   margin: auto;
   padding: 25px;
   width: 60%;

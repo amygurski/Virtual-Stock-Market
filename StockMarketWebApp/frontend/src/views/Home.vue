@@ -4,20 +4,20 @@
 
     <div id="welcome">
     
-      <H1 id="h1">Welcome to the <strong>Virtual Stock Market!</strong></H1>
+      <h1 id="h1">Welcome to the <span class="headername">Virtual Stock Market</span>!</h1>
       
       <p class="spacer"></p>
 
-      <h3 id="question">
+      <h5 id="question">
         &nbsp;&nbsp;&nbsp;&nbsp; Want to practice trading, but don't want to risk your own money?
-        </h3>
+        </h5>
 
-        <h3 id="summary">
+        <h5 id="summary">
         &nbsp;&nbsp;&nbsp;&nbsp;Play games and practice with us!
-      </h3>
-      <h3 id="howto">
+      </h5>
+      <h5 id="howto">
         &nbsp;&nbsp;&nbsp;&nbsp;You can play by yourself or compete with friends.
-      </h3>
+      </h5>
     
   </div>
 
@@ -31,6 +31,11 @@ export default {
 </script>
 
 <style scoped>
+.headername {
+  color: rgb(71, 104, 255);
+  font-weight: bold;
+  font-style: italic;
+}
 .welcome-container{
   /* background-color: darkgray; */
   background: linear-gradient(rgba(255,255,255,.25), rgba(255,255,255,.25)), url(/images/WallStreet.jfif) no-repeat center center fixed;
@@ -48,7 +53,8 @@ export default {
   border: 2px solid black;
   border-radius: 25px;
   background-image: none;
-  background-color: white;
+  background-color: #343a40;
+  color: white;
   margin: auto;
   padding: 20px;
   width: 65%;

@@ -134,7 +134,8 @@ export default {
   margin: auto;
   border-radius: 25px;
   border: 2px solid rgba(0,0,0,0.05);
-  background-color: white;
+  background-color: #343a40;
+  color: white;
 }
 
 </style>

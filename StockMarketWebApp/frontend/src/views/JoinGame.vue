@@ -1,12 +1,12 @@
 <template>
 <div class="table-responsive">
-        <table class="table-hover" v-if="data">
+        <table class=" table table-hover" v-if="data">
             <thead>
                 <tr>
-                    <th>Creator</th>
-                    <th>Game Name</th>
-                    <th>Date Created</th>
-                    <th>Game Ends</th>
+                    <th scope="col">Creator</th>
+                    <th scope="col">Game Name</th>
+                    <th scope="col">Date Created</th>
+                    <th scope="col">Game Ends</th>
                 </tr>
             </thead>
             <tbody>

@@ -43,7 +43,7 @@ export default {
   height: 100%;
   width: 100%;
   background-size: cover;
-  padding-top: 8%;
+  padding-top: 5%;
   /* padding: 200px 0px 25px 0px; */
 }
 

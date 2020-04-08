@@ -71,7 +71,8 @@ export default {
         endDate: "",
         description: "",
         userName: this.user.sub
-      }
+      },
+      createGameErrors: false
     };
   },
   methods: {
@@ -79,17 +80,14 @@ export default {
       fetch(`${process.env.VUE_APP_REMOTE_API}/games/newgame`, {
         method: "POST",
         headers: {
-          Accept: "application/json",
+          "Accept": "application/json",
           "Content-Type": "application/json"
         },
         body: JSON.stringify(this.game)
       })
         .then(response => {
           if (response.ok) {
-            this.$router.push({
-              path: "/",
-              query: { gameCreation: "success" }
-            });
+            this.$router.push({ path: '/'})
           } else {
             this.createGameErrors = true;
           }

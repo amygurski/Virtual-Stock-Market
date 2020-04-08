@@ -8,7 +8,7 @@
 </template>
 <script>
 export default {
-    name: 'footer'
+    name: 'footer-custom'
 }
 </script>
 <style scoped>

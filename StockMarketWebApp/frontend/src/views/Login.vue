@@ -111,7 +111,7 @@ export default {
 #login-container {
   background: linear-gradient(rgba(255,255,255,.25), rgba(255,255,255,.25)), url(/Images/register-login-background.jpg); /*no-repeat center center fixed; */
   background-size: cover;
-  padding-top: 8%;
+  padding-top: 5%;
   position: fixed;
   width: 100%;
   height: 100%;

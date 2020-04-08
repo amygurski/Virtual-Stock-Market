@@ -67,7 +67,7 @@ export default {
 #joingame-container {
   background: linear-gradient(rgba(255,255,255,.25), rgba(255,255,255,.25)),url(/Images/Join-Game-Background.png);
   background-size: cover;
-  padding-top: 8%;
+  padding-top: 5%;
   position: fixed;
   width: 100%;
   height: 100%;

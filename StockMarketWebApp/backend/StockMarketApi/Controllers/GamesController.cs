@@ -33,6 +33,7 @@ namespace StockMarketApi.Controllers
         [HttpGet("currentgames")]
         public IActionResult AllActiveGames()
         {
+            // TODO: Refactor with SQL Join Statement
             IList<Game> unformattedCurrentGames = gameDao.GetAllActiveGames();
             IList<CurrentGamesModel> formattedGames = new List<CurrentGamesModel>();
 

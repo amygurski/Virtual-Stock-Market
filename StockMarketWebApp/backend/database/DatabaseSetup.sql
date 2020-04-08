@@ -101,7 +101,7 @@ BEGIN TRANSACTION;
 
 --default games for testing
 INSERT INTO games
-	(creato_id, game_name, date_created, end_date)
+	(creator_id, game_name, date_created, end_date)
 VALUES
 	(1653, 'testGame1', '2020-04-07', '2020-04-08'),
 	(1654, 'testGame2', '2020-03-09', '2020-04-09'),

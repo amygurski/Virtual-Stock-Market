@@ -28,7 +28,7 @@ namespace StockMarketApi.DAL
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand("SELECT * FROM games WHERE  enddate > @now", conn);
+                    SqlCommand cmd = new SqlCommand("SELECT * FROM games WHERE  end_date > @now", conn);
                     cmd.Parameters.AddWithValue("@now", DateTime.Now);
 
                     SqlDataReader reader = cmd.ExecuteReader();
@@ -137,12 +137,12 @@ namespace StockMarketApi.DAL
             return new Game()
             {
 
-                Id = Convert.ToInt32(reader["gameId"]),
-                CreatorId = Convert.ToInt32(reader["creatorId"]),
-                Name = Convert.ToString(reader["gameName"]),
+                Id = Convert.ToInt32(reader["id"]),
+                CreatorId = Convert.ToInt32(reader["creator_id"]),
+                Name = Convert.ToString(reader["game_name"]),
                 Description = Convert.ToString(reader["game_desc"]),
-                DateCreated = Convert.ToDateTime(reader["dateCreated"]),
-                EndDate = Convert.ToDateTime(reader["endDate"])
+                DateCreated = Convert.ToDateTime(reader["date_created"]),
+                EndDate = Convert.ToDateTime(reader["end_date"])
             };
         }
     }

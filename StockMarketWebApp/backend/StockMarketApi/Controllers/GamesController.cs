@@ -93,14 +93,22 @@ namespace StockMarketApi.Controllers
         [HttpPost("newgame")]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
-        public IActionResult CreateNewGame([FromBody]Game game)
+        public IActionResult CreateNewGame([FromBody]CreateGameAPIModel apiModel)
         {
             if (ModelState.IsValid)
             {
-                int newId = gameDao.CreateGame(game);
-                game = gameDao.GetGameById(newId);
+                Game newGame = new Game();
+                newGame.CreatorId = userDao.GetUser(apiModel.UserName).Id;
+                newGame.Name = apiModel.Name;
+                newGame.Description = apiModel.Description;
+                newGame.DateCreated = apiModel.StartDate;
+                newGame.EndDate = apiModel.EndDate;
+                
+                int newId = gameDao.CreateGame(newGame);
+                newGame = gameDao.GetGameById(newId);
+
                 // TODO 09a (Controller): Return CreatedAtRoute to return 201
-                return CreatedAtRoute("GetGame", new { id = newId }, game);
+                return CreatedAtRoute("GetGame", new { id = newId }, newGame);
             }
             else
             {

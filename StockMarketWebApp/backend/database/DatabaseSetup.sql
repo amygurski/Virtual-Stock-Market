@@ -103,14 +103,18 @@ BEGIN TRANSACTION;
 INSERT INTO games
 	(creator_id, game_name, date_created, end_date)
 VALUES
-	(1653, 'testGame1', '2020-04-07', '2020-04-08'),
-	(1654, 'testGame2', '2020-03-09', '2020-04-09'),
-	(1655, 'testGame3', '2020-04-07', '2020-04-07'),
-	(1656, 'testGame4', '2020-03-10', '2020-04-15');
+	('testGame1', '2020-04-07', '2020-04-08'),
+	('testGame2', '2020-03-09', '2020-04-09'),
+	('testGame3', '2020-04-07', '2020-04-07'),
+	('testGame4', '2020-03-10', '2020-04-15');
 
 COMMIT TRANSACTION;
 
 BEGIN TRANSACTION;
 
 INSERT INTO transactions
-	(user_id
+	(stock_symbol, number_of_shares, transaction_share_price, is_buy)
+VALUES
+	('TETIL', 1, 100,000.00, 0);
+
+COMMIT TRANSACTION;

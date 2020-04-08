@@ -63,14 +63,7 @@ namespace StockMarketApi.Controllers
 
             foreach (Game game in unformattedCurrentGames)
             {
-                GameAPIModel gameFormatted = new GameAPIModel();
-                gameFormatted.GameId = game.Id;
-                gameFormatted.DateCreated = game.DateCreated.ToString("d");
-                gameFormatted.EndDate = game.EndDate.ToString("g");
-                gameFormatted.Name = game.Name;
-                gameFormatted.Description = game.Description;
-                gameFormatted.CreatorUsername = userDao.GetUser(game.CreatorId).Username;
-
+                GameAPIModel gameFormatted = FormatGameToApiModel(game);
                 formattedGames.Add(gameFormatted);
             }
 
@@ -81,13 +74,19 @@ namespace StockMarketApi.Controllers
         [ProducesResponseType(404)]
         public IActionResult GetGame(int id)
         {
-            Game game = gameDao.GetGameById(id);
-            if (game == null)
+            Game gameUnformatted = gameDao.GetGameById(id);
+            GameAPIModel gameFormatted = new GameAPIModel();
+
+            if (gameUnformatted == null)
             {
                 return NotFound();
             }
+            else
+            {
+                gameFormatted = FormatGameToApiModel(gameUnformatted);
+            }
 
-            return new JsonResult(game);
+            return new JsonResult(gameFormatted);
         }
 
         [HttpPost("newgame")]
@@ -114,6 +113,20 @@ namespace StockMarketApi.Controllers
             {
                 return new BadRequestObjectResult(ModelState);
             }
+        }
+
+        private GameAPIModel FormatGameToApiModel(Game game)
+        {
+            GameAPIModel gameFormatted = new GameAPIModel();
+            gameFormatted.GameId = game.Id;
+            gameFormatted.DateCreated = game.DateCreated.ToString("d");
+            gameFormatted.EndDate = game.EndDate.ToString("g");
+            gameFormatted.Name = game.Name;
+            gameFormatted.Description = game.Description;
+            gameFormatted.CreatorUsername = userDao.GetUser(game.CreatorId).Username;
+            gameFormatted.CreatorId = game.CreatorId;
+
+            return gameFormatted;
         }
     }
 }

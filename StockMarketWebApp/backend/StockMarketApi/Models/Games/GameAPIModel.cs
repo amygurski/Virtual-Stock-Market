@@ -12,6 +12,8 @@ namespace StockMarketApi.Models.Games
         /// </summary>
         public int GameId { get; set; }
 
+        public int CreatorId { get; set; }
+
         /// <summary>
         /// The username of the user that created the game instance
         /// </summary>

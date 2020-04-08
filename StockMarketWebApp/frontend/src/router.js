@@ -8,6 +8,9 @@ import Rules from '@/views/Rules.vue'
 import JoinGame from '@/views/JoinGame.vue'
 import MyGames from '@/views/MyGames.vue'
 import CreateGame from '@/views/CreateGame.vue'
+import GameDetail from '@/views/GameDetail.vue'
+import MyGameDetail from '@/views/MyGameDetail.vue'
+
 
 // import { RuleTester } from 'eslint'
 
@@ -82,6 +85,22 @@ const router = new Router({
         requiresAuth: false
       }
     },
+    {
+      path: "/game-detail",
+      name: "game-detail",
+      component: GameDetail,
+      meta: {
+        requiresAuth: false
+      }
+    },
+    {
+      path: "/mygame-detail",
+      name: "mygame-detail",
+      component: MyGameDetail,
+      meta: {
+        requiresAuth: false
+      }
+    }
   ]
 })
 

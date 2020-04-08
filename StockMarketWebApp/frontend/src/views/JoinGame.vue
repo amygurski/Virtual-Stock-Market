@@ -20,7 +20,9 @@
               <td>{{ game.dateCreated }}</td>
               <td>{{ game.endDate }}</td>
               <td>
+                  <router-link :to="{name: 'game-detail'}">
                 <button type="button" class="btn btn-primary btn-rounded btn-sm m-0">Join Game</button>
+                  </router-link>
               </td>
             </tr>
           </tbody>

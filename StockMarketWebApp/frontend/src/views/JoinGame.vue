@@ -2,6 +2,7 @@
   <div id="joingame-container">
     <div id="joingame" class="text-center">
       <div class="table-responsive">
+     <h1>Join a Game</h1>
         <table class="table table-hover table-dark" v-if="data">
           <thead class="thead-dark">
             <tr>
@@ -77,6 +78,8 @@ export default {
   border-radius: 25px;
   border: 2px solid rgba(0,0,0,0.05);
   background-color:#343a40;
+color: white;
+
 }
 
 </style>

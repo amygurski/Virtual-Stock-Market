@@ -2,6 +2,7 @@
   <div id="mygames-container">
     <div id="mygames" class="text-center">
       <div class="table-responsive">
+          <h1>My Games</h1>
         <table class="table table-hover table-dark" v-if="data">
           <thead class="thead-dark">
             <tr>
@@ -74,6 +75,8 @@ export default {
   border-radius: 25px;
   border: 2px solid rgba(0,0,0,0.05);
   background-color:#343a40;
+  color: white;
 }
+
 
 </style>

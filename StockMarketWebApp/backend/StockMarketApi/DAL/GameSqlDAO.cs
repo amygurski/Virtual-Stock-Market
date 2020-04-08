@@ -83,9 +83,8 @@ namespace StockMarketApi.DAL
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand(@"INSERT INTO games (id, creator_id, game_name, game_desc, date_created, end_date)  
-                                                      VALUES (@id, @creator_id, @game_name, @game_desc, @date_created, @end_date); SELECT @@identity", conn);
-                    cmd.Parameters.AddWithValue("@id", game.Id);
+                    SqlCommand cmd = new SqlCommand(@"INSERT INTO games (creator_id, game_name, game_desc, date_created, end_date)  
+                                                      VALUES (@creator_id, @game_name, @game_desc, @date_created, @end_date); SELECT @@identity As NewId", conn);
                     cmd.Parameters.AddWithValue("@creator_id", game.CreatorId);
                     cmd.Parameters.AddWithValue("@game_name", game.Name);
                     cmd.Parameters.AddWithValue("@game_desc", game.Description);

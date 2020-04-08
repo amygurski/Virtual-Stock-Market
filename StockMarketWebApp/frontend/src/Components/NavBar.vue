@@ -53,30 +53,33 @@
 </template>
 
 <script>
-import auth from "@/auth.js";
+// import auth from "@/auth.js";
 
 export default {
     name: 'navbar',
-  data() {
-    return {
-      user: null
-    };
-  },
-  methods: {
-    logout() {
-      auth.logout();
-      this.$router.push("/login");
-      this.user = null;
+    props: {
+      user: Object
     }
-  },
-  created() {
-    this.user = auth.getUser();
-  },
-  watch: {
-    $route: function() {
-      this.user = auth.getUser();
-    }
-  }
+  // data() {
+  //   return {
+  //     user: null
+  //   };
+  // },
+  // methods: {
+  //   logout() {
+  //     auth.logout();
+  //     this.$router.push("/login");
+  //     this.user = null;
+  //   }
+  // },
+  // created() {
+  //   this.user = auth.getUser();
+  // },
+  // watch: {
+  //   $route: function() {
+  //     this.user = auth.getUser();
+  //   }
+  // }
 }
 </script>
 

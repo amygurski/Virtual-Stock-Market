@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <nav-bar></nav-bar>
+    <nav-bar v-bind:user="this.user"></nav-bar>
     <router-view />
     <footer-custom></footer-custom>
   </div>

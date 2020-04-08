@@ -87,7 +87,11 @@ export default {
       })
         .then(response => {
           if (response.ok) {
-            this.$router.push({ path: '/'})
+            response.json().then( json => {
+              console.log(json);
+              this.$router.push({ name: 'game-detail', params: {id: json.id}})
+            })
+            
           } else {
             this.createGameErrors = true;
           }

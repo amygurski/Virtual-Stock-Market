@@ -16,11 +16,11 @@
           <tbody>
             <tr v-bind:key="game" v-for="game in data">
               <td>{{ game.creatorUsername }}</td>
-              <td>{{ game.gameName }}</td>
+              <td>{{ game.name }}</td>
               <td>{{ game.dateCreated }}</td>
               <td>{{ game.endDate }}</td>
               <td>
-                  <router-link :to="{name: 'game-detail'}">
+                  <router-link :to="{ name: 'game-detail', params: {id: game.gameId} }">
                 <button type="button" class="btn btn-primary btn-rounded btn-sm m-0">Join Game</button>
                   </router-link>
               </td>

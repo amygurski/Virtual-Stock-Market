@@ -39,7 +39,7 @@ export default {
 
 .rules-background{
   background-color: darkgray;
-  background-image: url(/images/Rules-Page-Background-2.jpg);
+  background-image: url(/images/Rules-Page-Background.jpg);
   padding-top: 8%;
   position: fixed;
   height: 100%;

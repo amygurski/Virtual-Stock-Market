@@ -20,7 +20,7 @@ BEGIN TRANSACTION;
 
 CREATE TABLE users
 (
-	id			int			identity(1,1),
+	id			int		Primary Key	identity(1,1),
 	firstname   varchar(50) not null,
 	email		varchar(50) not null,
 	username	varchar(50)	not null,
@@ -28,24 +28,60 @@ CREATE TABLE users
 	salt		varchar(50)	not null,
 	role		varchar(50)	default('user'),
 
-	constraint pk_users primary key (id)
 );
 
 COMMIT TRANSACTION;
 
 BEGIN TRANSACTION;
+
 CREATE TABLE games
 (
-	gameId int identity(1653, 1),
-	creatorId int not null,
-	gameName varchar(50) not null,
-	dateCreated date not null,
-	endDate date not null,
+	
+	id int Primary Key identity(1653, 1),
+	creator_id int not null,
+	game_name varchar(50) not null,
+	date_created date not null,
+	end_date date not null,
+	game_desc varchar (300) null,
 
-	constraint pk_games primary key (gameId)
+	Constraint fk_games_users foreign key (creator_id) references users (id)
 
 );
 
+COMMIT TRANSACTION;
+
+BEGIN TRANSACTION;
+
+CREATE TABLE stocks
+(
+
+	stock_symbol varchar(5) primary key not null,
+	name_of_company varchar(50) not null,
+	current_share_price money not null,
+	percent_daily_change varchar(5) not null,
+
+);
+
+COMMIT TRANSACTION;
+
+BEGIN TRANSACTION;
+
+CREATE TABLE transactions
+(
+
+	user_id int not null,
+	game_id int not null,
+	stock_symbol varchar(5) null,
+	number_of_shares int not null,
+	transaction_share_price money not null,
+	is_buy bit not null,
+
+	constraint fk_transactions_users foreign key (user_id) references users (id),
+	constraint fk_transactions_games foreign key (game_id) references games (id),
+	constraint fk_transactions_stocks foreign key (stock_symbol) references stocks (stock_symbol),
+	constraint pk_transactions_user_id_game_id primary key (user_id, game_id)
+
+);
 
 COMMIT TRANSACTION;
 

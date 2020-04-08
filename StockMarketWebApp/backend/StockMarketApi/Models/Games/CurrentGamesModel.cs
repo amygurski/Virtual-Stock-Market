@@ -22,10 +22,10 @@ namespace StockMarketApi.Models.Games
         /// <summary>
         /// The date that the game was started
         /// </summary>
-        public DateTime DateCreated { get; set; }
+        public string DateCreated { get; set; }
         /// <summary>
         /// The date that the game is set to end on
         /// </summary>
-        public DateTime EndDate { get; set; }
+        public string EndDate { get; set; }
     }
 }

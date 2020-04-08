@@ -41,8 +41,8 @@ namespace StockMarketApi.Controllers
             {
                 CurrentGamesModel gameFormatted = new CurrentGamesModel();
                 gameFormatted.GameId = game.GameId;
-                gameFormatted.DateCreated = game.DateCreated;
-                gameFormatted.EndDate = game.EndDate;
+                gameFormatted.DateCreated = game.DateCreated.ToString("d");
+                gameFormatted.EndDate = game.EndDate.ToString("g");
                 gameFormatted.GameName = game.GameName;
                 gameFormatted.CreatorUsername = userDao.GetUser(game.CreatorId).Username;
 

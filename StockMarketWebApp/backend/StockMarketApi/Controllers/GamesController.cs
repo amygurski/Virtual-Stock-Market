@@ -101,8 +101,8 @@ namespace StockMarketApi.Controllers
                 newGame.CreatorId = userDao.GetUser(apiModel.UserName).Id;
                 newGame.Name = apiModel.Name;
                 newGame.Description = apiModel.Description;
-                newGame.DateCreated = apiModel.StartDate;
-                newGame.EndDate = apiModel.EndDate;
+                newGame.DateCreated = DateTime.Parse(apiModel.StartDate);
+                newGame.EndDate = DateTime.Parse(apiModel.EndDate);
                 
                 int newId = gameDao.CreateGame(newGame);
                 newGame = gameDao.GetGameById(newId);

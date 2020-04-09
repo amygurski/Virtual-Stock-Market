@@ -68,7 +68,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 #gamedetail-container {
   background: linear-gradient(
       rgba(255, 255, 255, 0.25),

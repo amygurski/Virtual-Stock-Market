@@ -100,7 +100,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 #login {
   width: 25%;
   padding: 25px;

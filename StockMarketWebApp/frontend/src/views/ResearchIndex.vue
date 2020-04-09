@@ -47,7 +47,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .research-background {
   background-color: darkgray;
   background-image: url(/images/register-login-background.jpg);

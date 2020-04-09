@@ -1,16 +1,17 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import auth from './auth'
-import Home from './views/Home.vue'
+import Index from './views/Index.vue'
 import Login from './views/Login.vue'
 import Register from './views/Register.vue'
 import Rules from '@/views/Rules.vue'
 import JoinGame from '@/views/JoinGame.vue'
 import MyGames from '@/views/MyGames.vue'
 import CreateGame from '@/views/CreateGame.vue'
+import JoinGameDetail from '@/views/JoinGameDetail.vue'
 import GameDetail from '@/views/GameDetail.vue'
-import MyGameDetail from '@/views/MyGameDetail.vue'
 import AdminControlPanel from '@/views/AdminControlPanel.vue'
+import ResearchIndex from '@/views/ResearchIndex.vue'
 
 
 // import { RuleTester } from 'eslint'
@@ -32,15 +33,13 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: Home,
+      component: Index,
       meta: {
         requiresAuth: false
       }
     },
     {
       path: "/login",
-      name: "login",
       component: Login,
       meta: {
         requiresAuth: false
@@ -48,7 +47,6 @@ const router = new Router({
     },
     {
       path: "/register",
-      name: "register",
       component: Register,
       meta: {
         requiresAuth: false
@@ -56,7 +54,6 @@ const router = new Router({
     },
     {
       path: "/rules",
-      name: "game-rules",
       component: Rules,
       meta: {
         requiresAuth: false
@@ -64,7 +61,6 @@ const router = new Router({
     },
     {
       path: "/games/join",
-      name: "join-game",
       component: JoinGame,
       meta: {
         requiresAuth: true
@@ -75,7 +71,7 @@ const router = new Router({
       name: "my-games",
       component: MyGames,
       meta: {
-        requiresAuth: false
+        requiresAuth: true
       }
     },
     {
@@ -87,17 +83,24 @@ const router = new Router({
       }
     },
     {
-      path: "/game-detail",
-      name: "game-detail",
-      component: GameDetail,
+      path: "/join-game-detail/:id",
+      name: "join-game-detail",
+      component: JoinGameDetail,
       meta: {
-        requiresAuth: false
+        requiresAuth: true
       }
     },
     {
-      path: "/mygame-detail",
-      name: "mygame-detail",
-      component: MyGameDetail,
+      path: "/game-detail/:id",
+      name: "game-detail",
+      component: GameDetail,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/stocks/research",
+      component: ResearchIndex,
       meta: {
         requiresAuth: false
       }
@@ -121,12 +124,17 @@ router.beforeEach((to, from, next) => {
   const isAdmin = to.matched.some(x => x.meta.isAdmin);
 
   // If it does and they are not logged in, send the user to "/login"
-  if ((requiresAuth && !user) || (isAdmin && user.rol !== 'Admin')) {
-    const loginpath = window.location.pathname;
-    auth.logout();
+  if (requiresAuth && !user) {
+    const loginpath = router.currentRoute.path;
+    console.log("path: " + loginpath)
     //next("/login");
-    next( { name: 'login', query: { from: loginpath } } ) ;
-  } else {
+    next( { path: '/login', query: { from: loginpath } } );
+  } 
+  else if ( isAdmin && user.rol !== 'Admin' ) {
+    auth.logout();
+    next( { path: '/login', query: { from: "/" } } );
+  }
+  else {
     // Else let them go to their next destination
     next();
   }

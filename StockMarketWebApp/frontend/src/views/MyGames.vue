@@ -14,13 +14,13 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-bind:key="game" v-for="game in data">
+            <tr v-bind:key="game.gameId" v-for="game in data">
               <td>{{ game.creatorUsername }}</td>
-              <td>{{ game.gameName }}</td>
+              <td>{{ game.name }}</td>
               <td>{{ game.dateCreated }}</td>
               <td>{{ game.endDate }}</td>
               <td>
-          <router-link :to="{name: 'mygame-detail'}">
+          <router-link :to="{name: 'game-detail', params: {id: game.gameId}}">
                     <button type="button" class="btn btn-primary btn-rounded btn-sm m-0">View Game</button>
             </router-link>
               </td>
@@ -37,18 +37,28 @@ export default {
   name: "my-games",
   data() {
     return {
-      data: []
+      data: Array,
+      token: String,
+      user: Object
     };
   },
 
   mounted() {
+    this.token = this.$attrs.token
+    this.user = this.$attrs.user
     this.getData();
   },
 
   methods: {
     getData() {
       // vue-resource example
-      fetch(`${process.env.VUE_APP_REMOTE_API}/games/mygames`)
+      fetch(`${process.env.VUE_APP_REMOTE_API}/games/mygames/${this.user.sub}` , {
+        method: "GET",
+        headers: {
+          "Content-Type": 'application/json',
+          Authorization: "Bearer " + this.token
+        }
+      })
         .then(response => {
           return response.json();
         })

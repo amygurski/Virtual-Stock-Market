@@ -42,7 +42,7 @@
         </div>
 
         <div class="text-center mt-4 form-group">
-          <router-link :to="{ name: 'register' }">Need an account?</router-link>
+          <router-link :to="{ path: '/register' }">Need an account?</router-link>
         </div>
       </form>
     </div>

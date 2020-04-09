@@ -26,7 +26,7 @@
 </template>
 <script>
 export default {
-  name: 'home'
+  name: 'Index'
 }
 </script>
 

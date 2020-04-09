@@ -60,19 +60,23 @@
 <script>
 export default {
   name: "creategame",
-  props: {
-    user: Object
-  },
   data() {
     return {
-      game: {
-        name: "",
-        startDate: "",
-        endDate: "",
-        description: "",
-        userName: this.user.sub
-      },
+      user: Object,
+      token: String,
+      game: Object,
       createGameErrors: false
+    };
+  },
+  mounted() {
+    this.token = this.$attrs.token;
+    this.user = this.$attrs.user;
+    this.game = {
+      name: "",
+      startDate: "",
+      endDate: "",
+      description: "",
+      userName: this.user.sub
     };
   },
   methods: {
@@ -80,18 +84,20 @@ export default {
       fetch(`${process.env.VUE_APP_REMOTE_API}/games/newgame`, {
         method: "POST",
         headers: {
-          "Accept": "application/json",
-          "Content-Type": "application/json"
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + this.token
         },
         body: JSON.stringify(this.game)
       })
         .then(response => {
           if (response.ok) {
-            response.json().then( json => {
-              console.log(json);
-              this.$router.push({ name: 'game-detail', params: {id: json.id}})
-            })
-            
+            response.json().then(json => {
+              // gameResult = json
+              this.$router.push({
+                path: `/game-detail/${json.id}`
+              });
+            });
           } else {
             this.createGameErrors = true;
           }

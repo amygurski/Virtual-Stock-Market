@@ -55,7 +55,7 @@ BEGIN TRANSACTION;
 CREATE TABLE stocks
 (
 
-	stock_symbol varchar(5) primary key not null,
+	stock_symbol varchar(12) primary key not null,
 	name_of_company varchar(50) not null,
 	current_share_price money not null,
 	percent_daily_change varchar(5) not null,
@@ -71,7 +71,7 @@ CREATE TABLE transactions
 
 	user_id int not null,
 	game_id int not null,
-	stock_symbol varchar(5) null,
+	stock_symbol varchar(12) not null,
 	number_of_shares int not null,
 	transaction_share_price money not null,
 	is_buy bit not null,
@@ -92,7 +92,8 @@ BEGIN TRANSACTION;
 INSERT INTO users
   (firstname, email, username, password, salt, role)
 VALUES
-  ('john', 'email@email.com', 'user', 'jUE98uhvS5tdIlxRsmz1W7/Qaqo=', '9CWPUTvXqQ4=', 'User');
+  ('john', 'email@email.com', 'user', 'jUE98uhvS5tdIlxRsmz1W7/Qaqo=', '9CWPUTvXqQ4=', 'User'),
+  ('Mike', 'mmorel@TE.com', 'webmaster', 'aSepEtqUZVo4EXu71Kswa6LSJgU=', 'ugcDbPAWItU=', 'Admin');
 
 COMMIT TRANSACTION;
 
@@ -116,7 +117,7 @@ BEGIN TRANSACTION;
 INSERT INTO stocks
 	(stock_symbol, name_of_company, current_share_price, percent_daily_change)
 VALUES
-	('TETRN', 'Default Transaction', 1, 0);
+	('SYSTEMTRANS', 'Default Transaction', 1, 0);
 
 COMMIT TRANSACTION;
 
@@ -125,9 +126,9 @@ BEGIN TRANSACTION;
 INSERT INTO transactions
 	(user_id, game_id, stock_symbol, number_of_shares, transaction_share_price, is_buy)
 VALUES
-	(1, 1653,'TETRN', 1, 100000.00, 0),
-	(1, 1654,'TETRN', 1, 100000.00, 0),
-	(1, 1655,'TETRN', 1, 100000.00, 0),
-	(1, 1656,'TETRN', 1, 100000.00, 0);
+	(1, 1653,'SYSTEMTRANS', 1, 100000.00, 0),
+	(1, 1654,'SYSTEMTRANS', 1, 100000.00, 0),
+	(1, 1655,'SYSTEMTRANS', 1, 100000.00, 0),
+	(1, 1656,'SYSTEMTRANS', 1, 100000.00, 0);
 
 COMMIT TRANSACTION;

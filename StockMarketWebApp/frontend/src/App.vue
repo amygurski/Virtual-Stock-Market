@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <nav-bar></nav-bar>
-    <router-view v-bind:user="this.user"/>
+    <router-view v-bind:user="this.user" v-bind:token="this.token"/>
     <footer-custom></footer-custom>
   </div>
 </template>
@@ -18,7 +18,8 @@ export default {
   },
   data() {
     return {
-      user: null
+      user: null,
+      token: null
     };
   },
   methods: {
@@ -30,10 +31,12 @@ export default {
   },
   created() {
     this.user = auth.getUser();
+    this.token = auth.getToken();
   },
   watch: {
     $route: function() {
       this.user = auth.getUser();
+      this.token = auth.getToken();
     }
   }
 };

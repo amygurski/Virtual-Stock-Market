@@ -1,7 +1,7 @@
 <template>
-<div id="login-container">
-  <div id="login" class="text-center">
-    <form class="form-signin" @submit.prevent="login">
+  <div id="login-container">
+    <div id="login" class="text-center">
+      <form class="form-signin" @submit.prevent="login">
         <h1 class="h3 mb-3 font-weight-normal">Please Sign In</h1>
         <div
           class="alert alert-danger"
@@ -44,9 +44,9 @@
         <div class="text-center mt-4 form-group">
           <router-link :to="{ name: 'register' }">Need an account?</router-link>
         </div>
-    </form>
+      </form>
+    </div>
   </div>
-</div>
 </template>
 
 <script>
@@ -87,7 +87,11 @@ export default {
               token = token.replace(/"/g, "");
             }
             auth.saveToken(token);
-            this.$router.push("/");
+            if (this.$route.query.from) {
+              this.$router.replace(this.$route.query.from);
+            } else {
+              this.$router.push("/");
+            }
           }
         })
         .catch(err => console.error(err));
@@ -97,24 +101,26 @@ export default {
 </script>
 
 <style>
-
 #login {
   width: 25%;
   padding: 25px;
   margin: auto;
   border-radius: 25px;
-  border: 2px solid rgba(0,0,0,0.05);
+  border: 2px solid rgba(0, 0, 0, 0.05);
   background-color: #343a40;
   color: white;
 }
 
 #login-container {
-  background: linear-gradient(rgba(255,255,255,.25), rgba(255,255,255,.25)), url(/Images/register-login-background.jpg); /*no-repeat center center fixed; */
+  background: linear-gradient(
+      rgba(255, 255, 255, 0.25),
+      rgba(255, 255, 255, 0.25)
+    ),
+    url(/Images/register-login-background.jpg); /*no-repeat center center fixed; */
   background-size: cover;
   padding-top: 5%;
   position: fixed;
   width: 100%;
   height: 100%;
 }
-
 </style>

@@ -10,6 +10,7 @@ import MyGames from '@/views/MyGames.vue'
 import CreateGame from '@/views/CreateGame.vue'
 import GameDetail from '@/views/GameDetail.vue'
 import MyGameDetail from '@/views/MyGameDetail.vue'
+import AdminControlPanel from '@/views/AdminControlPanel.vue'
 
 
 // import { RuleTester } from 'eslint'
@@ -66,7 +67,7 @@ const router = new Router({
       name: "join-game",
       component: JoinGame,
       meta: {
-        requiresAuth: false
+        requiresAuth: true
       }
     },
     {
@@ -82,7 +83,7 @@ const router = new Router({
       name: "create-game",
       component: CreateGame,
       meta: {
-        requiresAuth: false
+        requiresAuth: true
       }
     },
     {
@@ -100,6 +101,15 @@ const router = new Router({
       meta: {
         requiresAuth: false
       }
+    },
+    {
+      path: "/admin",
+      name: "admin",
+      component: AdminControlPanel,
+      meta: {
+        requiresAuth: true,
+        isAdmin: true
+      }
     }
   ]
 })
@@ -108,10 +118,14 @@ router.beforeEach((to, from, next) => {
   // Determine if the route requires Authentication
   const requiresAuth = to.matched.some(x => x.meta.requiresAuth);
   const user = auth.getUser();
+  const isAdmin = to.matched.some(x => x.meta.isAdmin);
 
   // If it does and they are not logged in, send the user to "/login"
-  if (requiresAuth && !user) {
-    next("/login");
+  if ((requiresAuth && !user) || (isAdmin && user.rol !== 'Admin')) {
+    const loginpath = window.location.pathname;
+    auth.logout();
+    //next("/login");
+    next( { name: 'login', query: { from: loginpath } } ) ;
   } else {
     // Else let them go to their next destination
     next();

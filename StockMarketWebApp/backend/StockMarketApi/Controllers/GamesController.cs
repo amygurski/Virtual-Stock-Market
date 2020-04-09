@@ -15,6 +15,7 @@ namespace StockMarketApi.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
+    
     public class GamesController : ControllerBase
     {
         private IGameDAO gameDao;
@@ -31,6 +32,7 @@ namespace StockMarketApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("currentgames")]
+        [Authorize]
         public IActionResult AllActiveGames()
         {
             // TODO: Refactor with SQL Join Statement
@@ -49,6 +51,7 @@ namespace StockMarketApi.Controllers
 
                 formattedGames.Add(gameFormatted);
             }
+
 
             return new JsonResult(formattedGames);
         }

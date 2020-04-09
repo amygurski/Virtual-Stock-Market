@@ -34,6 +34,8 @@ namespace StockMarketApi
             Configuration = configuration;
         }
 
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -77,6 +79,16 @@ namespace StockMarketApi
                             Encoding.UTF8.GetBytes(Configuration["JwtSecret"]))
                     };
                 });
+
+            // Required to hit the API from external sources, maybe?
+            //services.AddCors(options =>
+            //{
+            //    options.AddPolicy(MyAllowSpecificOrigins,
+            //        builder =>
+            //        {
+            //            builder.AllowAnyOrigin();
+            //        });
+            //});
 
             // Dependency Injection configuration
             services.AddSingleton<ITokenGenerator>(tk => new JwtGenerator(Configuration["JwtSecret"]));

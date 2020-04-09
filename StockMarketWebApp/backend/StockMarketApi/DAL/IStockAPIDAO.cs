@@ -13,5 +13,6 @@ namespace StockMarketApi.DAL
         /// </summary>
         /// <returns></returns>
         List<Stock> GetCurrentStockPrices();
+        void SaveStock(Stock stock);
     }
 }

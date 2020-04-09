@@ -3,6 +3,7 @@ using StockMarketApi.Models;
 using StockMarketApi.Models.Games;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -16,6 +17,14 @@ namespace StockMarketApi.DAL
     /// </summary>
     public class StockAPIDAO : IStockAPIDAO
     {
+        //To add stocks to our database
+        private readonly string connectionString;
+
+        public StockAPIDAO(string connectionString)
+        {
+            this.connectionString = connectionString;
+        }
+
         /// <summary>
         /// Get current stock prices from public API
         /// </summary>
@@ -46,7 +55,7 @@ namespace StockMarketApi.DAL
 
                 foreach (Result result in publicStockInfo.results)
                 {
-                    //Add the stock details required for game to our stock model
+                    //Add the stock details required for stock to our stock model
                     Stock stock = new Stock()
                     {
                         Symbol = result.symbol,
@@ -57,14 +66,51 @@ namespace StockMarketApi.DAL
                         Close = result.close,
                         PercentChange = result.percentChange,
                         ServerTimestamp = result.serverTimestamp,
-                        Volume = result.volume
+                        Volume = result.volume,
+                        LastPrice = result.lastPrice
                     };
 
                     //Add the stock to the list of stocks to be returned
                     allStocks.Add(stock);
+
+                    //Save stocks to database
+                    SaveStock(stock);
                 }
             }
+
             return allStocks;
+        }
+
+        //TODO: Move to separate DAO for SQL
+        /// <summary>
+        /// Saves a stock to the database
+        /// </summary>
+        /// <param name="stock"></param>
+        public void SaveStock(Stock stock)
+        {
+            int stockId;
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand(@"INSERT INTO stocks (stock_symbol, name_of_company, current_share_price, percent_daily_change) 
+                                                      VALUES (@stock_symbol, @name_of_company, @current_share_price, @percent_daily_change); SELECT @@identity As NewId", conn);
+                    cmd.Parameters.AddWithValue("@stock_symbol", stock.Symbol);
+                    cmd.Parameters.AddWithValue("@name_of_company", stock.Name);
+                    cmd.Parameters.AddWithValue("@current_share_price", stock.LastPrice);
+                    cmd.Parameters.AddWithValue("@percent_daily_change", stock.PercentChange);
+
+                    stockId = Convert.ToInt32(cmd.ExecuteScalar());
+
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+
+            //return stockId;
         }
     }
 }

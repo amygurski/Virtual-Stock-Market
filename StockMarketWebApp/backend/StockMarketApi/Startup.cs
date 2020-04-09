@@ -96,7 +96,7 @@ namespace StockMarketApi
             services.AddTransient<IUserDAO>(m => new UserSqlDAO(Configuration.GetConnectionString("Default")));
             services.AddTransient<IGameDAO>(m => new GameSqlDAO(Configuration.GetConnectionString("Default")));
             services.AddTransient<ITransactionDAO>(m => new TransactionSqlDAO(Configuration.GetConnectionString("Default")));
-
+            services.AddTransient<IStockAPIDAO>(m => new StockAPIDAO(Configuration.GetConnectionString("Default")));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 

@@ -16,5 +16,6 @@ namespace StockMarketApi.Models
         public float Low { get; set; }
         public object Close { get; set; }
         public int Volume { get; set; }
+        public float LastPrice { get; set; }
     }
 }

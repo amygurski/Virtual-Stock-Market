@@ -76,6 +76,7 @@ CREATE TABLE stock_history
 	daily_low varchar(10) null,
 	close_price varchar(10) null,
 	volume varchar(20) null,
+	open_interest varchar(20) null,
 
 	constraint fk_stock_history_stocks foreign key (symbol) references stocks (stock_symbol)
 );

@@ -66,6 +66,24 @@ COMMIT TRANSACTION;
 
 BEGIN TRANSACTION;
 
+CREATE TABLE stock_history
+(
+	symbol varchar(12) Primary Key,
+	time_stamp datetime null,
+	trading_day date not null,
+	open_price varchar(10) null,
+	daily_high varchar(10) null,
+	daily_low varchar(10) null,
+	close_price varchar(10) null,
+	volume varchar(20) null,
+
+	constraint fk_stock_history_stocks foreign key (symbol) references stocks (stock_symbol)
+);
+
+COMMIT TRANSACTION;
+
+BEGIN TRANSACTION;
+
 CREATE TABLE transactions
 (
 

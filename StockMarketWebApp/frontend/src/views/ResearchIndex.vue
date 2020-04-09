@@ -27,6 +27,11 @@
               <td>Test</td>
               <td>Test</td>
               <td>Test</td>
+              <td>
+                <router-link :to="{ name: 'stock-details' }">
+                  <button type="button" class="btn btn-primary btn-rounded btn-sm m-0">View Details</button>
+                </router-link>
+              </td>
             </tr>
           </tbody>
         </table>

@@ -12,6 +12,7 @@ import JoinGameDetail from '@/views/JoinGameDetail.vue'
 import GameDetail from '@/views/GameDetail.vue'
 import AdminControlPanel from '@/views/AdminControlPanel.vue'
 import ResearchIndex from '@/views/ResearchIndex.vue'
+import StockDetails from '@/views/StockDetails.vue'
 
 
 // import { RuleTester } from 'eslint'
@@ -112,6 +113,14 @@ const router = new Router({
       meta: {
         requiresAuth: true,
         isAdmin: true
+      }
+    },
+    {
+      path: "/research/details",
+      name: "stock-details",
+      component: StockDetails,
+      meta: {
+        requiresAuth: false
       }
     }
   ]

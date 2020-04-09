@@ -57,8 +57,8 @@ CREATE TABLE stocks
 
 	stock_symbol varchar(12) primary key not null,
 	name_of_company varchar(50) not null,
-	current_share_price money not null,
-	percent_daily_change varchar(5) not null,
+	current_share_price float not null,
+	percent_daily_change float not null,
 
 );
 
@@ -71,11 +71,11 @@ CREATE TABLE stock_history
 	symbol varchar(12) Primary Key,
 	time_stamp datetime null,
 	trading_day date not null,
-	open_price varchar(10) null,
-	daily_high varchar(10) null,
-	daily_low varchar(10) null,
-	close_price varchar(10) null,
-	volume varchar(20) null,
+	open_price float null,
+	daily_high float null,
+	daily_low float null,
+	close_price float null,
+	volume int null,
 	open_interest varchar(20) null,
 
 	constraint fk_stock_history_stocks foreign key (symbol) references stocks (stock_symbol)

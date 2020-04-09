@@ -50,7 +50,7 @@ namespace StockMarketApi.DAL
             {
                 //Get the stock details from the API and store in the StockAPIModel
                 WebClient client = new WebClient();
-                string response = client.DownloadString("https://marketdata.websol.barchart.com/getQuote.json?apikey=af26319a23a6675378f3c947e95706a7&symbols=" + stockSet);
+                string response = client.DownloadString("https://marketdata.websol.barchart.com/getQuote.json?apikey=31a2d95da1cf2b19dbabb725d7ff9136&symbols=" + stockSet);
                 StockAPIModel publicStockInfo = JsonConvert.DeserializeObject<StockAPIModel>(response);
 
                 foreach (Result result in publicStockInfo.results)
@@ -88,21 +88,19 @@ namespace StockMarketApi.DAL
         /// <param name="stock"></param>
         public void SaveStock(Stock stock)
         {
-            int stockId;
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
                     SqlCommand cmd = new SqlCommand(@"INSERT INTO stocks (stock_symbol, name_of_company, current_share_price, percent_daily_change) 
-                                                      VALUES (@stock_symbol, @name_of_company, @current_share_price, @percent_daily_change); SELECT @@identity As NewId", conn);
+                                                      VALUES (@stock_symbol, @name_of_company, @current_share_price, @percent_daily_change);", conn);
                     cmd.Parameters.AddWithValue("@stock_symbol", stock.Symbol);
                     cmd.Parameters.AddWithValue("@name_of_company", stock.Name);
                     cmd.Parameters.AddWithValue("@current_share_price", stock.LastPrice);
                     cmd.Parameters.AddWithValue("@percent_daily_change", stock.PercentChange);
 
-                    stockId = Convert.ToInt32(cmd.ExecuteScalar());
-
+                    cmd.ExecuteScalar();
                 }
             }
             catch (SqlException ex)

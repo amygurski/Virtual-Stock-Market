@@ -93,6 +93,7 @@ CREATE TABLE transactions
 	stock_symbol varchar(12) not null,
 	number_of_shares int not null,
 	transaction_share_price money not null,
+	transaction_date datetime not null,
 	is_buy bit not null,
 
 	constraint fk_transactions_users foreign key (user_id) references users (id),
@@ -143,11 +144,11 @@ COMMIT TRANSACTION;
 BEGIN TRANSACTION;
 
 INSERT INTO transactions
-	(user_id, game_id, stock_symbol, number_of_shares, transaction_share_price, is_buy)
+	(user_id, game_id, stock_symbol, number_of_shares, transaction_share_price, transaction_date, is_buy)
 VALUES
-	(1, 1653,'SYSTEMTRANS', 1, 100000.00, 0),
-	(1, 1654,'SYSTEMTRANS', 1, 100000.00, 0),
-	(1, 1655,'SYSTEMTRANS', 1, 100000.00, 0),
-	(1, 1656,'SYSTEMTRANS', 1, 100000.00, 0);
+	(1, 1653,'SYSTEMTRANS', 1, 100000.00, '2020-01-01', 0),
+	(1, 1654,'SYSTEMTRANS', 1, 100000.00, '2020-01-01', 0),
+	(1, 1655,'SYSTEMTRANS', 1, 100000.00, '2020-01-01', 0),
+	(1, 1656,'SYSTEMTRANS', 1, 100000.00, '2020-01-01', 0);
 
 COMMIT TRANSACTION;

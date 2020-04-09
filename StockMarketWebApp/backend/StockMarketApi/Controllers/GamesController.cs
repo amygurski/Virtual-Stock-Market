@@ -16,7 +16,6 @@ namespace StockMarketApi.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-
     public class GamesController : ControllerBase
     {
         private IGameDAO gameDao;

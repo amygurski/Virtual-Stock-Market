@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace StockMarketApi.Models.Games
+namespace StockMarketApi.Models.ApiInputModels.Games
 {
     public class CreateGameAPIModel
     {

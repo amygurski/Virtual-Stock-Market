@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace StockMarketApi.Models
+namespace StockMarketApi.Models.ApiReturnModels
 {
-    public class StockTransaction
-    {
+	public class StockTransaction
+	{
 		public int Id { get; set; }
 		public int UserId { get; set; }
 		public int GameId { get; set; }

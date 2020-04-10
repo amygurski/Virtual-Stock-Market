@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
-using StockMarketApi.Models;
+using StockMarketApi.Models.DatabaseModels;
 
 namespace StockMarketApi.DAL
 {

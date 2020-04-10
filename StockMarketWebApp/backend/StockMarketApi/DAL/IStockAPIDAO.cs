@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using StockMarketApi.Models;
+using StockMarketApi.Models.DatabaseModels;
 
 namespace StockMarketApi.DAL
 {

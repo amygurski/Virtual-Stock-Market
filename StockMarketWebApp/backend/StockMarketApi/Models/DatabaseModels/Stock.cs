@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace StockMarketApi.Models
+namespace StockMarketApi.Models.DatabaseModels
 {
     public class Stock
     {

@@ -3,21 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace StockMarketApi.Models.Games
+namespace StockMarketApi.Models.DatabaseModels
 {
-    public class GameAPIModel
+    /// <summary>
+    /// Represents an instance of a game played by users
+    /// </summary>
+    public class Game
     {
+
         /// <summary>
         /// The ID assigned to each game instance
         /// </summary>
-        public int GameId { get; set; }
-
-        public int CreatorId { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
-        /// The username of the user that created the game instance
+        /// The ID of the user that created the game instance
         /// </summary>
-        public string CreatorUsername { get; set; }
+        public int CreatorId { get; set; }
 
         /// <summary>
         /// The name that the game creator assigned to their instance of the game
@@ -25,18 +27,19 @@ namespace StockMarketApi.Models.Games
         public string Name { get; set; }
 
         /// <summary>
-        /// Short description of the game
+        /// A short description of the game to entice new players
         /// </summary>
         public string Description { get; set; }
 
         /// <summary>
         /// The date that the game was started
         /// </summary>
-        public string DateCreated { get; set; }
+        public DateTime DateCreated { get; set; }
 
         /// <summary>
         /// The date that the game is set to end on
         /// </summary>
-        public string EndDate { get; set; }
+        public DateTime EndDate { get; set; }
+
     }
 }

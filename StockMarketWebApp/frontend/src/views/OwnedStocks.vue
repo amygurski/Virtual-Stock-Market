@@ -23,7 +23,7 @@
               <td>{{stock.avgPurchasedPrice}}</td>
               <td>
                 <router-link
-                  :to="{ name: 'sell-stock', params: {gameId: gameId } }"
+                  :to="{ name: 'sell-stock', params: {stockSymbol: stock.stockSymbol, gameId: gameId} }"
                 >
                   <button type="button" class="btn btn-primary btn-rounded btn-sm m-0">Sell Stock</button>
                 </router-link>

@@ -18,20 +18,19 @@
             id="numShares"
             class="form-control"
             placeholder="Number of Shares to Buy"
-            v-model="stock.numShares"
+            v-model="stock.numberOfShares"
             required
             autofocus
           />
         </div>
         <p>Do you still want to buy this stock?</p>
         <div class="form-group">
-          <router-link :to="{name: 'game-detail', params: {id: gameId}}">
-            <button
-              class="btn btn-lg btn-primary btn-block"
-              style="color: green"
-              type="submit"
-            >Purchase</button>
-          </router-link>
+          <button
+            class="btn btn-lg btn-primary btn-block"
+            type="submit"
+            v-on:click.prevent="buildStockObject()"
+          >Purchase</button>
+
           <router-link :to="{name: 'available-stocks', params: {id: gameId}}">
             <button class="btn btn-lg btn-primary btn-block" style="color: red" type="cancel">Cancel</button>
           </router-link>
@@ -63,7 +62,7 @@ export default {
   },
   methods: {
     purchaseStock() {
-      fetch(`${process.env.VUE_APP_REMOTE_API}/stocks/purchase`, {
+      fetch(`${process.env.VUE_APP_REMOTE_API}/transactions/newtransaction`, {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -74,11 +73,8 @@ export default {
       })
         .then(response => {
           if (response.ok) {
-            response.json().then(json => {
-              // gameResult = json
-              this.$router.push({
-                path: `/stock/available/${json.id}`
-              });
+            this.$router.push({
+              path: `/game-detail/${this.gameId}`
             });
           } else {
             this.purchaseStockErrors = true;
@@ -110,6 +106,13 @@ export default {
           }
         })
         .then(err => console.error(err));
+    },
+    buildStockObject() {
+      this.stock.userId = this.user.sub;
+      this.stock.gameId = this.gameId;
+      this.stock.stockSymbol = this.stockSymbol;
+      this.stock.isPurchase = 1;
+      this.purchaseStock();
     }
   }
 };

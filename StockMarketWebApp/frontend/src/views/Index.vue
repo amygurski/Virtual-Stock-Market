@@ -40,6 +40,7 @@ export default {
   /* background-color: darkgray; */
   background: linear-gradient(rgba(255,255,255,.25), rgba(255,255,255,.25)), url(/images/WallStreet.jfif) no-repeat center center fixed;
   position: fixed;
+  overflow: auto;
   height: 100%;
   width: 100%;
   background-size: cover;

@@ -53,6 +53,7 @@ export default {
   background-image: url(/images/register-login-background.jpg);
   padding-top: 5%;
   position: fixed;
+  overflow: auto;
   height: 100%;
   width: 100%;
 }

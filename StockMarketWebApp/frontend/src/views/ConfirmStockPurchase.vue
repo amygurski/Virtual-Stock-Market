@@ -99,6 +99,7 @@ label {
   background-size: cover;
   padding-top: 5%;
   position: fixed;
+  overflow: auto;
   width: 100%;
   height: 100%;
 }

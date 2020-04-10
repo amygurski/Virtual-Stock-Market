@@ -50,7 +50,7 @@ namespace StockMarketApi.DAL
             {
                 //Get the stock details from the API and store in the StockAPIModel
                 WebClient client = new WebClient();
-                string response = client.DownloadString("https://marketdata.websol.barchart.com/getQuote.json?apikey=31a2d95da1cf2b19dbabb725d7ff9136&symbols=" + stockSet);
+                string response = client.DownloadString("https://marketdata.websol.barchart.com/getQuote.json?apikey=af26319a23a6675378f3c947e95706a7&symbols=" + stockSet);
                 StockAPIModel publicStockInfo = JsonConvert.DeserializeObject<StockAPIModel>(response);
 
                 foreach (Result result in publicStockInfo.results)

@@ -170,8 +170,8 @@ export default {
   background-size: cover;
   padding-top: 5%;
   position: fixed;
-  top: 0;
-  left: 0;
+  /* top: 0;
+  left: 0; */
   overflow: auto;
   width: 100%;
   height: 100%;

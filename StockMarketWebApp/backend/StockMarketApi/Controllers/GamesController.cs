@@ -36,10 +36,10 @@ namespace StockMarketApi.Controllers
         public IActionResult AllActiveGames()
         {
             // TODO: Refactor with SQL Join Statement
-            IList<Game> unformattedCurrentGames = gameDao.GetAllActiveGames();
+            IList<GameModel> unformattedCurrentGames = gameDao.GetAllActiveGames();
             IList<GameAPIModel> formattedGames = new List<GameAPIModel>();
 
-            foreach (Game game in unformattedCurrentGames)
+            foreach (GameModel game in unformattedCurrentGames)
             {
                 GameAPIModel gameFormatted = FormatGameToApiModel(game);
                 formattedGames.Add(gameFormatted);
@@ -54,10 +54,10 @@ namespace StockMarketApi.Controllers
         {
             // TODO: Refactor with SQL Join Statement
             int userId = userDao.GetUser(userName).Id;
-            IList<Game> unformattedCurrentGames = gameDao.GetMyGames(userId);
+            IList<GameModel> unformattedCurrentGames = gameDao.GetMyGames(userId);
             IList<GameAPIModel> formattedGames = new List<GameAPIModel>();
 
-            foreach (Game game in unformattedCurrentGames)
+            foreach (GameModel game in unformattedCurrentGames)
             {
                 GameAPIModel gameFormatted = FormatGameToApiModel(game);
                 formattedGames.Add(gameFormatted);
@@ -70,7 +70,7 @@ namespace StockMarketApi.Controllers
         [ProducesResponseType(404)]
         public IActionResult GetGame(int id)
         {
-            Game gameUnformatted = gameDao.GetGameById(id);
+            GameModel gameUnformatted = gameDao.GetGameById(id);
             GameAPIModel gameFormatted = new GameAPIModel();
 
             if (gameUnformatted == null)
@@ -92,8 +92,10 @@ namespace StockMarketApi.Controllers
         {
             if (ModelState.IsValid)
             {
-                Game newGame = new Game();
-                newGame.CreatorId = userDao.GetUser(apiModel.UserName).Id;
+                GameModel newGame = new GameModel();
+                int userId = userDao.GetUser(apiModel.UserName).Id;
+
+                newGame.CreatorId = userId;
                 newGame.Name = apiModel.Name;
                 newGame.Description = apiModel.Description;
                 newGame.DateCreated = DateTime.Parse(apiModel.StartDate);
@@ -101,6 +103,19 @@ namespace StockMarketApi.Controllers
                 
                 int newId = gameDao.CreateGame(newGame);
                 newGame = gameDao.GetGameById(newId);
+
+                TransactionModel transactionModel = new TransactionModel()
+                {
+                    UserId = userId,
+                    GameId = newId,
+                    StockSymbol = "SYSTRN",
+                    NumberOfShares = 1,
+                    TransactionSharePrice = 100000,
+                    IsPurchase = false,
+                    NetTransactionChange = 100000           
+                };
+
+                transactionDao.AddNewTransaction(transactionModel);
 
                 // TODO 09a (Controller): Return CreatedAtRoute to return 201
                 return CreatedAtRoute("GetGame", new { id = newId }, newGame);
@@ -111,7 +126,7 @@ namespace StockMarketApi.Controllers
             }
         }
 
-        private GameAPIModel FormatGameToApiModel(Game game)
+        private GameAPIModel FormatGameToApiModel(GameModel game)
         {
             GameAPIModel gameFormatted = new GameAPIModel();
             gameFormatted.GameId = game.Id;

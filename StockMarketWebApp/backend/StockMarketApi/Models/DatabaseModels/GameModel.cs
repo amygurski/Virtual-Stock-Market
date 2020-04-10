@@ -8,7 +8,7 @@ namespace StockMarketApi.Models.DatabaseModels
     /// <summary>
     /// Represents an instance of a game played by users
     /// </summary>
-    public class Game
+    public class GameModel
     {
 
         /// <summary>

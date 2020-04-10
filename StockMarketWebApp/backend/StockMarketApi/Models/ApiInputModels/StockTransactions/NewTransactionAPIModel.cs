@@ -11,7 +11,6 @@ namespace StockMarketApi.Models.ApiInputModels.StockTransactions
         public int GameId { get; set; }
         public string StockSymbol { get; set; }
         public int NumberOfShares { get; set; }
-        public int SharePrice { get; set; }
         public bool IsPurchase { get; set; }
     }
 }

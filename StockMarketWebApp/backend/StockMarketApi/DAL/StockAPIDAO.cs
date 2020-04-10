@@ -29,10 +29,10 @@ namespace StockMarketApi.DAL
         /// Get current stock prices from public API
         /// </summary>
         /// <returns></returns>
-        public List<Stock> GetCurrentStockPrices()
+        public List<StockModel> GetCurrentStockPrices()
         {
             //Stocks to return
-            List<Stock> allStocks = new List<Stock>();
+            List<StockModel> allStocks = new List<StockModel>();
 
             //List of all the stocks we can play with
             List<string> stocksToGet = new List<string>
@@ -56,7 +56,7 @@ namespace StockMarketApi.DAL
                 foreach (Result result in publicStockInfo.results)
                 {
                     //Add the stock details required for stock to our stock model
-                    Stock stock = new Stock()
+                    StockModel stock = new StockModel()
                     {
                         Symbol = result.symbol,
                         High = result.high,
@@ -86,7 +86,7 @@ namespace StockMarketApi.DAL
         /// Saves a stock to the database
         /// </summary>
         /// <param name="stock"></param>
-        public void SaveStock(Stock stock)
+        public void SaveStock(StockModel stock)
         {
             try
             {

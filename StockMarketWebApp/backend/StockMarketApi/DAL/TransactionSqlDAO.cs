@@ -1,4 +1,5 @@
 ﻿using StockMarketApi.Models.ApiReturnModels;
+using StockMarketApi.Models.DatabaseModels;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -16,9 +17,36 @@ namespace StockMarketApi.DAL
             this.connectionString = connectionString;
         }
 
-        public int AddNewTransaction()
+        public int AddNewTransaction(TransactionModel model)
         {
-            throw new NotImplementedException();
+            int transactionId;
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand(@"INSERT INTO transactions (user_id, game_id, stock_symbol, number_of_shares, transaction_share_price, transaction_date, is_buy, net_transaction_change)  
+                                                      VALUES (@userId, @gameId, @stockSymbol, @numberOfShares, @transactionSharePrice, @transactionDate, @isBuy, @netTransactionChange); SELECT @@identity As NewId", conn);
+                    cmd.Parameters.AddWithValue("@userId", model.UserId);
+                    cmd.Parameters.AddWithValue("@gameId", model.GameId);
+                    cmd.Parameters.AddWithValue("@stockSymbol", model.StockSymbol);
+                    cmd.Parameters.AddWithValue("@numberOfShares", model.NumberOfShares);
+                    cmd.Parameters.AddWithValue("@transactionSharePrice", model.TransactionSharePrice);
+                    cmd.Parameters.AddWithValue("@transactionDate", DateTime.Now);
+                    cmd.Parameters.AddWithValue("@isBuy", model.IsPurchase);
+                    cmd.Parameters.AddWithValue("@netTransactionChange", model.NetTransactionChange);
+
+
+                    transactionId = Convert.ToInt32(cmd.ExecuteScalar());
+
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+
+            return transactionId;
         }
 
         public IList<StockTransaction> GetTransactionsByGameAndUser(int gameId, int userId)

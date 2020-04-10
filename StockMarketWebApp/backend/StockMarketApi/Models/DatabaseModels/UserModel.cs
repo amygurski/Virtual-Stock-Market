@@ -9,7 +9,7 @@ namespace StockMarketApi.Models.DatabaseModels
     /// <summary>
     /// Represents a user in the system.
     /// </summary>
-    public class User
+    public class UserModel
     {
         /// <summary>
         /// The user's id.

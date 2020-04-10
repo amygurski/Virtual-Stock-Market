@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace StockMarketApi.Models.DatabaseModels
 {
-    public class Stock
+    public class StockModel
     {
         public string Symbol { get; set; }
         public string Name { get; set; }

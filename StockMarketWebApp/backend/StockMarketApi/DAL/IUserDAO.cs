@@ -16,31 +16,31 @@ namespace StockMarketApi.DAL
         /// </summary>
         /// <param name="username"></param>
         /// <returns></returns>
-        User GetUser(string username);
+        UserModel GetUser(string username);
 
         /// <summary>
         /// Retrieves a user from the system by id.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        User GetUser(int id);
+        UserModel GetUser(int id);
 
         /// <summary>
         /// Creates a new user.
         /// </summary>
         /// <param name="user"></param>
-        void CreateUser(User user);
+        void CreateUser(UserModel user);
 
         /// <summary>
         /// Updates a user.
         /// </summary>
         /// <param name="user"></param>
-        void UpdateUser(User user);
+        void UpdateUser(UserModel user);
 
         /// <summary>
         /// Deletes a user from the system.
         /// </summary>
         /// <param name="user"></param>
-        void DeleteUser(User user);
+        void DeleteUser(UserModel user);
     }
 }

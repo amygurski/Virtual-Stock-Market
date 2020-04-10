@@ -12,7 +12,7 @@ namespace StockMarketApi.DAL
         /// List of stocks from public API
         /// </summary>
         /// <returns></returns>
-        List<Stock> GetCurrentStockPrices();
-        void SaveStock(Stock stock);
+        List<StockModel> GetCurrentStockPrices();
+        void SaveStock(StockModel stock);
     }
 }

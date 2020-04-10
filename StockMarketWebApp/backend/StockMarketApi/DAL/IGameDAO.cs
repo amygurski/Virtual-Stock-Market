@@ -15,16 +15,16 @@ namespace StockMarketApi.DAL
         /// Returns all games
         /// </summary>
         /// <returns></returns>
-        IList<Game> GetAllActiveGames();
+        IList<GameModel> GetAllActiveGames();
 
         /// <summary>
         /// Adds a new game to the database
         /// </summary>
         /// <returns>an integer id representing the game primary key id</returns>
-        int CreateGame(Game game);
+        int CreateGame(GameModel game);
 
-        Game GetGameById(int id);
+        GameModel GetGameById(int id);
 
-        IList<Game> GetMyGames(int userId);
+        IList<GameModel> GetMyGames(int userId);
     }
 }

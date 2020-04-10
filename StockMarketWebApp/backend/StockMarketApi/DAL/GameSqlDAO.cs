@@ -19,9 +19,9 @@ namespace StockMarketApi.DAL
             this.connectionString = connectionString;
         }
 
-        public IList<Game> GetAllActiveGames()
+        public IList<GameModel> GetAllActiveGames()
         {
-            List<Game> result = new List<Game>();
+            List<GameModel> result = new List<GameModel>();
 
             try
             {
@@ -47,9 +47,9 @@ namespace StockMarketApi.DAL
             return result;
         }
 
-        public Game GetGameById(int id)
+        public GameModel GetGameById(int id)
         {
-            Game result = new Game();
+            GameModel result = new GameModel();
 
             try
             {
@@ -75,7 +75,7 @@ namespace StockMarketApi.DAL
             return result;
         }
 
-        public int CreateGame(Game game)
+        public int CreateGame(GameModel game)
         {
             int gameId;
             try
@@ -103,9 +103,9 @@ namespace StockMarketApi.DAL
             return gameId;
         }
 
-        public IList<Game> GetMyGames(int userId)
+        public IList<GameModel> GetMyGames(int userId)
         {
-            List<Game> result = new List<Game>();
+            List<GameModel> result = new List<GameModel>();
 
             try
             {
@@ -131,9 +131,9 @@ namespace StockMarketApi.DAL
             return result;
         }
 
-        private Game MapRowToGame(SqlDataReader reader)
+        private GameModel MapRowToGame(SqlDataReader reader)
         {
-            return new Game()
+            return new GameModel()
             {
 
                 Id = Convert.ToInt32(reader["id"]),

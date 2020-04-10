@@ -8,9 +8,9 @@
             <tr>
               <th scope="col">Symbol</th>
               <th scope="col">Name</th>
+              <th scope="col">Number of Shares</th>
               <th scope="col">Current Share Price</th>
-              <th scope="col">Percent Daily Change</th>
-              <th scope="col">Stock Purchase Price</th>
+              <th scope="col">Average Purchase Price</th>
               <th scope="col"></th>
             </tr>
           </thead>

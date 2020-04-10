@@ -7,27 +7,44 @@
           <tbody>
             <tr>
               <td>
-                <label for="symbol" class="form-controll">Symbol</label>
+                <label for="symbol" class="form-controll">Symbol: Value in curly-braces</label>
               </td>
             </tr>
             <tr>
               <td>
-                <label for="name" class="form-controll">Name</label>
+                <label for="name" class="form-controll">Name: Value in curly-braces</label>
               </td>
             </tr>
             <tr>
               <td>
-                <label for="stock-purchase-price" class="form-controll">Stock Purchase Price</label>
+                <label
+                  for="stock-purchase-price"
+                  class="form-controll"
+                >Stock Purchase Price: Value in curly-braces</label>
               </td>
             </tr>
             <tr>
               <td>
-                <label for="current-share-price" class="form-controll">Current Share Price</label>
+                <label
+                  for="current-share-price"
+                  class="form-controll"
+                >Current Share Price: Value in curly-braces</label>
               </td>
             </tr>
             <tr>
               <td>
-                <label for="currently-owned-shares" class="form-controll">Currently Owned Shares</label>
+                <label
+                  for="currently-owned-shares"
+                  class="form-controll"
+                >Currently Owned Shares: Value in curly-braces</label>
+                <input
+                  type="number"
+                  max='10'
+                  id="currently-owned-shares"
+                  class="form-control"
+                  placeholder="0"
+                  autofocus
+                />
               </td>
             </tr>
           </tbody>
@@ -60,7 +77,6 @@ export default {
   color: white;
   margin: auto;
   padding: 25px;
-  width: 60%;
+  width: 25%;
 }
-
 </style>

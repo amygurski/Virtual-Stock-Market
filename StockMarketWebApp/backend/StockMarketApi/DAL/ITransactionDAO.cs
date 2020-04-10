@@ -9,5 +9,7 @@ namespace StockMarketApi.DAL
     public interface ITransactionDAO
     {
         IList<StockTransaction> GetTransactionsByGameAndUser(int gameId, int userId);
+
+        int AddNewTransaction();
     }
 }

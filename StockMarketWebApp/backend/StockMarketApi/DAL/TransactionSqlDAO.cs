@@ -16,6 +16,11 @@ namespace StockMarketApi.DAL
             this.connectionString = connectionString;
         }
 
+        public int AddNewTransaction()
+        {
+            throw new NotImplementedException();
+        }
+
         public IList<StockTransaction> GetTransactionsByGameAndUser(int gameId, int userId)
         {
             List<StockTransaction> result = new List<StockTransaction>();

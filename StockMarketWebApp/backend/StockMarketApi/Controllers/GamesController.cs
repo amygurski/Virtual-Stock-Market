@@ -19,11 +19,13 @@ namespace StockMarketApi.Controllers
     {
         private IGameDAO gameDao;
         private IUserDAO userDao;
+        private readonly ITransactionDAO transactionDao;
 
-        public GamesController(IGameDAO gameDao, IUserDAO userDao)
+        public GamesController(IGameDAO gameDao, IUserDAO userDao, ITransactionDAO transactionDao)
         {
             this.gameDao = gameDao;
             this.userDao = userDao;
+            this.transactionDao = transactionDao;
         }
 
         /// <summary>

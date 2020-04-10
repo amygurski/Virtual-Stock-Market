@@ -12,6 +12,19 @@
 <div> Stock Name: {{stock.name}}</div>
 <div>Stock Price: {{stock.lastPrice}}</div>
 <div> Daily Percent Change: {{stock.percentChange}}</div>
+
+ <div class="form-group">
+          <label for="numShares">Name</label>
+          <input
+            type="text"
+            id="numShares"
+            class="form-control"
+            placeholder="Number of Shares to Buy"
+            v-model="game.name"
+            required
+            autofocus
+          />
+        </div>
 <p>Do you still want to buy this stock?</p>
         <div class="form-group">
           <button class="btn btn-lg btn-primary btn-block" type="submit">Purchase</button>

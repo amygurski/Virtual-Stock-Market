@@ -83,7 +83,7 @@ export default {
   mounted() {
     this.token = this.$attrs.token;
     this.user = this.$attrs.user;
-    this.gameId = this.$route.params.id;
+    this.gameId = this.$route.params.gameId;
     this.stockSymbol = this.$route.params.stockSymbol;
     this.getStockData();
   },

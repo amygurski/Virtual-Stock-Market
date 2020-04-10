@@ -167,7 +167,6 @@ export default {
 }
 #table-container {
   margin-top: 5%;
-  margin-bottom: 10%;
 }
 #gamedetail-container {
   background: linear-gradient(
@@ -177,6 +176,7 @@ export default {
     url(/Images/Join-Game-Background.png);
   background-size: cover;
   padding-top: 5%;
+  padding-bottom: 10%;
   position: fixed;
   overflow: auto;
   width: 100%;

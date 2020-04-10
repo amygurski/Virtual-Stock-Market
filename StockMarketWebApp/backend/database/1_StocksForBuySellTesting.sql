@@ -1,3 +1,6 @@
+USE StockMarketDB
+GO
+
 --150 stocks to use for testing (these are the daily ones for buy/sell)
 BEGIN TRANSACTION;
 INSERT [dbo].[stocks] ([stock_symbol], [name_of_company], [current_share_price], [percent_daily_change]) VALUES (N'AAL', N'American Airlines Gp', 12.510000228881836, 10.409999847412109)
@@ -298,4 +301,35 @@ INSERT [dbo].[stocks] ([stock_symbol], [name_of_company], [current_share_price],
 GO
 INSERT [dbo].[stocks] ([stock_symbol], [name_of_company], [current_share_price], [percent_daily_change]) VALUES (N'ZM', N'Zoom Video Communications Cl A', 124.51000213623047, 5.690000057220459)
 GO
+COMMIT TRANSACTION;
+
+
+-- Add System Transaction "Stock" to stocks table used for player starting balance and end of game cashout transactions
+BEGIN TRANSACTION;
+
+INSERT INTO stocks
+	(stock_symbol, name_of_company, current_share_price, percent_daily_change)
+VALUES
+	('SYSTRN', 'System Transaction', 1, 0);
+
+COMMIT TRANSACTION;
+
+
+-- Seed database with some transactions for testing
+BEGIN TRANSACTION;
+
+INSERT INTO transactions
+	(user_id, game_id, stock_symbol, number_of_shares, transaction_share_price, transaction_date, is_buy, net_transaction_change)
+VALUES
+	(1, 1653,'SYSTRN', 1, 100000.00, '2020-01-01', 0, 100000.00),
+	(1, 1654,'SYSTRN', 1, 100000.00, '2020-01-01', 0, 100000.00),
+	(1, 1655,'SYSTRN', 1, 100000.00, '2020-01-01', 0, 100000.00),
+	(1, 1656,'SYSTRN', 1, 100000.00, '2020-01-01', 0, 100000.00),
+	(1, 1653,'AAPL', 100, 250.778, '2020-03-15', 1, -25077.8),
+	(1, 1653,'BAC', 50, 27.115, '2020-03-22', 1, -1355.75),
+	(1, 1653,'CVX', 72, 81.22114, '2020-03-29', 1, -5847.92208),
+	(1, 1653,'GS', 133, 192.8876, '2020-04-01', 1, -25654.0508),
+	(1, 1653,'AAPL', 100, 267.989990234375, '2020-04-03', 0, 26798.9990234375),
+	(1, 1653,'CVX', 72, 77.2143, '2020-04-06', 0, 5559.4296);
+
 COMMIT TRANSACTION;

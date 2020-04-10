@@ -25,7 +25,13 @@ namespace StockMarketApi.DAL
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand("SELECT * FROM transactions WHERE  user_id = @userId AND game_id = @gameId", conn);
+                    string Sql =
+@"SELECT t.*, s.name_of_company 
+FROM transactions t
+JOIN stocks s ON t.stock_symbol = s.stock_symbol
+WHERE  t.user_id = @userId AND t.game_id = @gameId";
+
+                    SqlCommand cmd = new SqlCommand(Sql, conn);
                     cmd.Parameters.AddWithValue("@userId", userId);
                     cmd.Parameters.AddWithValue("@gameId", gameId);
 
@@ -49,13 +55,16 @@ namespace StockMarketApi.DAL
         {
             return new StockTransaction()
             {
+                Id = Convert.ToInt32(reader["id"]),
                 UserId = Convert.ToInt32(reader["user_id"]),
                 GameId = Convert.ToInt32(reader["game_id"]),
                 StockSymbol = Convert.ToString(reader["stock_symbol"]),
+                CompanyName = Convert.ToString(reader["name_of_company"]),
                 NumberOfShares = Convert.ToInt32(reader["number_of_shares"]),
                 TransactionPrice = Convert.ToDecimal(reader["transaction_share_price"]),
                 TransactionDate = Convert.ToDateTime(reader["transaction_date"]),
-                IsPurchase = Convert.ToBoolean(reader["is_buy"])
+                IsPurchase = Convert.ToBoolean(reader["is_buy"]),
+                NetValue = Convert.ToDecimal(reader["net_transaction_change"])
             };
         }
     }

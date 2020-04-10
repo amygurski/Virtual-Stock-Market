@@ -35,19 +35,23 @@
           <tr>
             <th scope="col">Date</th>
             <th scope="col">Stock Symbol</th>
+            <th scope="col">Company Name</th>
             <th scope="col"># of Shares</th>
             <th scope="col">Share Price</th>
             <th scope="col">Buy/Sell</th>
+            <th scope="col">Net Value</th>
           </tr>
         </thead>
         <tbody>
           <tr v-bind:key="transaction.userId" v-for="transaction in transactions">
             <td>{{ formatDate(transaction.transactionDate) }}</td>
             <td>{{transaction.stockSymbol}}</td>
+            <td>{{transaction.companyName}}</td>
             <td>{{transaction.numberOfShares}}</td>
-            <td>{{transaction.transactionPrice}}</td>
+            <td>${{transaction.transactionPrice.toFixed(2)}}</td>
             <td v-if="transaction.isPurchase" style="color: green">Buy</td>
             <td v-else style="color: red">Sell</td>
+            <td>${{transaction.netValue.toFixed(2)}}</td>
           </tr>
         </tbody>
       </table>
@@ -134,7 +138,7 @@ export default {
       let balance = 0;
       if (this.transactions.length > 0) {
         this.transactions.forEach(element => {
-          balance += parseInt(element.numberOfShares * element.transactionPrice);
+          balance += parseInt(element.netValue);
         });
       }
       return balance;
@@ -155,6 +159,7 @@ export default {
 }
 #table-container {
   margin-top: 5%;
+  margin-bottom: 10%;
 }
 #gamedetail-container {
   background: linear-gradient(

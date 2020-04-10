@@ -1,3 +1,6 @@
+USE StockMarketDB
+GO
+
 --6 month historical data to 4/9/2020
 INSERT INTO stock_history(stock_symbol,trading_day,open_price,daily_high,daily_low,close_price,volume) VALUES ('AAPL','2019-10-09',225.8145,226.5704,224.4319,225.8145,19131830);
 INSERT INTO stock_history(stock_symbol,trading_day,open_price,daily_high,daily_low,close_price,volume) VALUES ('AAPL','2019-10-10',226.7097,229.2063,226.0831,228.8581,29118798);

@@ -54,7 +54,7 @@ BEGIN TRANSACTION;
 
 CREATE TABLE stocks
 (
-	stock_symbol varchar(12) primary key not null,
+	stock_symbol varchar(6) primary key not null,
 	name_of_company varchar(50) not null,
 	current_share_price float not null,
 	percent_daily_change float not null,
@@ -67,7 +67,7 @@ BEGIN TRANSACTION;
 CREATE TABLE stock_history
 (
 	id int NOT NULL PRIMARY KEY identity(1,1),
-	stock_symbol varchar(12) not null,
+	stock_symbol varchar(6) not null,
 	trading_day date not null,
 	open_price float null,
 	daily_high float null,
@@ -86,20 +86,19 @@ BEGIN TRANSACTION;
 
 CREATE TABLE transactions
 (
-
+	id int NOT NULL PRIMARY KEY identity(1,1),
 	user_id int not null,
 	game_id int not null,
-	stock_symbol varchar(12) not null,
+	stock_symbol varchar(6) not null,
 	number_of_shares int not null,
-	transaction_share_price money not null,
+	transaction_share_price float not null,
 	transaction_date datetime not null,
 	is_buy bit not null,
+	net_transaction_change float not null
 
 	constraint fk_transactions_users foreign key (user_id) references users (id),
 	constraint fk_transactions_games foreign key (game_id) references games (id),
-	constraint fk_transactions_stocks foreign key (stock_symbol) references stocks (stock_symbol),
-	constraint pk_transactions_user_id_game_id primary key (user_id, game_id)
-
+	constraint fk_transactions_stocks foreign key (stock_symbol) references stocks (stock_symbol)
 );
 
 COMMIT TRANSACTION;
@@ -130,24 +129,24 @@ VALUES
 
 COMMIT TRANSACTION;
 
-BEGIN TRANSACTION;
+--BEGIN TRANSACTION;
 
---default games for testing
-INSERT INTO stocks
-	(stock_symbol, name_of_company, current_share_price, percent_daily_change)
-VALUES
-	('SYSTEMTRANS', 'Default Transaction', 1, 0);
+----default games for testing
+--INSERT INTO stocks
+--	(stock_symbol, name_of_company, current_share_price, percent_daily_change)
+--VALUES
+--	('SYSTEMTRANS', 'Default Transaction', 1, 0);
 
-COMMIT TRANSACTION;
+--COMMIT TRANSACTION;
 
-BEGIN TRANSACTION;
+--BEGIN TRANSACTION;
 
-INSERT INTO transactions
-	(user_id, game_id, stock_symbol, number_of_shares, transaction_share_price, transaction_date, is_buy)
-VALUES
-	(1, 1653,'SYSTEMTRANS', 1, 100000.00, '2020-01-01', 0),
-	(1, 1654,'SYSTEMTRANS', 1, 100000.00, '2020-01-01', 0),
-	(1, 1655,'SYSTEMTRANS', 1, 100000.00, '2020-01-01', 0),
-	(1, 1656,'SYSTEMTRANS', 1, 100000.00, '2020-01-01', 0);
+--INSERT INTO transactions
+--	(user_id, game_id, stock_symbol, number_of_shares, transaction_share_price, transaction_date, is_buy)
+--VALUES
+--	(1, 1653,'SYSTEMTRANS', 1, 100000.00, '2020-01-01', 0),
+--	(1, 1654,'SYSTEMTRANS', 1, 100000.00, '2020-01-01', 0),
+--	(1, 1655,'SYSTEMTRANS', 1, 100000.00, '2020-01-01', 0),
+--	(1, 1656,'SYSTEMTRANS', 1, 100000.00, '2020-01-01', 0);
 
-COMMIT TRANSACTION;
+--COMMIT TRANSACTION;

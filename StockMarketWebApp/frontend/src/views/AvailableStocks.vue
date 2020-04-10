@@ -14,7 +14,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-bind:key="stock.symbol" v-for="stock in data">
+            <tr v-bind:key="stock.stockSymbol" v-for="stock in data">
               <td>{{stock.stockSymbol}}</td>
               <td>{{stock.companyName}}</td>
               <td>{{stock.currentPrice}}</td>

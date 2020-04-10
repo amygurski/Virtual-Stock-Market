@@ -8,26 +8,33 @@
           role="alert"
           v-if="purchaseStockErrors"
         >There were problems purchasing this stock.</div>
-<div>Stock Sym: {{stock.symbol}}</div>
-<div> Stock Name: {{stock.name}}</div>
-<div>Stock Price: {{stock.lastPrice}}</div>
-<div> Daily Percent Change: {{stock.percentChange}}</div>
+        <div>Stock Sym: {{stock.stockSymbol}}</div>
+        <div>Stock Price: {{stock.currentPrice}}</div>
 
- <div class="form-group">
-          <label for="numShares">Name</label>
+        <div class="form-group">
+          <label for="numShares">Number of Shares to Purchase</label>
           <input
             type="text"
             id="numShares"
             class="form-control"
             placeholder="Number of Shares to Buy"
-            v-model="game.name"
+            v-model="stock.numShares"
             required
             autofocus
           />
         </div>
-<p>Do you still want to buy this stock?</p>
+        <p>Do you still want to buy this stock?</p>
         <div class="form-group">
-          <button class="btn btn-lg btn-primary btn-block" type="submit">Purchase</button>
+          <router-link :to="{name: 'game-detail', params: {id: gameId}}">
+            <button
+              class="btn btn-lg btn-primary btn-block"
+              style="color: green"
+              type="submit"
+            >Purchase</button>
+          </router-link>
+          <router-link :to="{name: 'available-stocks', params: {id: gameId}}">
+            <button class="btn btn-lg btn-primary btn-block" style="color: red" type="cancel">Cancel</button>
+          </router-link>
         </div>
       </form>
     </div>
@@ -43,14 +50,16 @@ export default {
       token: String,
       stock: Object,
       gameId: Number,
-      stockSymbol: String
+      stockSymbol: String,
+      purchaseStockErrors: false
     };
   },
   mounted() {
     this.token = this.$attrs.token;
     this.user = this.$attrs.user;
     this.gameId = this.$route.params.gameId;
-    this.stockSymbol = this.$route.params.stockSymbol
+    this.stockSymbol = this.$route.params.stockSymbol;
+    this.getStockData();
   },
   methods: {
     purchaseStock() {
@@ -59,7 +68,7 @@ export default {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          "Authorization": "Bearer " + this.token
+          Authorization: "Bearer " + this.token
         },
         body: JSON.stringify(this.stock)
       })
@@ -72,15 +81,36 @@ export default {
               });
             });
           } else {
-            this.createGameErrors = true;
+            this.purchaseStockErrors = true;
           }
         })
 
         .then(err => console.error(err));
-    }
-  },
-  getStockData() {
+    },
 
+    getStockData() {
+      fetch(
+        `${process.env.VUE_APP_REMOTE_API}/stocks/detail/${this.stockSymbol}`,
+        {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + this.token
+          }
+        }
+      )
+        .then(response => {
+          if (response.ok) {
+            response.json().then(json => {
+              this.stock = json;
+            });
+          } else {
+            this.purchaseStockErrors = true;
+          }
+        })
+        .then(err => console.error(err));
+    }
   }
 };
 </script>

@@ -32,7 +32,7 @@
         <router-link :to="{name: 'available-stocks', params: {id: game.gameId}}">
           <button type="button" class="btn btn-primary btn-rounded buysell-button">Buy Stocks</button>
         </router-link>
-        <router-link :to="{name: 'see-owned-stocks', params: {id: game.gameId}}">
+        <router-link :to="{name: 'owned-stocks', params: {id: game.gameId}}">
           <button type="button" class="btn btn-primary btn-rounded buysell-button">Sell Stocks</button>
         </router-link>
       </div>

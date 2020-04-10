@@ -248,8 +248,6 @@ INSERT [dbo].[stocks] ([stock_symbol], [name_of_company], [current_share_price],
 GO
 INSERT [dbo].[stocks] ([stock_symbol], [name_of_company], [current_share_price], [percent_daily_change]) VALUES (N'SQ', N'Square', 59.209999084472656, 3.7999999523162842)
 GO
-INSERT [dbo].[stocks] ([stock_symbol], [name_of_company], [current_share_price], [percent_daily_change]) VALUES (N'SYSTEMTRANS', N'Default Transaction', 1, 0)
-GO
 INSERT [dbo].[stocks] ([stock_symbol], [name_of_company], [current_share_price], [percent_daily_change]) VALUES (N'T', N'AT&T Inc', 30.729999542236328, 2.809999942779541)
 GO
 INSERT [dbo].[stocks] ([stock_symbol], [name_of_company], [current_share_price], [percent_daily_change]) VALUES (N'TAL', N'Tal Education Group', 50.819999694824219, -2.380000114440918)

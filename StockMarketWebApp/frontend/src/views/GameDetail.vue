@@ -34,21 +34,20 @@
         <thead class="thead-dark">
           <tr>
             <th scope="col">Date</th>
-            <th scope="col">Co-Trader</th>
             <th scope="col">Stock Symbol</th>
             <th scope="col"># of Shares</th>
             <th scope="col">Share Price</th>
-            <th scope="col">Bought/Sold</th>
+            <th scope="col">Buy/Sell</th>
           </tr>
         </thead>
         <tbody>
           <tr v-bind:key="transaction.userId" v-for="transaction in transactions">
-            <td>{{transaction.transactiondate}}</td>
-            <td>{{transaction.userid}}</td>
+            <td>{{ formatDate(transaction.transactionDate) }}</td>
             <td>{{transaction.stockSymbol}}</td>
             <td>{{transaction.numberOfShares}}</td>
             <td>{{transaction.transactionPrice}}</td>
-            <td>{{transaction.isPurchase}}</td>
+            <td v-if="transaction.isPurchase" style="color: green">Buy</td>
+            <td v-else style="color: red">Sell</td>
           </tr>
         </tbody>
       </table>
@@ -123,14 +122,19 @@ export default {
         .catch(e => {
           console.log("Error", e);
         });
+    },
+    formatDate(dateString) {
+      let rawDate = new Date(Date.parse(dateString));
+      let options = { year: 'numeric', month: '2-digit', day:'2-digit'}
+      return new Intl.DateTimeFormat('en-US', options).format(rawDate);
     }
   },
   computed: {
     currentBalance: function() {
       let balance = 0;
       if (this.transactions.length > 0) {
-        this.transactions.array.forEach(element => {
-          balance += Int.parse(element);
+        this.transactions.forEach(element => {
+          balance += parseInt(element.numberOfShares * element.transactionPrice);
         });
       }
       return balance;
@@ -161,6 +165,9 @@ export default {
   background-size: cover;
   padding-top: 5%;
   position: fixed;
+  top: 0;
+  left: 0;
+  overflow: auto;
   width: 100%;
   height: 100%;
 }

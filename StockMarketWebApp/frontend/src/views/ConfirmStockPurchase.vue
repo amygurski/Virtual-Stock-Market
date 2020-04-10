@@ -18,7 +18,7 @@
             id="numShares"
             class="form-control"
             placeholder="Number of Shares to Buy"
-            v-model="stock.numberOfShares"
+            v-model="postApiModel.numberOfShares"
             required
             autofocus
           />
@@ -50,6 +50,13 @@ export default {
       stock: Object,
       gameId: Number,
       stockSymbol: String,
+      postApiModel: {
+        userName: String,
+        gameId: Number,
+        stockSymbol: String,
+        numberOfShares: 0,
+        isPurchase: Boolean
+      },
       purchaseStockErrors: false
     };
   },
@@ -69,7 +76,7 @@ export default {
           "Content-Type": "application/json",
           Authorization: "Bearer " + this.token
         },
-        body: JSON.stringify(this.stock)
+        body: JSON.stringify(this.postApiModel)
       })
         .then(response => {
           if (response.ok) {
@@ -108,10 +115,11 @@ export default {
         .then(err => console.error(err));
     },
     buildStockObject() {
-      this.stock.userId = this.user.sub;
-      this.stock.gameId = this.gameId;
-      this.stock.stockSymbol = this.stockSymbol;
-      this.stock.isPurchase = 1;
+      this.postApiModel.userName = this.user.sub;
+      this.postApiModel.gameId = this.gameId;
+      this.postApiModel.stockSymbol = this.stockSymbol;
+      this.postApiModel.numberOfShares = this.postApiModel.numberOfShares * 1;
+      this.postApiModel.isPurchase = 1;
       this.purchaseStock();
     }
   }

@@ -7,7 +7,7 @@ namespace StockMarketApi.Models.ApiInputModels.StockTransactions
 {
     public class NewTransactionAPIModel
     {
-        public int UserId { get; set; }
+        public string UserName { get; set; }
         public int GameId { get; set; }
         public string StockSymbol { get; set; }
         public int NumberOfShares { get; set; }

@@ -45,7 +45,7 @@ namespace StockMarketApi.Controllers
             if (ModelState.IsValid)
             {
                 TransactionModel newTransaction = new TransactionModel();
-                newTransaction.UserId = apiModel.UserId;
+                newTransaction.UserId = userDao.GetUser(apiModel.UserName).Id;
                 newTransaction.GameId = apiModel.GameId;
                 newTransaction.StockSymbol = apiModel.StockSymbol;
                 newTransaction.NumberOfShares = apiModel.NumberOfShares;

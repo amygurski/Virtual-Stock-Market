@@ -20,13 +20,21 @@
         <div class="card text-white bg-dark detail-card">
           <div class="card-header">Leaderboard</div>
           <div class="card-body">
-            <h5 class="card-title">Winner:</h5>
             <ul class="card-text">
-              <li>second place</li>
-              <li>third place</li>
+              <li><h5 class="card-title">Winner:</h5></li>
+              <li>Second place:</li>
+              <li>Third place:</li>
             </ul>
           </div>
         </div>
+      </div>
+      <div class="buysell-container">
+        <router-link :to="{name: 'available-stocks', params: {id: game.gameId}}">
+          <button type="button" class="btn btn-primary btn-rounded buysell-button">Buy Stocks</button>
+        </router-link>
+        <router-link :to="{name: 'see-owned-stocks', params: {id: game.gameId}}">
+          <button type="button" class="btn btn-primary btn-rounded buysell-button">Sell Stocks</button>
+        </router-link>
       </div>
     </div>
     <div class="gamedetail" id="table-container">
@@ -129,8 +137,8 @@ export default {
     },
     formatDate(dateString) {
       let rawDate = new Date(Date.parse(dateString));
-      let options = { year: 'numeric', month: '2-digit', day:'2-digit'}
-      return new Intl.DateTimeFormat('en-US', options).format(rawDate);
+      let options = { year: "numeric", month: "2-digit", day: "2-digit" };
+      return new Intl.DateTimeFormat("en-US", options).format(rawDate);
     }
   },
   computed: {
@@ -155,7 +163,7 @@ export default {
   flex-wrap: nowrap;
 }
 .detail-card {
-  width: 30%;
+  width: 25%;
 }
 #table-container {
   margin-top: 5%;
@@ -170,12 +178,11 @@ export default {
   background-size: cover;
   padding-top: 5%;
   position: fixed;
-  /* top: 0;
-  left: 0; */
   overflow: auto;
   width: 100%;
   height: 100%;
 }
+
 
 .gamedetail {
   width: 75%;
@@ -186,4 +193,19 @@ export default {
   background-color: #343a40;
   color: white;
 }
+
+.buysell-button {
+  width: 30%;
+  margin: 25px 25px 0px 25px;
+}
+
+ul {
+  padding: 0px;
+}
+
+li {
+  list-style-type: none;
+
+}
+
 </style>

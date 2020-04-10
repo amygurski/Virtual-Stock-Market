@@ -36,7 +36,7 @@
 
 <script>
 export default {
-  name: "see-owned-stocks"
+  name: "owned-stocks"
 };
 </script>
 

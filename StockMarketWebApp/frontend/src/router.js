@@ -13,7 +13,7 @@ import GameDetail from '@/views/GameDetail.vue'
 import AdminControlPanel from '@/views/AdminControlPanel.vue'
 import ResearchIndex from '@/views/ResearchIndex.vue'
 import StockDetails from '@/views/StockDetails.vue'
-import SeeOwnedStocks from '@/views/SeeOwnedStocks'
+import OwnedStocks from '@/views/OwnedStocks'
 import SellStock from '@/views/SellStock'
 
 
@@ -129,8 +129,8 @@ const router = new Router({
     },
     {
       path: "/stocks/owned",
-      name: "see-owned-stocks",
-      component: SeeOwnedStocks,
+      name: "owned-stocks",
+      component: OwnedStocks,
       meta: {
         requiresAuth: false
       }

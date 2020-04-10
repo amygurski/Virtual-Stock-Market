@@ -14,13 +14,13 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-bind:key="stock.userId" v-for="stock in data">
-              <td>{{stock.symbol}}</td>
-              <td>{{stock.name}}</td>
-              <td>{{stock.lastPrice}}</td>
+            <tr v-bind:key="stock.symbol" v-for="stock in data">
+              <td>{{stock.stockSymbol}}</td>
+              <td>{{stock.companyName}}</td>
+              <td>{{stock.currentPrice}}</td>
               <td>{{stock.percentChange}}</td>
               <td>
-                <router-link :to="{ name: 'confirm-purchase' }">
+                <router-link :to="{ name: 'confirm-purchase', params: {stockSymbol: stock.stockSymbol, gameId: gameId} }">
                   <button type="button" class="btn btn-primary btn-rounded btn-sm m-0">Buy Stock</button>
                 </router-link>
               </td>
@@ -40,19 +40,20 @@ export default {
       return {
           stock: Object,
           data: Array,
-          user: Object
+          user: Object,
+          gameId: Number,
       };
   },
   mounted() {
     this.token = this.$attrs.token
     this.user = this.$attrs.user
+    this.gameId = this.$route.params.id
     this.getData();
   },
   methods: {
       getData() {
-      console.log("token: " + this.token)
       // vue-resource example
-      fetch(`${process.env.VUE_APP_REMOTE_API}/stock/currentprices`, {
+      fetch(`${process.env.VUE_APP_REMOTE_API}/stocks/currentprices`, {
         method: "GET",
         headers: {
           "Content-Type": 'application/json',

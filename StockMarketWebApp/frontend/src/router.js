@@ -15,6 +15,8 @@ import ResearchIndex from '@/views/ResearchIndex.vue'
 import StockDetails from '@/views/StockDetails.vue'
 import OwnedStocks from '@/views/OwnedStocks'
 import SellStock from '@/views/SellStock'
+import AvailableStocks from '@/views/AvailableStocks'
+import ConfirmStockPurchase from "@/views/ConfirmStockPurchase"
 
 
 // import { RuleTester } from 'eslint'
@@ -139,6 +141,22 @@ const router = new Router({
       path: "/stocks/owned/sell",
       name: "sell-stock",
       component: SellStock,
+      meta: {
+        requiresAuth: false
+      }
+    },
+    {
+      path: "/stocks/available",
+      name: "available-stocks",
+      component: AvailableStocks,
+      meta: {
+        requiresAuth: false
+      }
+    },
+    {
+      path: "/stocks/available/confirmpurchase",
+      name: "confirm-purchase",
+      component: ConfirmStockPurchase,
       meta: {
         requiresAuth: false
       }

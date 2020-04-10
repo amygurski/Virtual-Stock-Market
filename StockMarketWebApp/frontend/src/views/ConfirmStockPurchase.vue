@@ -8,11 +8,13 @@
           role="alert"
           v-if="purchaseStockErrors"
         >There were problems purchasing this stock.</div>
-<div>Stock: {{stock.symbol}}, {{stock.name}}</div>
-<div>{{stock.lastPrice}}, {{stock.percentChange}}</div>
+<div>Stock Sym: {{stock.symbol}}</div>
+<div> Stock Name: {{stock.name}}</div>
+<div>Stock Price: {{stock.lastPrice}}</div>
+<div> Daily Percent Change: {{stock.percentChange}}</div>
 <p>Do you still want to buy this stock?</p>
         <div class="form-group">
-          <button class="btn btn-lg btn-primary btn-block" type="submit">Purchase Stock</button>
+          <button class="btn btn-lg btn-primary btn-block" type="submit">Purchase</button>
         </div>
       </form>
     </div>
@@ -27,15 +29,18 @@ export default {
       user: Object,
       token: String,
       stock: Object,
+      gameId: Number,
+      stockSymbol: String
     };
   },
   mounted() {
     this.token = this.$attrs.token;
     this.user = this.$attrs.user;
-    this.getData();
+    this.gameId = this.$route.params.gameId;
+    this.stockSymbol = this.$route.params.stockSymbol
   },
   methods: {
-    creategame() {
+    purchaseStock() {
       fetch(`${process.env.VUE_APP_REMOTE_API}/stocks/purchase`, {
         method: "POST",
         headers: {
@@ -60,6 +65,9 @@ export default {
 
         .then(err => console.error(err));
     }
+  },
+  getStockData() {
+
   }
 };
 </script>

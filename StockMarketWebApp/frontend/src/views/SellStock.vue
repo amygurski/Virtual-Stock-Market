@@ -62,7 +62,9 @@
             </tr>
             <tr>
               <td>
+                <router-link :to="{ name: 'owned-stocks', params: {gameId: id } }">
                 <button type="button" class="btn btn-primary btn-rounded btn-sm m-0">Cancel</button>
+                </router-link>
               </td>
               <td><button type="button" class="btn btn-primary btn-rounded btn-sm m-0">Confirm</button>
               </td>

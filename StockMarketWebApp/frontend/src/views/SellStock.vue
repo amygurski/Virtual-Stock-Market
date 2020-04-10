@@ -7,36 +7,49 @@
           <tbody>
             <tr>
               <td>
-                <label for="symbol" class="form-controll">Symbol: Value in curly-braces</label>
+                Symbol: 
+              </td>
+              <td>
+                Value in curly-braces
               </td>
             </tr>
             <tr>
               <td>
-                <label for="name" class="form-controll">Name: Value in curly-braces</label>
+                Name: 
+              </td>
+              <td>
+                Value in curly-braces
               </td>
             </tr>
             <tr>
               <td>
-                <label
-                  for="stock-purchase-price"
-                  class="form-controll"
-                >Stock Purchase Price: Value in curly-braces</label>
+                Stock Purchase Price: 
+              </td>
+              <td>
+                Value in curly-braces
               </td>
             </tr>
             <tr>
               <td>
-                <label
-                  for="current-share-price"
-                  class="form-controll"
-                >Current Share Price: Value in curly-braces</label>
+                Current Share Price: 
+              </td>
+              <td>
+                Value in curly-braces
               </td>
             </tr>
             <tr>
               <td>
-                <label
-                  for="currently-owned-shares"
-                  class="form-controll"
-                >Currently Owned Shares: Value in curly-braces</label>
+                Currently Owned Shares:
+              </td>
+              <td>
+                Value in curly-braces
+              </td>
+            </tr>
+            <tr>
+              <td>
+                How many shares do you want to sell?
+              </td>
+              <td>
                 <input
                   type="number"
                   max='10'
@@ -45,6 +58,13 @@
                   placeholder="0"
                   autofocus
                 />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <button type="button" class="btn btn-primary btn-rounded btn-sm m-0">Cancel</button>
+              </td>
+              <td><button type="button" class="btn btn-primary btn-rounded btn-sm m-0">Confirm</button>
               </td>
             </tr>
           </tbody>

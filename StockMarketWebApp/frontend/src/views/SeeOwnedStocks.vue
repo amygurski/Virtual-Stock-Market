@@ -11,6 +11,7 @@
               <th scope="col">Current Share Price</th>
               <th scope="col">Percent Daily Change</th>
               <th scope="col">Stock Purchase Price</th>
+              <th scope="col"></th>
             </tr>
           </thead>
           <tbody>
@@ -35,7 +36,7 @@
 
 <script>
 export default {
-  Name: "see-owned-stocks"
+  name: "see-owned-stocks"
 };
 </script>
 

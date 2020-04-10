@@ -14,6 +14,7 @@ import AdminControlPanel from '@/views/AdminControlPanel.vue'
 import ResearchIndex from '@/views/ResearchIndex.vue'
 import StockDetails from '@/views/StockDetails.vue'
 import SeeOwnedStocks from '@/views/SeeOwnedStocks'
+import SellStock from '@/views/SellStock'
 
 
 // import { RuleTester } from 'eslint'
@@ -130,6 +131,14 @@ const router = new Router({
       path: "/stocks/owned",
       name: "see-owned-stocks",
       component: SeeOwnedStocks,
+      meta: {
+        requiresAuth: false
+      }
+    },
+    {
+      path: "/stocks/owned/sell",
+      name: "sell-stock",
+      component: SellStock,
       meta: {
         requiresAuth: false
       }

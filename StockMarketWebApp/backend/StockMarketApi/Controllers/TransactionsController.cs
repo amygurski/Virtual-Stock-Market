@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StockMarketApi.DAL;
-using StockMarketApi.Models;
-using StockMarketApi.Models.StockTransactions;
+using StockMarketApi.Models.ApiInputModels.StockTransactions;
+using StockMarketApi.Models.ApiReturnModels;
 
 namespace StockMarketApi.Controllers
 {
@@ -28,7 +28,7 @@ namespace StockMarketApi.Controllers
         }
 
         [HttpPost("GetByGameAndUser")]
-        public IActionResult AllTransactionsForUserAndGame([FromBody]TransactionAPIModel apiModel)
+        public IActionResult AllTransactionsForUserAndGame([FromBody]UserAndGameAPIModel apiModel)
         {
 
             IList<StockTransaction> transactions = transactDao.GetTransactionsByGameAndUser(apiModel.GameId, userDao.GetUser(apiModel.Username).Id);

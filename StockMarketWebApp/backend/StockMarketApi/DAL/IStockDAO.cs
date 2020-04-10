@@ -1,4 +1,4 @@
-﻿using StockMarketApi.Models;
+﻿using StockMarketApi.Models.ApiReturnModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +8,8 @@ namespace StockMarketApi.DAL
 {
     public interface IStockDAO
     {
-        IList<CurrentStock> GetCurrentStocks();
+        IList<CurrentStocksModel> GetCurrentStocks();
+
+        CurrentStocksModel GetStockBySymbol(string symbol);
     }
 }

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace StockMarketApi.Models.Account
+namespace StockMarketApi.Models.ApiInputModels.Account
 {
     /// <summary>
     /// Represents a registration request

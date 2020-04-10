@@ -1,4 +1,4 @@
-﻿using StockMarketApi.Models;
+﻿using StockMarketApi.Models.DatabaseModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;

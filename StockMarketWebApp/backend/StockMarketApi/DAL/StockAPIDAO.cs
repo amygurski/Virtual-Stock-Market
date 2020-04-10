@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
-using StockMarketApi.Models;
-using StockMarketApi.Models.Games;
+using StockMarketApi.Models.ApiInputModels.Games;
+using StockMarketApi.Models.DatabaseModels;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;

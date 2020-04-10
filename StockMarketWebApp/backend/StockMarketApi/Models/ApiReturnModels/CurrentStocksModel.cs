@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace StockMarketApi.Models
+﻿namespace StockMarketApi.Models.ApiReturnModels
 {
-    public class CurrentStock
+    public class CurrentStocksModel
     {
         public string StockSymbol { get; set; }
 

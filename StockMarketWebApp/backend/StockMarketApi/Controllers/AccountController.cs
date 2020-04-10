@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using StockMarketApi.DAL;
-using StockMarketApi.Models;
-using StockMarketApi.Models.Account;
+using StockMarketApi.Models.ApiInputModels.Account;
+using StockMarketApi.Models.DatabaseModels;
 using StockMarketApi.Providers.Security;
 
 namespace StockMarketApi.Controllers

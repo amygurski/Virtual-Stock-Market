@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StockMarketApi.DAL;
-using StockMarketApi.Models;
-using StockMarketApi.Models.Games;
+using StockMarketApi.Models.ApiInputModels.Games;
+using StockMarketApi.Models.ApiReturnModels;
+using StockMarketApi.Models.DatabaseModels;
 using System;
 using System.Collections.Generic;
 
@@ -38,14 +39,7 @@ namespace StockMarketApi.Controllers
 
             foreach (Game game in unformattedCurrentGames)
             {
-                GameAPIModel gameFormatted = new GameAPIModel();
-                gameFormatted.GameId = game.Id;
-                gameFormatted.DateCreated = game.DateCreated.ToString("d");
-                gameFormatted.EndDate = game.EndDate.ToString("g");
-                gameFormatted.Name = game.Name;
-                gameFormatted.Description = game.Description;
-                gameFormatted.CreatorUsername = userDao.GetUser(game.CreatorId).Username;
-
+                GameAPIModel gameFormatted = FormatGameToApiModel(game);
                 formattedGames.Add(gameFormatted);
             }
 

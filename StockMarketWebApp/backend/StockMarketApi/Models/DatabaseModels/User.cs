@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace StockMarketApi.Models
+namespace StockMarketApi.Models.DatabaseModels
 {
     /// <summary>
     /// Represents a user in the system.

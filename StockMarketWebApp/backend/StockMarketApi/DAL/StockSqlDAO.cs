@@ -1,4 +1,4 @@
-﻿using StockMarketApi.Models;
+﻿using StockMarketApi.Models.ApiReturnModels;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -16,9 +16,9 @@ namespace StockMarketApi.DAL
             this.connectionString = connectionString;
         }
 
-        public IList<CurrentStock> GetCurrentStocks()
+        public IList<CurrentStocksModel> GetCurrentStocks()
         {
-            List<CurrentStock> result = new List<CurrentStock>();
+            List<CurrentStocksModel> result = new List<CurrentStocksModel>();
 
             try
             {
@@ -43,9 +43,37 @@ namespace StockMarketApi.DAL
             return result;
         }
 
-        private CurrentStock MapRowToCurrentStock(SqlDataReader reader)
+        public CurrentStocksModel GetStockBySymbol(string symbol)
         {
-            return new CurrentStock()
+            CurrentStocksModel result = new CurrentStocksModel();
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("SELECT * FROM stocks WHERE stock_symbol = @symbol", conn);
+                    cmd.Parameters.AddWithValue("@symbol", symbol);
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        result = MapRowToCurrentStock(reader);
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+
+            return result;
+        }
+
+        private CurrentStocksModel MapRowToCurrentStock(SqlDataReader reader)
+        {
+            return new CurrentStocksModel()
             {
                 StockSymbol = Convert.ToString(reader["stock_symbol"]),
                 CompanyName = Convert.ToString(reader["name_of_company"]),

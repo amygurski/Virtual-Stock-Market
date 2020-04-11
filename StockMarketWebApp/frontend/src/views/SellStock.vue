@@ -36,6 +36,7 @@
                 <input
                   type="number"
                   max="10"
+                  min="0"
                   id="currently-owned-shares"
                   class="form-control"
                   placeholder="0"
@@ -146,6 +147,9 @@ export default {
 </script>
 
 <style scoped>
+h1 {
+  color:#67ddfb;
+}
 .sell-stocks-background {
   background-color: darkgray;
   background-image: url(/images/Rules-Page-Background.jpg);

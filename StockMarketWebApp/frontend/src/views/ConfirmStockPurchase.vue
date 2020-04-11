@@ -8,31 +8,51 @@
           role="alert"
           v-if="purchaseStockErrors"
         >There were problems purchasing this stock.</div>
-        <div>Stock Sym: {{stock.stockSymbol}}</div>
-        <div>Stock Price: {{stock.currentPrice}}</div>
+        <table class="table table-hover table-dark text-left">
+          <tbody>
+            <tr>
+              <td>Stock Symbol:</td>
+              <td>{{stock.stockSymbol}}</td>
+            </tr>
+            <tr>
+              <td>Stock Price:</td>
+              <td>{{stock.currentPrice}}</td>
+            </tr>
+            <tr>
+              <td>
+                <label for="numShares">How many shares do you want to purchase?</label>
+              </td>
+              <td>
+                <input
+                  type="number"
+                  min="0"
+                  id="numShares"
+                  class="form-control"
+                  placeholder="Number of Shares to Buy"
+                  v-model="postApiModel.numberOfShares"
+                  required
+                  autofocus
+                />
+              </td>
+            </tr>
 
-        <div class="form-group">
-          <label for="numShares">Number of Shares to Purchase</label>
-          <input
-            type="text"
-            id="numShares"
-            class="form-control"
-            placeholder="Number of Shares to Buy"
-            v-model="postApiModel.numberOfShares"
-            required
-            autofocus
-          />
-        </div>
-        <p>Do you still want to buy this stock?</p>
-        <div class="form-group">
+            <tr></tr>
+          </tbody>
+        </table>
+        <!-- <div class="row">Stock Sym: {{stock.stockSymbol}}</div>
+        <div class="row">Stock Price: {{stock.currentPrice}}</div>-->
+
+        <div class="form-group"></div>
+        <!-- <p>Do you still want to buy this stock?</p> -->
+        <div class="button-group">
           <button
-            class="btn btn-lg btn-primary btn-block"
+            class="btn btn-primary purchase-buttons"
             type="submit"
             v-on:click.prevent="buildStockObject()"
-          >Purchase</button>
+          >Purchase Stock</button>
 
           <router-link :to="{name: 'available-stocks', params: {id: gameId}}">
-            <button class="btn btn-lg btn-primary btn-block" style="color: red" type="cancel">Cancel</button>
+            <button class="btn btn-secondary purchase-buttons" type="cancel">Cancel</button>
           </router-link>
         </div>
       </form>
@@ -127,10 +147,9 @@ export default {
 </script>
 
 <style scoped>
-label {
-  float: left;
+h1 {
+  color:#67ddfb;
 }
-
 #creategame-container {
   background: linear-gradient(
       rgba(255, 255, 255, 0.25),
@@ -146,12 +165,16 @@ label {
 }
 
 #creategame {
-  width: 25%;
+  width: 35%;
   padding: 25px;
   margin: auto;
   border-radius: 25px;
   border: 2px solid rgba(0, 0, 0, 0.05);
   background-color: #343a40;
   color: white;
+}
+
+.purchase-buttons {
+  margin: 0px 15px 0px 15px;
 }
 </style>

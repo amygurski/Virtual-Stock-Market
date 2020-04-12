@@ -19,7 +19,7 @@ export default {
     flex-basis: auto;
     width: 100%;
     height: 90px;
-    background-color: #343a40;
+    background-color: #282a2e;
     position: absolute;
     bottom: 0;
 }

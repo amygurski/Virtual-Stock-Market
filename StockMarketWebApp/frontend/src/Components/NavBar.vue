@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="navbar-bg">
     <router-link :to="{path: '/'}" class="navbar-brand">
       <!-- Logo attribution: logo PNG Designed By haris99 from "https://pngtree.com/" Pngtree.com  -->
       <img src="/images/StockMarketLogo.png" id="img-logo-nav" />
@@ -44,6 +44,10 @@
       <li v-show="user && user.rol === 'Admin'" class="nav-item">
         <router-link :to="{name: 'admin'}" class="nav-link">Super Secret</router-link>
       </li>
+      <!-- TODO: Remove unnecessary links after chart tests -->
+      <li>
+        <router-link to="/chartjs">vue-chartjs</router-link>
+      </li>
     </ul>
     <ul v-if="user" class="navbar-nav ml-auto">
       <li class="nav-item">
@@ -85,7 +89,7 @@ export default {
     $route: function() {
       this.user = auth.getUser();
     }
-  },
+  }
 };
 </script>
 
@@ -98,7 +102,11 @@ export default {
     cursor: pointer;
 } */
 
-#logout-button :hover {
+#logout-button {
   cursor: pointer;
+}
+
+#navbar-bg {
+  background-color: #282a2e !important;
 }
 </style>

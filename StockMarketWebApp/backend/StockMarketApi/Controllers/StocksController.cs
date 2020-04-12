@@ -88,7 +88,12 @@ namespace StockMarketApi.Controllers
                         }
                     }
                     ownedStock.NumberOfShares = numShares;
-                    ownedStock.AvgPurchasedPrice = totalPrice / kvp.Value.Count;
+
+                    if (numShares != 0)
+                    {
+                        ownedStock.AvgPurchasedPrice = totalPrice / numShares;
+                    }
+                    
 
                     if (ownedStock.NumberOfShares > 0)
                     {

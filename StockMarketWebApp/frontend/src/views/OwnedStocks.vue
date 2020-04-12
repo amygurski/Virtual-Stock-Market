@@ -19,8 +19,8 @@
               <td>{{stock.stockSymbol}}</td>
               <td>{{stock.companyName}}</td>
               <td>{{stock.numberOfShares}}</td>
-              <td>{{stock.currentSharePrice}}</td>
-              <td>{{stock.avgPurchasedPrice}}</td>
+              <td>{{ formatCurrency(stock.currentSharePrice) }}</td>
+              <td>{{ formatCurrency(stock.avgPurchasedPrice) }}</td>
               <td>
                 <router-link
                   :to="{ name: 'sell-stock', params: {stockSymbol: stock.stockSymbol, gameId: gameId} }"
@@ -37,8 +37,11 @@
 </template>
 
 <script>
+import HelperMixins from "@/mixins/HelperMixins.js";
+
 export default {
   name: "owned-stocks",
+  mixins: [HelperMixins],
   data() {
     return {
       data: Array,

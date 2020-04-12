@@ -48,8 +48,6 @@ export default {
   /* padding: 200px 0px 25px 0px; */
 }
 
-
-
 #welcome{
   border: 2px solid black;
   border-radius: 25px;

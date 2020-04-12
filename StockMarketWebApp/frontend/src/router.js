@@ -17,6 +17,7 @@ import OwnedStocks from '@/views/OwnedStocks'
 import SellStock from '@/views/SellStock'
 import AvailableStocks from '@/views/AvailableStocks'
 import ConfirmStockPurchase from "@/views/ConfirmStockPurchase"
+import VueChartJS from '@/views/VueChartJS'
 
 
 // import { RuleTester } from 'eslint'
@@ -160,7 +161,13 @@ const router = new Router({
       meta: {
         requiresAuth: false
       }
-    }
+    },
+    // TODO: Remove unnecessary chart wrappers after testing
+    {
+      path: '/chartjs',
+      name: 'VueChartJS',
+      component: VueChartJS
+    },
   ]
 })
 

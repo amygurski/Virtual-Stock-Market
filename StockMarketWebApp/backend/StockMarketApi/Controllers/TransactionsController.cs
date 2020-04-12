@@ -70,5 +70,7 @@ namespace StockMarketApi.Controllers
                 return new BadRequestObjectResult(ModelState);
             }
         }
+
+        //[HttpPost("GetTransactionChartData")]
     }
 }

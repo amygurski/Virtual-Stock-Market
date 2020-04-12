@@ -38,5 +38,9 @@ namespace StockMarketApi.Models.ApiReturnModels
         /// The date that the game is set to end on
         /// </summary>
         public string EndDate { get; set; }
+
+        public DateTime NextDataUpdate { get; set; }
+
+        public IList<LeaderboardBalance> LeaderboardData{ get; set; }
     }
 }

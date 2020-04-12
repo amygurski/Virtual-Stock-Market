@@ -136,8 +136,44 @@ namespace StockMarketApi.Controllers
             gameFormatted.Description = game.Description;
             gameFormatted.CreatorUsername = userDao.GetUser(game.CreatorId).Username;
             gameFormatted.CreatorId = game.CreatorId;
+            gameFormatted.NextDataUpdate = DateTime.Now.AddMinutes(15);
+            gameFormatted.LeaderboardData = BuildLeaderBoardData(game.Id);
 
             return gameFormatted;
+        }
+
+        private IList<LeaderboardBalance> BuildLeaderBoardData(int gameId)
+        {
+            IList<StockTransaction> allTransactions = transactionDao.GetAllTransactionsByGame(gameId);
+
+            IDictionary<int, decimal> summedTransactions = new Dictionary<int, decimal>();
+
+            IList<LeaderboardBalance> result = new List<LeaderboardBalance>();
+
+            foreach (StockTransaction transaction in allTransactions)
+            {
+                if (!summedTransactions.ContainsKey(transaction.UserId))
+                {
+                    summedTransactions.Add(transaction.UserId, 0M);
+                    summedTransactions[transaction.UserId] += transaction.NetValue;
+                }
+                else
+                {
+                    summedTransactions[transaction.UserId] += transaction.NetValue;
+                }
+            }
+
+            foreach (KeyValuePair<int, decimal> kvp in summedTransactions)
+            {
+                LeaderboardBalance newBalance = new LeaderboardBalance()
+                {
+                    UserName = userDao.GetUser(kvp.Key).Username,
+                    CurrentBalance = kvp.Value
+                };
+                result.Add(newBalance);
+            }
+
+            return result;
         }
     }
 }

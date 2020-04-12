@@ -11,6 +11,8 @@ namespace StockMarketApi.DAL
     {
         IList<StockTransaction> GetTransactionsByGameAndUser(int gameId, int userId);
 
+        IList<StockTransaction> GetAllTransactionsByGame(int gameId);
+
         int AddNewTransaction(TransactionModel model);
     }
 }

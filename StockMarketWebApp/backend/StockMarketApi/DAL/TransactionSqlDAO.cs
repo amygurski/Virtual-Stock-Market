@@ -49,6 +49,41 @@ namespace StockMarketApi.DAL
             return transactionId;
         }
 
+        public IList<StockTransaction> GetAllTransactionsByGame(int gameId)
+        {
+            List<StockTransaction> result = new List<StockTransaction>();
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    string Sql =
+@"SELECT t.*, s.name_of_company 
+FROM transactions t
+JOIN stocks s ON t.stock_symbol = s.stock_symbol
+WHERE t.game_id = @gameId";
+
+                    SqlCommand cmd = new SqlCommand(Sql, conn);
+
+                    cmd.Parameters.AddWithValue("@gameId", gameId);
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        result.Add(MapRowToTransaction(reader));
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+
+            return result;
+        }
+
         public IList<StockTransaction> GetTransactionsByGameAndUser(int gameId, int userId)
         {
             List<StockTransaction> result = new List<StockTransaction>();

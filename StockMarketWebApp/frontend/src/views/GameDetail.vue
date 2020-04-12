@@ -11,7 +11,7 @@
           </div>
         </div>
         <div class="card text-white bg-dark detail-card">
-          <div class="card-header">Your Balance: {{currentBalance}}</div>
+          <div class="card-header">Your Balance: {{ formatCurrency(computedCurrentBalance) }}</div>
           <div class="card-body">
             <h5 class="card-title">The remainder of funds</h5>
             <p class="card-text">You're doing great!</p>
@@ -20,11 +20,12 @@
         <div class="card text-white bg-dark detail-card">
           <div class="card-header">Leaderboard</div>
           <div class="card-body">
-            <ul class="card-text">
-              <li><h5 class="card-title">Winner:</h5></li>
-              <li>Second place:</li>
-              <li>Third place:</li>
-            </ul>
+            <ol class="card-text">
+              <li
+                v-for="leaderboard in game.leaderboardData"
+                v-bind:key="leaderboard.userName"
+              >{{leaderboard.userName}}: {{formatCurrency(leaderboard.currentBalance)}}</li>
+            </ol>
           </div>
         </div>
       </div>
@@ -37,7 +38,13 @@
         </router-link>
       </div>
     </div>
-    <div class="gamedetail" id="table-container">
+    <div class="chart-container">
+      
+
+
+    </div>
+    <div class="gamedetail" id="transaction-table-container">
+      <h3 id="transaction-history-header" class="text-center">Transaction History</h3>
       <table class="table table-hover table-dark detail-table">
         <thead class="thead-dark">
           <tr>
@@ -51,15 +58,15 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-bind:key="transaction.userId" v-for="transaction in transactions">
-            <td>{{ formatDate(transaction.transactionDate) }}</td>
+          <tr v-bind:key="transaction.transactionDate" v-for="transaction in transactions">
+            <td>{{ formatDateOnly(transaction.transactionDate) }}</td>
             <td>{{transaction.stockSymbol}}</td>
             <td>{{transaction.companyName}}</td>
             <td>{{transaction.numberOfShares}}</td>
-            <td>${{transaction.transactionPrice.toFixed(2)}}</td>
+            <td>{{formatCurrency(transaction.transactionPrice)}}</td>
             <td v-if="transaction.isPurchase" style="color: green">Buy</td>
             <td v-else style="color: red">Sell</td>
-            <td>${{transaction.netValue.toFixed(2)}}</td>
+            <td>{{formatCurrency(transaction.netValue)}}</td>
           </tr>
         </tbody>
       </table>
@@ -68,19 +75,26 @@
 </template>
 
 <script>
+import HelperMixins from "@/mixins/HelperMixins.js";
+
 export default {
   name: "game-detail",
+  mixins: [HelperMixins],
   data() {
     return {
       game: Object,
       token: String,
       user: Object,
       id: Number,
+      currentBalance: Number,
       transactions: [],
       ApiModel: {
         username: "",
         gameid: ""
-      }
+      },
+      transactionLineLoaded: false,
+      transactionLineData: {},
+      transactionLineOptions: {}
     };
   },
   created() {
@@ -135,22 +149,48 @@ export default {
           console.log("Error", e);
         });
     },
-    formatDate(dateString) {
-      let rawDate = new Date(Date.parse(dateString));
-      let options = { year: "numeric", month: "2-digit", day: "2-digit" };
-      return new Intl.DateTimeFormat("en-US", options).format(rawDate);
+    buildTransactionLineData() {
+      console.log(this.buildTransactionLabels());
+    },
+    buildTransactionLabels() {
+      let rawDatesArr = [];
+      let formattedDatesArr = [];
+
+      this.transactions.forEach(transaction => {
+        const rawDate = new Date(transaction.transactionDate);
+        rawDatesArr.push(rawDate);
+      });
+
+      rawDatesArr.sort((a, b) => {
+        return a - b;
+      });
+
+      rawDatesArr.forEach(rawDate => {
+        formattedDatesArr.push(this.formatDateAndTime(rawDate));
+      });
+
+      return {
+        firstDate: rawDatesArr[0],
+        rawDates: rawDatesArr,
+        formattedDates: formattedDatesArr
+      }
     }
   },
   computed: {
-    currentBalance: function() {
+    computedCurrentBalance: function() {
       let balance = 0;
-      if (this.transactions.length > 0) {
-        this.transactions.forEach(element => {
-          balance += parseInt(element.netValue);
+      if (this.game.leaderboardData !== undefined) {
+        this.game.leaderboardData.forEach(ele => {
+          if (ele.userName === this.user.sub) {
+            balance = ele.currentBalance;
+          }
         });
       }
       return balance;
-    }
+    },
+    computedDateTest: function() {
+      return new Date(this.transactions[0].transactionDate);
+    },
   }
 };
 </script>
@@ -165,7 +205,7 @@ export default {
 .detail-card {
   width: 25%;
 }
-#table-container {
+#transaction-table-container {
   margin-top: 5%;
 }
 #gamedetail-container {
@@ -182,7 +222,6 @@ export default {
   width: 100%;
   height: 100%;
 }
-
 
 .gamedetail {
   width: 75%;
@@ -205,7 +244,9 @@ ul {
 
 li {
   list-style-type: none;
-
 }
 
+#transaction-history-header {
+  margin-bottom: 20px;
+}
 </style>

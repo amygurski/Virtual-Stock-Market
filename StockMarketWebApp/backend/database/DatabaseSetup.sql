@@ -43,6 +43,7 @@ CREATE TABLE games
 	date_created date not null,
 	end_date date not null,
 	game_desc varchar (300) null,
+	is_completed bit not null DEFAULT 0,
 
 	Constraint fk_games_users foreign key (creator_id) references users (id)
 
@@ -134,12 +135,13 @@ BEGIN TRANSACTION;
 
 --default games for testing
 INSERT INTO games
-	(creator_id, game_name, date_created, end_date)
+	(creator_id, game_name, date_created, end_date, is_completed)
 VALUES
-	(1, 'testGame1', '2020-04-07', '2020-04-08'),
-	(1, 'testGame2', '2020-03-09', '2020-04-09'),
-	(1, 'testGame3', '2020-04-07', '2020-04-07'),
-	(1, 'testGame4', '2020-03-10', '2020-04-15');
+	(1, 'testGame1', '2020-04-07', '2020-04-15', 0),
+	(1, 'testGame2', '2020-03-09', '2020-04-16', 0),
+	(1, 'testGame3', '2020-04-07', '2020-04-12', 0),
+	(1, 'testGame4', '2020-03-10', '2020-04-17', 0),
+	(1, 'testGame5', '2020-03-07', '2020-04-07', 0);
 
 COMMIT TRANSACTION;
 
@@ -151,7 +153,8 @@ VALUES
 	(1653, 1),
 	(1654, 1),
 	(1655, 1),
-	(1656, 1);
+	(1656, 1),
+	(1657, 1);
 
 COMMIT TRANSACTION;
 

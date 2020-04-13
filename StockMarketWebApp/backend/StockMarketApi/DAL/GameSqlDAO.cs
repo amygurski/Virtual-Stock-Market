@@ -47,6 +47,34 @@ namespace StockMarketApi.DAL
             return result;
         }
 
+        public IList<GameModel> GetAllExpiredGames()
+        {
+            List<GameModel> result = new List<GameModel>();
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("SELECT * FROM games WHERE end_date < @now AND is_completed = 0", conn);
+                    cmd.Parameters.AddWithValue("@now", DateTime.Now);
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        result.Add(MapRowToGame(reader));
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+
+            return result;
+        }
+
         public GameModel GetGameById(int id)
         {
             GameModel result = new GameModel();
@@ -172,7 +200,6 @@ namespace StockMarketApi.DAL
                 EndDate = Convert.ToDateTime(reader["end_date"])
             };
         }
-
     }
 }
 

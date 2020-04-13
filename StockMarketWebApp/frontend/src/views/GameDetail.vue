@@ -1,6 +1,20 @@
 <template>
   <div id="gamedetail-container">
-    <div class="gamedetail text-center">
+    <div class="card-background text-center" id="header">
+      <h1>Hi {{user.sub}}!</h1>
+      <h2>Your Game Details</h2>
+    </div>
+    <div class="row">
+      <div class="card-background text-center" id="game-actions">
+        <h1>Hi {{user.sub}}!</h1>
+        <h2>Your Game Details</h2>
+      </div>
+      <div class="card-background text-center" id="leaderboard">
+        <h1>Hi {{user.sub}}!</h1>
+        <h2>Your Game Details</h2>
+      </div>
+    </div>
+    <!-- <div class="gamedetail text-center">
       <h1>Hi {{user.sub}}!</h1>
       <div class="card-container">
         <div class="card text-white bg-dark detail-card">
@@ -36,14 +50,15 @@
         <router-link :to="{name: 'owned-stocks', params: {id: game.gameId}}">
           <button type="button" class="btn btn-primary btn-rounded buysell-button">Sell Stocks</button>
         </router-link>
+        <router-link :to="{name: 'owned-stocks', params: {id: game.gameId}}">
+          <button type="button" class="btn btn-primary btn-rounded buysell-button">Invite Players</button>
+        </router-link>
       </div>
-    </div>
-    <div class="chart-container">
-      
-
-
-    </div>
-    <div class="gamedetail" id="transaction-table-container">
+    </div>-->
+    <!-- <div class="card-background" id="chart-container">
+      <h3>Pretty pictures of our stocks</h3>
+    </div>-->
+    <div class="card-background" id="transaction-table-container">
       <h3 id="transaction-history-header" class="text-center">Transaction History</h3>
       <table class="table table-hover table-dark detail-table">
         <thead class="thead-dark">
@@ -173,7 +188,7 @@ export default {
         firstDate: rawDatesArr[0],
         rawDates: rawDatesArr,
         formattedDates: formattedDatesArr
-      }
+      };
     }
   },
   computed: {
@@ -190,13 +205,13 @@ export default {
     },
     computedDateTest: function() {
       return new Date(this.transactions[0].transactionDate);
-    },
+    }
   }
 };
 </script>
 
 <style scoped>
-.card-container {
+/* .card-container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -204,10 +219,36 @@ export default {
 }
 .detail-card {
   width: 25%;
+} */
+
+#header {
+  width: 75%;
+  padding: 0px;
+  margin: auto;
 }
+h1 {
+  color: #67ddfb;
+}
+h2 {
+  color: white;
+}
+.card-background {
+  padding: 25px;
+  margin: auto;
+  border-radius: 25px;
+  border: 2px solid rgba(0, 0, 0, 0.05);
+  background-color: #343a40;
+  color: white;
+}
+
 #transaction-table-container {
   margin-top: 5%;
 }
+
+#transaction-history-header {
+  margin-bottom: 20px;
+}
+
 #gamedetail-container {
   background: linear-gradient(
       rgba(255, 255, 255, 0.25),
@@ -244,9 +285,5 @@ ul {
 
 li {
   list-style-type: none;
-}
-
-#transaction-history-header {
-  margin-bottom: 20px;
 }
 </style>

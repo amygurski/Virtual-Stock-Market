@@ -16,6 +16,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using StockMarketApi.DAL;
+using StockMarketApi.HelperMethods;
 using StockMarketApi.Providers.Security;
 
 namespace StockMarketApi
@@ -98,6 +99,8 @@ namespace StockMarketApi
             services.AddTransient<ITransactionDAO>(m => new TransactionSqlDAO(Configuration.GetConnectionString("Default")));
             services.AddTransient<IStockAPIDAO>(m => new StockAPIDAO(Configuration.GetConnectionString("Default")));
             services.AddTransient<IStockDAO>(m => new StockSqlDAO(Configuration.GetConnectionString("Default")));
+
+            services.AddTransient<IOwnedStocksHelper, OwnedStocksHelper>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 

@@ -40,7 +40,7 @@
     </div>
     <div class="chart-container">
       
-
+      <button type="button" class="btn btn-primary btn-rounded buysell-button" @click="buildTransactionLineData">Build Data</button>
 
     </div>
     <div class="gamedetail" id="transaction-table-container">
@@ -92,7 +92,7 @@ export default {
         username: "",
         gameid: ""
       },
-      transactionLineLoaded: false,
+      transactionLineRawData: {},
       transactionLineData: {},
       transactionLineOptions: {}
     };
@@ -144,13 +144,18 @@ export default {
         })
         .then(jsonData => {
           this.transactions = jsonData;
+          this.buildTransactionLineData();
         })
         .catch(e => {
           console.log("Error", e);
         });
     },
     buildTransactionLineData() {
-      console.log(this.buildTransactionLabels());
+      
+      let groomedLabelData = this.buildTransactionLabels();
+      this.transactions.sort()
+      this.transactionLineRawData = groomedLabelData
+      this.transactionLineData.label = groomedLabelData.formattedDates;
     },
     buildTransactionLabels() {
       let rawDatesArr = [];
@@ -172,7 +177,7 @@ export default {
       return {
         firstDate: rawDatesArr[0],
         rawDates: rawDatesArr,
-        formattedDates: formattedDatesArr
+        formattedDates: formattedDatesArr,
       }
     }
   },

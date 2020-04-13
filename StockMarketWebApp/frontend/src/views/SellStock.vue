@@ -52,7 +52,7 @@
             class="btn btn-primary btn-rounded sell-buttons"
             v-on:click.prevent="buildApiModel()"
           >Confirm Sale</button>
-          <router-link :to="{ name: 'owned-stocks', params: {gameId: gameId } }">
+          <router-link :to="{ name: 'owned-stocks', params: {id: gameId } }">
             <button type="button" class="btn btn-secondary btn-rounded sell-buttons">Cancel</button>
           </router-link>
         </div>

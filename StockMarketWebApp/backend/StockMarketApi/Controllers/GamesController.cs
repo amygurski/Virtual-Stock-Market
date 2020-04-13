@@ -104,21 +104,60 @@ namespace StockMarketApi.Controllers
                 int newId = gameDao.CreateGame(newGame);
                 newGame = gameDao.GetGameById(newId);
 
+                gameDao.JoinGame(userId, newId);
+
+                AddInitialTransaction(userId, newId);
+
+                //TransactionModel transactionModel = new TransactionModel()
+                //{
+                //    UserId = userId,
+                //    GameId = newId,
+                //    StockSymbol = "SYSTRN",
+                //    NumberOfShares = 1,
+                //    TransactionSharePrice = 100000,
+                //    IsPurchase = false,
+                //    NetTransactionChange = 100000           
+                //};
+
+                //transactionDao.AddNewTransaction(transactionModel);
+
+                // TODO 09a (Controller): Return CreatedAtRoute to return 201
+                return CreatedAtRoute("GetGame", new { id = newId }, newGame);
+            }
+            else
+            {
+                return new BadRequestObjectResult(ModelState);
+            }
+        }
+
+        [HttpPost("joingame")]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
+        public IActionResult JoinExistingGame([FromBody]JoinGameApiModel apiModel)
+        {
+            if (ModelState.IsValid)
+            {
+                int userId = userDao.GetUser(apiModel.UserName).Id;
+
+                gameDao.JoinGame(userId, apiModel.GameId);
+
+                GameModel newGame = gameDao.GetGameById(apiModel.GameId);
+
                 TransactionModel transactionModel = new TransactionModel()
                 {
                     UserId = userId,
-                    GameId = newId,
+                    GameId = apiModel.GameId,
                     StockSymbol = "SYSTRN",
                     NumberOfShares = 1,
                     TransactionSharePrice = 100000,
                     IsPurchase = false,
-                    NetTransactionChange = 100000           
+                    NetTransactionChange = 100000
                 };
 
                 transactionDao.AddNewTransaction(transactionModel);
 
                 // TODO 09a (Controller): Return CreatedAtRoute to return 201
-                return CreatedAtRoute("GetGame", new { id = newId }, newGame);
+                return CreatedAtRoute("GetGame", new { id = newGame.Id }, newGame);
             }
             else
             {
@@ -140,6 +179,22 @@ namespace StockMarketApi.Controllers
             gameFormatted.LeaderboardData = BuildLeaderBoardData(game.Id);
 
             return gameFormatted;
+        }
+
+        private void AddInitialTransaction(int userId, int gameId)
+        {
+            TransactionModel transactionModel = new TransactionModel()
+            {
+                UserId = userId,
+                GameId = gameId,
+                StockSymbol = "SYSTRN",
+                NumberOfShares = 1,
+                TransactionSharePrice = 100000,
+                IsPurchase = false,
+                NetTransactionChange = 100000
+            };
+
+            transactionDao.AddNewTransaction(transactionModel);
         }
 
         private IList<LeaderboardBalance> BuildLeaderBoardData(int gameId)

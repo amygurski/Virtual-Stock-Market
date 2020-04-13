@@ -17,8 +17,8 @@
             <tr v-bind:key="stock.stockSymbol" v-for="stock in data">
               <td>{{stock.stockSymbol}}</td>
               <td>{{stock.companyName}}</td>
-              <td>{{stock.currentPrice}}</td>
-              <td>{{stock.percentChange}}</td>
+              <td>{{ formatCurrency(stock.currentPrice) }}</td>
+              <td>{{ stock.percentChange.toFixed(3) }}%</td>
               <td>
                 <router-link :to="{ name: 'confirm-purchase', params: {stockSymbol: stock.stockSymbol, gameId: gameId} }">
                   <button type="button" class="btn btn-primary btn-rounded btn-sm m-0">Buy Stock</button>
@@ -33,9 +33,12 @@
 </template>
 
 <script>
+import HelperMixin from "@/mixins/HelperMixins.js";
+
 //remember to include v-if="data" in table once data has been added
 export default {
   name: "available-stocks",
+  mixins: [HelperMixin],
   data() {
       return {
           stock: Object,

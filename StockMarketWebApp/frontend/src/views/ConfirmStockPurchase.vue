@@ -16,7 +16,7 @@
             </tr>
             <tr>
               <td>Stock Price:</td>
-              <td>{{stock.currentPrice}}</td>
+              <td>{{ formatCurrency(stock.currentPrice) }}</td>
             </tr>
             <tr>
               <td>
@@ -25,7 +25,7 @@
               <td>
                 <input
                   type="number"
-                  min="0"
+                  min="1"
                   id="numShares"
                   class="form-control"
                   placeholder="Number of Shares to Buy"
@@ -61,8 +61,11 @@
 </template>
 
 <script>
+import HelperMixin from "@/mixins/HelperMixins.js";
+
 export default {
   name: "confirm-purchase",
+  mixins: [HelperMixin],
   data() {
     return {
       user: Object,

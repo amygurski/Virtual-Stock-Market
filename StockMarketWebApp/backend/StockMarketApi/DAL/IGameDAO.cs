@@ -26,5 +26,7 @@ namespace StockMarketApi.DAL
         GameModel GetGameById(int id);
 
         IList<GameModel> GetMyGames(int userId);
+
+        bool JoinGame(int userId, int gameId);
     }
 }

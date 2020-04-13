@@ -78,6 +78,7 @@ export default {
   background: linear-gradient(rgba(255,255,255,.25), rgba(255,255,255,.25)),url(/Images/Join-Game-Background.png);
   background-size: cover;
   padding-top: 5%;
+  padding-bottom: 10%;
   position: fixed;
   overflow: auto;
   width: 100%;

@@ -112,7 +112,7 @@ namespace StockMarketApi.DAL
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand("SELECT * FROM games WHERE creator_Id = @userId", conn);
+                    SqlCommand cmd = new SqlCommand("SELECT * FROM user_game u JOIN games g ON u.game_id = g.id WHERE user_id = @userId", conn);
                     cmd.Parameters.AddWithValue("@userId", userId);
 
                     SqlDataReader reader = cmd.ExecuteReader();
@@ -131,6 +131,34 @@ namespace StockMarketApi.DAL
             return result;
         }
 
+
+        public bool JoinGame(int userId, int gameId)
+        {
+            bool result = false;
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand(@"INSERT INTO user_game (user_id, game_id)  
+                                                      VALUES (@userId, @gameId)", conn);
+                    cmd.Parameters.AddWithValue("@userId", userId);
+                    cmd.Parameters.AddWithValue("@gameId", gameId);
+
+                    cmd.ExecuteNonQuery();
+
+                    result = true;
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+                
+            }
+
+            return result;
+        }
+
         private GameModel MapRowToGame(SqlDataReader reader)
         {
             return new GameModel()
@@ -144,6 +172,7 @@ namespace StockMarketApi.DAL
                 EndDate = Convert.ToDateTime(reader["end_date"])
             };
         }
+
     }
 }
 

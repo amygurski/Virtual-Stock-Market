@@ -122,6 +122,7 @@ label {
     url(/Images/join-game-background.png);
   background-size: cover;
   padding-top: 5%;
+  padding-bottom: 10%;
   position: fixed;
   overflow: auto;
   width: 100%;

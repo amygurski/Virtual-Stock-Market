@@ -103,6 +103,20 @@ CREATE TABLE transactions
 
 COMMIT TRANSACTION;
 
+BEGIN TRANSACTION;
+
+CREATE TABLE user_game
+(
+	game_id int not null,
+	user_id int not null
+
+	constraint fk_usergame_users foreign key (user_id) references users(id),
+	constraint fk_usergame_games foreign key (game_id) references games(id),
+	CONSTRAINT pk_usergame_userid_gameid PRIMARY KEY (game_id, user_id)
+)
+
+COMMIT TRANSACTION;
+
 -- Seed Database Section
 BEGIN TRANSACTION;
 
@@ -126,6 +140,18 @@ VALUES
 	(1, 'testGame2', '2020-03-09', '2020-04-09'),
 	(1, 'testGame3', '2020-04-07', '2020-04-07'),
 	(1, 'testGame4', '2020-03-10', '2020-04-15');
+
+COMMIT TRANSACTION;
+
+BEGIN TRANSACTION;
+
+INSERT INTO user_game
+	(game_id, user_id)
+VALUES
+	(1653, 1),
+	(1654, 1),
+	(1655, 1),
+	(1656, 1);
 
 COMMIT TRANSACTION;
 

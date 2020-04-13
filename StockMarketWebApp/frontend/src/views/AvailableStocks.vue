@@ -24,6 +24,11 @@
                   <button type="button" class="btn btn-primary btn-rounded btn-sm m-0">Buy Stock</button>
                 </router-link>
               </td>
+              <td>
+                <router-link :to="{name: 'stock-details', params: {stockSymbol: stock.stockSymbol}}">
+                  <button type="button" class="btn btn-primary btn-rounded btn-sm m-0">Stock Details</button>
+                </router-link>
+              </td>
             </tr>
           </tbody>
         </table>

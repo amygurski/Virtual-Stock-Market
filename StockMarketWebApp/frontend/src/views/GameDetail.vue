@@ -75,11 +75,11 @@
 </template>
 
 <script>
-import HelperMixins from "@/mixins/HelperMixins.js";
+import HelperMixin from "@/mixins/HelperMixins.js";
 
 export default {
   name: "game-detail",
-  mixins: [HelperMixins],
+  mixins: [HelperMixin],
   data() {
     return {
       game: Object,

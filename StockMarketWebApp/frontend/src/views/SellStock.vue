@@ -12,34 +12,34 @@
           <tbody>
             <tr>
               <td>Symbol:</td>
-              <td>{{stock.stockSymbol}}</td>
+              <td>{{ ownedModel.stockSymbol }}</td>
             </tr>
             <tr>
               <td>Name:</td>
-              <td>{{stock.companyName}}</td>
+              <td>{{ ownedModel.companyName }}</td>
             </tr>
             <tr>
-              <td>Stock Purchase Price:</td>
-              <td>{{stock.currentPrice}}</td>
+              <td>Stock Average Purchase Price:</td>
+              <td>{{ formatCurrency(ownedModel.avgPurchasedPrice) }}</td>
             </tr>
             <tr>
               <td>Current Share Price:</td>
-              <td>TBC</td>
+              <td>{{ formatCurrency(ownedModel.currentSharePrice) }}</td>
             </tr>
             <tr>
               <td>Currently Owned Shares:</td>
-              <td>TBC</td>
+              <td>{{ ownedModel.numberOfShares }}</td>
             </tr>
             <tr>
               <td>How many shares do you want to sell?</td>
               <td>
                 <input
                   type="number"
-                  max="10"
-                  min="0"
+                  v-bind:max="ownedModel.numberOfShares"
+                  min="1"
                   id="currently-owned-shares"
                   class="form-control"
-                  placeholder="0"
+                  v-model="postApiModel.numberOfShares"
                   autofocus
                 />
               </td>
@@ -50,9 +50,9 @@
           <button
             type="button"
             class="btn btn-primary btn-rounded sell-buttons"
-            v-on:click.prevent="buildStockObject()"
+            v-on:click.prevent="buildApiModel()"
           >Confirm Sale</button>
-          <router-link :to="{ name: 'owned-stocks', params: {gameId: id } }">
+          <router-link :to="{ name: 'owned-stocks', params: {gameId: gameId } }">
             <button type="button" class="btn btn-secondary btn-rounded sell-buttons">Cancel</button>
           </router-link>
         </div>
@@ -62,21 +62,24 @@
 </template>
 
 <script>
+import HelperMixin from "@/mixins/HelperMixins.js";
+
 export default {
   name: "sell-stock",
+  mixins: [HelperMixin],
   data() {
     return {
       user: Object,
       token: String,
       stock: Object,
       gameId: Number,
-      stockSymbol: String,
+      ownedModel: Object,
       sellStockErrors: false,
       postApiModel: {
         userName: String,
         gameId: Number,
         stockSymbol: String,
-        numberOfShares: 0,
+        numberOfShares: 1,
         isPurchase: Boolean
       }
     };
@@ -85,32 +88,15 @@ export default {
     this.token = this.$attrs.token;
     this.user = this.$attrs.user;
     this.gameId = this.$route.params.gameId;
-    this.stockSymbol = this.$route.params.stockSymbol;
-    this.getStockData();
+    this.ownedModel = this.$route.params.ownedModel;
   },
   methods: {
-    getStockData() {
-      fetch(
-        `${process.env.VUE_APP_REMOTE_API}/stocks/detail/${this.stockSymbol}`,
-        {
-          method: "GET",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + this.token
-          }
-        }
-      )
-        .then(response => {
-          if (response.ok) {
-            response.json().then(json => {
-              this.stock = json;
-            });
-          } else {
-            this.sellStockErrors = true;
-          }
-        })
-        .then(err => console.error(err));
+    buildApiModel() {
+      this.postApiModel.userName = this.user.sub;
+      this.postApiModel.gameId = this.gameId;
+      this.postApiModel.stockSymbol = this.ownedModel.stockSymbol;
+      this.postApiModel.isPurchase = false; //is Sell
+      this.sellStock();
     },
     sellStock() {
       fetch(`${process.env.VUE_APP_REMOTE_API}/transactions/newtransaction`, {
@@ -133,22 +119,37 @@ export default {
         })
 
         .then(err => console.error(err));
-    },
-    buildStockObject() {
-      this.postApiModel.userName = this.user.sub;
-      this.postApiModel.gameId = this.gameId;
-      this.postApiModel.stockSymbol = this.stockSymbol;
-      this.postApiModel.numberOfShares = this.postApiModel.numberOfShares * 1;
-      this.postApiModel.isPurchase = 0; //is Sell
-      this.sellStock();
     }
+    // getStockData() {
+    //   fetch(
+    //     `${process.env.VUE_APP_REMOTE_API}/stocks/detail/${this.stockSymbol}`,
+    //     {
+    //       method: "GET",
+    //       headers: {
+    //         Accept: "application/json",
+    //         "Content-Type": "application/json",
+    //         Authorization: "Bearer " + this.token
+    //       }
+    //     }
+    //   )
+    //     .then(response => {
+    //       if (response.ok) {
+    //         response.json().then(json => {
+    //           this.stock = json;
+    //         });
+    //       } else {
+    //         this.sellStockErrors = true;
+    //       }
+    //     })
+    //     .then(err => console.error(err));
+    // },
   }
 };
 </script>
 
 <style scoped>
 h1 {
-  color:#67ddfb;
+  color: #67ddfb;
 }
 .sell-stocks-background {
   background-color: darkgray;

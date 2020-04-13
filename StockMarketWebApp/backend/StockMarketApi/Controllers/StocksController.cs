@@ -73,25 +73,27 @@ namespace StockMarketApi.Controllers
                     ownedStock.CurrentSharePrice = stockDao.GetStockBySymbol(kvp.Key).CurrentPrice;
 
                     int numShares = 0;
-                    decimal totalPrice = 0.0M;
+                    decimal netTotalPriceBought = 0.0M;
+                    int netNumSharesBought = 0;
+                    
                     foreach (StockTransaction transaction in kvp.Value)
                     {
                         if (transaction.IsPurchase)
                         {
                             numShares += transaction.NumberOfShares;
-                            totalPrice -= transaction.NetValue;
+                            netNumSharesBought += transaction.NumberOfShares;
+                            netTotalPriceBought -= transaction.NetValue;
                         }
                         else
                         {
                             numShares -= transaction.NumberOfShares;
-                            totalPrice += transaction.NetValue;
                         }
                     }
                     ownedStock.NumberOfShares = numShares;
 
-                    if (numShares != 0)
+                    if (netNumSharesBought != 0)
                     {
-                        ownedStock.AvgPurchasedPrice = totalPrice / numShares;
+                        ownedStock.AvgPurchasedPrice = netTotalPriceBought / netNumSharesBought;
                     }
                     
 

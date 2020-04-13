@@ -45,9 +45,9 @@
         <router-link :to="{name: 'admin'}" class="nav-link">Super Secret</router-link>
       </li>
       <!-- TODO: Remove unnecessary links after chart tests -->
-      <li>
+      <!-- <li>
         <router-link to="/chartjs">vue-chartjs</router-link>
-      </li>
+      </li> -->
     </ul>
     <ul v-if="user" class="navbar-nav ml-auto">
       <li class="nav-item">

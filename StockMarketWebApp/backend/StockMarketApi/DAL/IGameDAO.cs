@@ -23,6 +23,8 @@ namespace StockMarketApi.DAL
         /// <returns>an integer id representing the game primary key id</returns>
         int CreateGame(GameModel game);
 
+        IList<GameModel> GetAllExpiredGames();
+
         GameModel GetGameById(int id);
 
         IList<GameModel> GetMyGames(int userId);

@@ -49,6 +49,24 @@ namespace StockMarketApi.Controllers
             return new JsonResult(formattedGames);
         }
 
+        // TODO: THROWAWAY
+        [HttpGet("expiredgames")]
+        public IActionResult AllExpiredGames()
+        {
+            // TODO: Refactor with SQL Join Statement
+            IList<GameModel> unformattedCurrentGames = gameDao.GetAllExpiredGames();
+            IList<GameAPIModel> formattedGames = new List<GameAPIModel>();
+
+            foreach (GameModel game in unformattedCurrentGames)
+            {
+                GameAPIModel gameFormatted = FormatGameToApiModel(game);
+                formattedGames.Add(gameFormatted);
+            }
+
+
+            return new JsonResult(formattedGames);
+        }
+
         [HttpGet("mygames/{username}")]
         public IActionResult MyGames(string userName)
         {

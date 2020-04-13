@@ -43,6 +43,7 @@
       <button type="button" class="btn btn-primary btn-rounded buysell-button" @click="buildTransactionLineData">Build Data</button>
 
     </div>
+    <owned-stocks-list v-bind:gameId="this.id" v-bind:user="this.user" v-bind:token="this.token"></owned-stocks-list>
     <div class="gamedetail" id="transaction-table-container">
       <h3 id="transaction-history-header" class="text-center">Transaction History</h3>
       <table class="table table-hover table-dark detail-table">
@@ -76,10 +77,14 @@
 
 <script>
 import HelperMixin from "@/mixins/HelperMixins.js";
+import OwnedStocksList from "@/Components/OwnedStocksList.vue"
 
 export default {
   name: "game-detail",
   mixins: [HelperMixin],
+  components: {
+    OwnedStocksList
+  },
   data() {
     return {
       game: Object,
@@ -253,5 +258,20 @@ li {
 
 #transaction-history-header {
   margin-bottom: 20px;
+}
+
+#owned-stocks-header {
+  margin-bottom: 500px;
+}
+
+#owned-stocks-container {
+  border: 2px solid black;
+  border-radius: 25px;
+  background-image: none;
+  background-color: #343a40;
+  color: white;
+  margin: auto;
+  padding: 25px;
+  width: 75%;
 }
 </style>

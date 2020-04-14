@@ -5,7 +5,7 @@
         <h1>Hi {{user.sub}}!</h1>
         <h2>{{game.name}}</h2>
         <p>{{game.description}}</p>
-        <div class="button-group">
+        <div class="button-group" v-if="game.isCompleted == false" >
           <router-link :to="{name: 'available-stocks', params: {id: game.gameId}}">
             <button
               type="button"
@@ -28,6 +28,7 @@
             >Invite Players</button>
           </router-link>-->
         </div>
+        <div v-else><P>Sorry, the game is over. Check the Leaderboard to see who won!</P></div>
       </div>
       <div class="card-background text-center" id="leaderboard">
         <h1>Leaderboard</h1>

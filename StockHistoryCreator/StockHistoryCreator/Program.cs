@@ -22,6 +22,9 @@ namespace StockHistoryCreator
             //to just get closed day:
             //string apiRequest = $"https://marketdata.websol.barchart.com/getHistory.csv?apikey=f32669fc5614fbd62719ba6543de5576&type=daily&symbol=";
 
+            WebClient client2 = new WebClient();
+            string result = client2.DownloadString("https://marketdata.websol.barchart.com/getHistory.csv?apikey=31a2d95da1cf2b19dbabb725d7ff9136&type=dailyContinue&startDate=20200409&symbol=AAL");
+
             foreach (string stock in stocks)
             {
                 WebClient client = new WebClient();

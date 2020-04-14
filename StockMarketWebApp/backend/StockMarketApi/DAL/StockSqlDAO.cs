@@ -118,6 +118,43 @@ namespace StockMarketApi.DAL
             return result;
         }
 
+        /// <summary>
+        /// Get 6 month stock history from single stock
+        /// </summary>
+        /// <returns></returns>
+        public List<StockHistoryModel> GetStockHistory(string stockSymbol)
+        {
+            List<StockHistoryModel> stockHistory = new List<StockHistoryModel>();
+
+            //Get 6 months ago
+            //Subtract 6 months
+            DateTime sixMonthsAgo = DateTime.Today.AddMonths(-6);
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("select * from stock_history where trading_day >= @startdate AND stock_symbol = @stocksymbol", conn);
+                    cmd.Parameters.AddWithValue("@startdate", sixMonthsAgo);
+                    cmd.Parameters.AddWithValue("@stocksymbol", stockSymbol);
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        stockHistory.Add(MapRowToStockHistory(reader));
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+
+            return stockHistory;
+        }
+
         public void UpdateStock(StockModel stock)
         {
             try

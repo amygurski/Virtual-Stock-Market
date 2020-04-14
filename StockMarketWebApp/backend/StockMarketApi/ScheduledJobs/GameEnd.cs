@@ -5,8 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using StockMarketApi.DAL;
 using StockMarketApi.HelperMethods;
-
-
+using StockMarketApi.Models.ApiReturnModels;
 
 namespace StockMarketApi.ScheduledJobs
 {
@@ -14,28 +13,39 @@ namespace StockMarketApi.ScheduledJobs
     {
         private IUserDAO userDao;
         private IGameDAO gameDao;
+        private ITransactionDAO transactionDao;
+        private IOwnedStocksHelper ownedHelper;
 
-        public GameEnd(IUserDAO userDao, IGameDAO gameDao)
+        public GameEnd(IUserDAO userDao, IGameDAO gameDao, ITransactionDAO transactionDao, IOwnedStocksHelper ownedHelper)
+
         {
             this.userDao = userDao;
             this.gameDao = gameDao;
-        }
-        public void SellOffStocks()
-        {
-   
+            this.transactionDao = transactionDao;
+            this.ownedHelper = ownedHelper;
 
+        }
+
+    public void SellOffStocks()
+        {
             //get all games that need to be processed
-            IList<GameModel> expiredgames = gameDao.GetAllExpiredGames();
-            foreach (GameModel game in expiredgames)
+            IList<GameModel> expiredGames = gameDao.GetAllExpiredGames();
+            foreach (GameModel game in expiredGames)
             {
-                //find all the users within the games
-                UserModel user = userDao.GetUser(game.CreatorId);
+                //find all the users within the game
+                UserModel user = userDao.GetUser(game.Id);
 
                 //get all the stocks these users own
-
+                IList<OwnedStocksModel> expiredStocks = ownedHelper.GetOwnedStocksByUserAndGame(user.Id, game.Id);
 
                 //use transactionDAO to sell all of these stocks
-                //transactionDao.AddNewTransaction();
+               foreach(OwnedStocksModel stock in expiredStocks)
+                {
+                    transactionDao.AddNewTransaction();
+                }
+
+                //sell all the stocks a user has
+                
 
             }
         }

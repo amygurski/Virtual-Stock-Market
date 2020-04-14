@@ -40,7 +40,11 @@
     </div>
     <div class="chart-container">
       
-      <button type="button" class="btn btn-primary btn-rounded buysell-button" @click="buildTransactionLineData">Build Data</button>
+      <line-chart-reactive
+      v-if="transactionLineLoaded"
+      :chartdata="transactionLineData"
+      :options="transactionLineOptions"
+      />
 
     </div>
     <owned-stocks-list v-bind:gameId="this.id" v-bind:user="this.user" v-bind:token="this.token"></owned-stocks-list>
@@ -77,13 +81,15 @@
 
 <script>
 import HelperMixin from "@/mixins/HelperMixins.js";
-import OwnedStocksList from "@/Components/OwnedStocksList.vue"
+import OwnedStocksList from "@/Components/OwnedStocksList.vue";
+import LineChartReactive from "@/Components/LineChartReactive.vue";
 
 export default {
   name: "game-detail",
   mixins: [HelperMixin],
   components: {
-    OwnedStocksList
+    OwnedStocksList,
+    LineChartReactive,
   },
   data() {
     return {
@@ -97,24 +103,39 @@ export default {
         username: "",
         gameid: ""
       },
-      transactionLineRawData: {},
-      transactionLineData: {},
-      transactionLineOptions: {}
+      transactionLineLoaded: false,
+      transactionLineData: {
+        labels: Array,
+        datasets: [],
+      },
+      transactionLineOptions: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+      }
     };
   },
-  created() {
+  mounted() {
     this.id = this.$route.params.id;
     this.token = this.$attrs.token;
     this.user = this.$attrs.user;
     this.ApiModel.username = this.user.sub;
     this.ApiModel.gameid = this.$route.params.id;
     this.getData();
-    this.getTransactionData();
+    this.getTransactionData().jsonData;
+    // this.buildTransactionLineData();
   },
   //   }  mounted() {
 
   //   },
   methods: {
+    openModal() {
+            this.modalOpen = !this.modalOpen;
+        },  
     getData() {
       // vue-resource example
       fetch(`${process.env.VUE_APP_REMOTE_API}/games/${this.id}`, {
@@ -148,7 +169,7 @@ export default {
           return response.json();
         })
         .then(jsonData => {
-          this.transactions = jsonData;
+          this.transactions = jsonData
           this.buildTransactionLineData();
         })
         .catch(e => {
@@ -156,34 +177,49 @@ export default {
         });
     },
     buildTransactionLineData() {
-      
-      let groomedLabelData = this.buildTransactionLabels();
-      this.transactions.sort()
-      this.transactionLineRawData = groomedLabelData
-      this.transactionLineData.label = groomedLabelData.formattedDates;
+      this.transactions.forEach( transaction => {
+        transaction.rawDate = new Date(transaction.transactionDate)
+      })
+
+      this.transactions.sort((a, b) => {
+        return a.rawDate - b.rawDate
+      })
+
+      this.transactionLineData.labels = this.buildTransactionLabels();
+      this.transactionLineData.datasets.push(
+        {
+          label: 'Cash Balance',
+          data: this.buildTransactionDataPoints()
+        }
+      )
+      this.transactionLineLoaded = true;
     },
     buildTransactionLabels() {
-      let rawDatesArr = [];
       let formattedDatesArr = [];
 
+      // this.transactions.forEach(transaction => {
+      //   const rawDate = new Date(transaction.transactionDate);
+      //   rawDatesArr.push(rawDate);
+      // });
+
+      // rawDatesArr.sort((a, b) => {
+      //   return a - b;
+      // });
+
       this.transactions.forEach(transaction => {
-        const rawDate = new Date(transaction.transactionDate);
-        rawDatesArr.push(rawDate);
+        formattedDatesArr.push(this.formatDateAndTime(transaction.rawDate));
       });
 
-      rawDatesArr.sort((a, b) => {
-        return a - b;
-      });
-
-      rawDatesArr.forEach(rawDate => {
-        formattedDatesArr.push(this.formatDateAndTime(rawDate));
-      });
-
-      return {
-        firstDate: rawDatesArr[0],
-        rawDates: rawDatesArr,
-        formattedDates: formattedDatesArr,
-      }
+      return formattedDatesArr;
+    },
+    buildTransactionDataPoints() {
+      let transactionData = [];
+      let transactionBalance = 0;
+      this.transactions.forEach( transaction => {
+        transactionBalance += transaction.netValue;
+        transactionData.push(transactionBalance);
+      })
+      return transactionData
     }
   },
   computed: {

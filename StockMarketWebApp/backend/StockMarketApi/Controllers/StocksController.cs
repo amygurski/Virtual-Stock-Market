@@ -5,6 +5,7 @@ using StockMarketApi.DAL;
 using StockMarketApi.HelperMethods;
 using StockMarketApi.Models.ApiInputModels.StockTransactions;
 using StockMarketApi.Models.ApiReturnModels;
+using StockMarketApi.Models.DatabaseModels;
 
 namespace StockMarketApi.Controllers
 {
@@ -43,6 +44,7 @@ namespace StockMarketApi.Controllers
 
             return new JsonResult(currentStocks);
         }
+
 
         [HttpGet("detail/{symbol}")]
         public IActionResult GetStockDetail(string symbol)

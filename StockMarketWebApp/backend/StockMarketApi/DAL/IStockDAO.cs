@@ -1,4 +1,5 @@
 ﻿using StockMarketApi.Models.ApiReturnModels;
+using StockMarketApi.Models.DatabaseModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,7 @@ namespace StockMarketApi.DAL
         IList<CurrentStocksModel> GetCurrentStocks();
 
         CurrentStocksModel GetStockBySymbol(string symbol);
+
+        IList<StockHistoryModel> GetAllStocksHistory();
     }
 }

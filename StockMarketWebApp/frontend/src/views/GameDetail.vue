@@ -39,7 +39,6 @@
         </ol>
       </div>
     </div>
-<<<<<<< HEAD
     <div class="chart-container">
       
       <line-chart-reactive
@@ -49,9 +48,6 @@
       />
 
     </div>
-=======
-    <div class="card-background chart-container"></div>
->>>>>>> 35ad37d697978044122875a7ab3f960cd2266442
     <owned-stocks-list v-bind:gameId="this.id" v-bind:user="this.user" v-bind:token="this.token"></owned-stocks-list>
     <div class="card-background" id="transaction-table-container">
       <h3 id="transaction-history-header" class="text-center">Transaction History</h3>
@@ -87,10 +83,7 @@
 <script>
 import HelperMixin from "@/mixins/HelperMixins.js";
 import OwnedStocksList from "@/Components/OwnedStocksList.vue";
-<<<<<<< HEAD
 import LineChartReactive from "@/Components/LineChartReactive.vue";
-=======
->>>>>>> 35ad37d697978044122875a7ab3f960cd2266442
 
 export default {
   name: "game-detail",
@@ -98,10 +91,7 @@ export default {
 
   components: {
     OwnedStocksList,
-<<<<<<< HEAD
     LineChartReactive,
-=======
->>>>>>> 35ad37d697978044122875a7ab3f960cd2266442
   },
   data() {
     return {
@@ -195,7 +185,6 @@ export default {
         });
     },
     buildTransactionLineData() {
-<<<<<<< HEAD
       this.transactions.forEach( transaction => {
         transaction.rawDate = new Date(transaction.transactionDate)
       })
@@ -212,12 +201,6 @@ export default {
         }
       )
       this.transactionLineLoaded = true;
-=======
-      let groomedLabelData = this.buildTransactionLabels();
-      this.transactions.sort();
-      this.transactionLineRawData = groomedLabelData;
-      this.transactionLineData.label = groomedLabelData.formattedDates;
->>>>>>> 35ad37d697978044122875a7ab3f960cd2266442
     },
     buildTransactionLabels() {
       let formattedDatesArr = [];
@@ -235,7 +218,6 @@ export default {
         formattedDatesArr.push(this.formatDateAndTime(transaction.rawDate));
       });
 
-<<<<<<< HEAD
       return formattedDatesArr;
     },
     buildTransactionDataPoints() {
@@ -246,13 +228,6 @@ export default {
         transactionData.push(transactionBalance);
       })
       return transactionData
-=======
-      return {
-        firstDate: rawDatesArr[0],
-        rawDates: rawDatesArr,
-        formattedDates: formattedDatesArr
-      };
->>>>>>> 35ad37d697978044122875a7ab3f960cd2266442
     }
   },
   computed: {

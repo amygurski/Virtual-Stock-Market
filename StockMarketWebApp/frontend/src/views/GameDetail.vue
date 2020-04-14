@@ -1,5 +1,16 @@
 <template>
   <div id="gamedetail-container">
+    <div
+      class="alert alert-dismissible fade show"
+      v-bind:class="{'alert-success': alertSuccess, 'alert-danger': !alertSuccess }"
+      role="alert"
+      v-if="alertMessage"
+    >
+      {{alertMessage}}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
     <div class="row">
       <div class="card-background text-center" id="game-actions">
         <h1>Hi {{user.sub}}!</h1>
@@ -18,17 +29,22 @@
               class="btn btn-danger btn-rounded btn-block buysell-button"
             >Sell Stocks</button>
           </router-link>
-          <div class="form-group"> 
+          <div class="form-group" v-if="this.user.sub == this.game.creatorUsername">
             <label for="name" class="sr-only">Name</label>
             <input
               type="text"
               id="name"
               class="form-control"
-              placeholder="Username"
+              placeholder="Username to Invite"
+              v-model="inviteUserAPI.username"
               required
               autofocus
             />
-            <button type="button" class="btn btn-secondary btn-rounded">Invite Players</button>
+            <button
+              type="button"
+              class="btn btn-secondary btn-rounded"
+              @click="this.addUserToGame"
+            >Invite Players</button>
           </div>
           <!-- <modal name="hello-world">hello, world!</modal> -->
           <!-- <button
@@ -114,15 +130,21 @@ export default {
   },
   data() {
     return {
+      alertMessage: null,
+      alertSuccess: false,
       game: Object,
       token: String,
       user: Object,
       id: Number,
       currentBalance: Number,
       transactions: [],
-      ApiModel: {
+      inviteUserAPI: {
         username: "",
-        gameid: ""
+        gameId: ""
+      },
+      getStocksAPIModel: {
+        username: "",
+        gameId: ""
       },
       transactionLineLoaded: false,
       transactionLineData: {
@@ -146,8 +168,15 @@ export default {
     this.id = this.$route.params.id;
     this.token = this.$attrs.token;
     this.user = this.$attrs.user;
-    this.ApiModel.username = this.user.sub;
-    this.ApiModel.gameid = this.$route.params.id;
+    this.getStocksAPIModel.username = this.user.sub;
+    this.getStocksAPIModel.gameId = this.$route.params.id;
+    this.inviteUserAPI.gameId = this.$route.params.id;
+    if (this.$route.params.alertMessage) {
+      this.alertMessage = this.$route.params.alertMessage;
+    }
+    if (this.$route.params.alertSuccess) {
+      this.alertSuccess = this.$route.params.alertSuccess;
+    }
     this.getData();
     this.getTransactionData();
     // this.buildTransactionLineData();
@@ -184,6 +213,28 @@ export default {
     hide() {
       this.$modal.hide("hello-world");
     },
+    addUserToGame() {
+      fetch(`${process.env.VUE_APP_REMOTE_API}/games/joingame`, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + this.token
+        },
+        body: JSON.stringify(this.inviteUserAPI)
+      })
+        .then(response => {
+          if (response.ok) {
+            this.cleanUpInvite();
+          } else {
+            this.alertMessage =
+              "There was a problem adding this user to the game.";
+          }
+        })
+        .catch(e => {
+          console.log("Error", e);
+        });
+    },
     getTransactionData() {
       fetch(`${process.env.VUE_APP_REMOTE_API}/transactions/getbygameanduser`, {
         method: "POST",
@@ -192,7 +243,7 @@ export default {
           "Content-Type": "application/json",
           Authorization: "Bearer " + this.token
         },
-        body: JSON.stringify(this.ApiModel)
+        body: JSON.stringify(this.getStocksAPIModel)
       })
         .then(response => {
           return response.json();
@@ -204,6 +255,11 @@ export default {
         .catch(e => {
           console.log("Error", e);
         });
+    },
+    cleanUpInvite() {
+      this.inviteUserAPI.username = null;
+      this.alertMessage = "User Successfully Added To Game.";
+      this.alertSuccess = true;
     },
     buildTransactionLineData() {
       this.transactions.forEach(transaction => {
@@ -269,6 +325,14 @@ export default {
 </script>
 
 <style scoped>
+.form-group,
+.btn {
+  margin-top: 10px;
+}
+.alert {
+  max-width: 50%;
+  margin: auto;
+}
 /* .card-container {
   display: flex;
   flex-direction: row;

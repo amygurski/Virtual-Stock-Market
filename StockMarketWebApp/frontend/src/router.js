@@ -70,6 +70,7 @@ const router = new Router({
     {
       path: "/games/join",
       component: JoinGame,
+      name: "join-game",
       meta: {
         requiresAuth: true
       }

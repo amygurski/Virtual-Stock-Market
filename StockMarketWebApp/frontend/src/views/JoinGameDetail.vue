@@ -1,5 +1,50 @@
 <template>
-  <div id="gamedetail-container">
+  <div id="creategame-container">
+    <div id="creategame" class="text-center">
+      <h1 class="h3 mb-3 font-weight-normal">Game Detail</h1>
+      <table class="table table-hover table-dark text-left">
+        <tbody>
+          <tr>
+            <td>Game:</td>
+            <td>{{game.name}}</td>
+          </tr>
+          <tr>
+            <td>Creator:</td>
+            <td>{{game.creatorUsername}}</td>
+          </tr>
+          <tr>
+            <td>Game Start Date:</td>
+            <td>{{game.dateCreated}}</td>
+          </tr>
+          <tr>
+            <td>Game End Date:</td>
+            <td>{{game.endDate}}</td>
+          </tr>
+          <tr>
+            <td>Game Description:</td>
+            <td>{{game.description}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- <div class="row">Stock Sym: {{stock.stockSymbol}}</div>
+      <div class="row">Stock Price: {{stock.currentPrice}}</div>-->
+
+      <div class="form-group"></div>
+      <!-- <p>Do you still want to buy this stock?</p> -->
+      <div class="button-group">
+        <button
+          class="btn btn-primary purchase-buttons"
+          type="submit"
+          v-on:click.prevent="addUserToGame"
+        >Join Game</button>
+
+        <router-link :to="{name: 'join-game'}">
+          <button class="btn btn-secondary purchase-buttons" type="cancel">Cancel</button>
+        </router-link>
+      </div>
+    </div>
+  </div>
+  <!-- <div id="gamedetail-container">
     <div id="gamedetail" class="text-center">
       <div class="table-responsive">
         <h1>Game Details</h1>
@@ -21,7 +66,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div>-->
 </template>
 
 <script>
@@ -29,6 +74,10 @@ export default {
   name: "join-game-detail",
   data() {
     return {
+      inviteUserAPI: {
+        userName: "",
+        gameId: ""
+      },
       game: Object,
       token: String,
       user: Object,
@@ -39,6 +88,8 @@ export default {
     this.id = this.$route.params.id;
     this.token = this.$attrs.token;
     this.user = this.$attrs.user;
+    this.inviteUserAPI.gameId = this.id;
+    this.inviteUserAPI.userName = this.user.sub;
     this.getData();
   },
   //   }  mounted() {
@@ -63,13 +114,64 @@ export default {
         .catch(e => {
           console.log("Error", e);
         });
-    }
+    },
+    addUserToGame() {
+    fetch(`${process.env.VUE_APP_REMOTE_API}/games/joingame`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + this.token
+      },
+      body: JSON.stringify(this.inviteUserAPI)
+    })
+      .then(response => {
+        if (response.ok) {
+          this.$router.push({name: 'game-detail', params: {id: this.game.gameId, alertMessage:"You have successfully joined this game. Have fun!", alertSuccess: true}})
+        } else {
+          this.$router.push({name: 'game-detail', params: {id: this.game.gameId, alertMessage:"You are already playing this game. Here's the details. Have fun!", alertSuccess: false}})
+        }
+      })
+      .catch(e => {
+        console.log("Error", e);
+      });
+  }
   }
 };
 </script>
 
 <style scoped>
-#gamedetail-container {
+h1 {
+  color: #67ddfb;
+}
+#creategame-container {
+  background: linear-gradient(
+      rgba(255, 255, 255, 0.25),
+      rgba(255, 255, 255, 0.25)
+    ),
+    url(/Images/join-game-background.png);
+  background-size: cover;
+  padding-top: 5%;
+  position: fixed;
+  overflow: auto;
+  width: 100%;
+  height: 100%;
+}
+
+#creategame {
+  width: 35%;
+  padding: 25px;
+  margin: auto;
+  border-radius: 25px;
+  border: 2px solid rgba(0, 0, 0, 0.05);
+  background-color: #343a40;
+  color: white;
+}
+
+.purchase-buttons {
+  margin: 0px 15px 0px 15px;
+}
+/* #gamedetail-container {
   background: linear-gradient(
       rgba(255, 255, 255, 0.25),
       rgba(255, 255, 255, 0.25)
@@ -91,5 +193,5 @@ export default {
   border: 2px solid rgba(0, 0, 0, 0.05);
   background-color: #343a40;
   color: white;
-}
+} */
 </style>

@@ -42,5 +42,6 @@ namespace StockMarketApi.Models.ApiReturnModels
         public DateTime NextDataUpdate { get; set; }
 
         public IList<LeaderboardBalance> LeaderboardData{ get; set; }
+        public bool IsCompleted { get; set; }
     }
 }

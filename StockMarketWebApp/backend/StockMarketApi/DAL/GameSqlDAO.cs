@@ -197,7 +197,8 @@ namespace StockMarketApi.DAL
                 Name = Convert.ToString(reader["game_name"]),
                 Description = Convert.ToString(reader["game_desc"]),
                 DateCreated = Convert.ToDateTime(reader["date_created"]),
-                EndDate = Convert.ToDateTime(reader["end_date"])
+                EndDate = Convert.ToDateTime(reader["end_date"]),
+                IsCompleted = Convert.ToBoolean(reader["is_completed"])
             };
         }
 

@@ -195,6 +195,7 @@ namespace StockMarketApi.Controllers
             gameFormatted.CreatorId = game.CreatorId;
             gameFormatted.NextDataUpdate = DateTime.Now.AddMinutes(15);
             gameFormatted.LeaderboardData = BuildLeaderBoardData(game.Id);
+            gameFormatted.IsCompleted = game.IsCompleted;
 
             return gameFormatted;
         }

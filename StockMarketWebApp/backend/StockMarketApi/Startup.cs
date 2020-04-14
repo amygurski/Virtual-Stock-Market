@@ -111,7 +111,7 @@ namespace StockMarketApi
 
             services.AddTransient<IOwnedStocksHelper>(sp => new OwnedStocksHelper(sp.GetService<ITransactionDAO>(), sp.GetService<IStockDAO>()));
 
-            services.AddTransient<IScheduledJobs>(sp => new ScheduledJobs(sp.GetService<IUserDAO>(), sp.GetService<IGameDAO>(), sp.GetService<ITransactionDAO>(), sp.GetService<IOwnedStocksHelper>()));
+            services.AddTransient<IScheduledJobs>(sp => new ScheduledJobs(sp.GetService<IUserDAO>(), sp.GetService<IGameDAO>(), sp.GetService<ITransactionDAO>(), sp.GetService<IOwnedStocksHelper>(), sp.GetService<IStockAPIDAO>(), sp.GetService<IStockDAO>()));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
@@ -155,7 +155,8 @@ namespace StockMarketApi
             // Setup Hangfire Dashboard
             app.UseHangfireDashboard();
             backgroundJobs.Enqueue(() => Console.WriteLine("Hello world from Hangfire!"));
-            RecurringJob.AddOrUpdate(() => scheduledJobs.ProcessGameEnd(), "2/5 * * * *");
+            RecurringJob.AddOrUpdate(() => scheduledJobs.ProcessGameEnd(), "2/5 * * * *", TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"));
+            RecurringJob.AddOrUpdate(() => scheduledJobs.UpdateStockDataFromAPI(), "0/15 7-18 ? * *", TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"));
 
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
             // specifying the Swagger JSON endpoint.

@@ -166,11 +166,11 @@ namespace StockMarketApi.DAL
                                                       SET current_share_price = @currentPrice,
                                                           percent_daily_change = @percentChange
                                                       WHERE stock_symbol = @stockSymbol", conn);
-                    cmd.Parameters.AddWithValue("@stock_symbol", stock.Symbol);
-                    cmd.Parameters.AddWithValue("@current_share_price", stock.LastPrice);
-                    cmd.Parameters.AddWithValue("@percent_daily_change", stock.PercentChange);
+                    cmd.Parameters.AddWithValue("@stockSymbol", stock.Symbol);
+                    cmd.Parameters.AddWithValue("@currentPrice", stock.LastPrice);
+                    cmd.Parameters.AddWithValue("@percentChange", stock.PercentChange);
 
-                    cmd.ExecuteScalar();
+                    cmd.ExecuteNonQuery();
                 }
             }
             catch (SqlException ex)

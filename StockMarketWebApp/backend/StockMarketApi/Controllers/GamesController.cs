@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StockMarketApi.DAL;
+using StockMarketApi.HelperMethods;
 using StockMarketApi.Models.ApiInputModels.Games;
 using StockMarketApi.Models.ApiReturnModels;
 using StockMarketApi.Models.DatabaseModels;
@@ -17,15 +18,17 @@ namespace StockMarketApi.Controllers
     [Authorize]
     public class GamesController : ControllerBase
     {
-        private IGameDAO gameDao;
-        private IUserDAO userDao;
+        private readonly IGameDAO gameDao;
+        private readonly IUserDAO userDao;
         private readonly ITransactionDAO transactionDao;
+        private readonly IOwnedStocksHelper ownedHelper;
 
-        public GamesController(IGameDAO gameDao, IUserDAO userDao, ITransactionDAO transactionDao)
+        public GamesController(IGameDAO gameDao, IUserDAO userDao, ITransactionDAO transactionDao, IOwnedStocksHelper ownedHelper)
         {
             this.gameDao = gameDao;
             this.userDao = userDao;
             this.transactionDao = transactionDao;
+            this.ownedHelper = ownedHelper;
         }
 
         /// <summary>
@@ -239,34 +242,81 @@ namespace StockMarketApi.Controllers
 
         private IList<LeaderboardBalance> BuildLeaderBoardData(int gameId)
         {
-            IList<StockTransaction> allTransactions = transactionDao.GetAllTransactionsByGame(gameId);
+            //IList<StockTransaction> allTransactions = transactionDao.GetAllTransactionsByGame(gameId);
 
-            IDictionary<int, decimal> summedTransactions = new Dictionary<int, decimal>();
+            //IDictionary<int, decimal> summedTransactions = new Dictionary<int, decimal>();
 
-            IList<LeaderboardBalance> result = new List<LeaderboardBalance>();
+            //IList<LeaderboardBalance> result = new List<LeaderboardBalance>();
 
-            foreach (StockTransaction transaction in allTransactions)
+            //foreach (StockTransaction transaction in allTransactions)
+            //{
+            //    if (!summedTransactions.ContainsKey(transaction.UserId))
+            //    {
+            //        summedTransactions.Add(transaction.UserId, 0M);
+            //        summedTransactions[transaction.UserId] += transaction.NetValue;
+            //    }
+            //    else
+            //    {
+            //        summedTransactions[transaction.UserId] += transaction.NetValue;
+            //    }
+            //}
+
+            //foreach (KeyValuePair<int, decimal> kvp in summedTransactions)
+            //{
+            //    LeaderboardBalance newBalance = new LeaderboardBalance()
+            //    {
+            //        UserName = userDao.GetUser(kvp.Key).Username,
+            //        CurrentBalance = kvp.Value
+            //    };
+            //    result.Add(newBalance);
+            //}
+
+
+            IList<UserModel> users = userDao.GetUsersByGame(gameId);
+
+            IDictionary<UserModel, IList<StockTransaction>> userTransactions = new Dictionary<UserModel, IList<StockTransaction>>();
+
+            foreach (UserModel user in users)
             {
-                if (!summedTransactions.ContainsKey(transaction.UserId))
-                {
-                    summedTransactions.Add(transaction.UserId, 0M);
-                    summedTransactions[transaction.UserId] += transaction.NetValue;
-                }
-                else
-                {
-                    summedTransactions[transaction.UserId] += transaction.NetValue;
-                }
+                userTransactions.Add(user, transactionDao.GetTransactionsByGameAndUser(gameId, user.Id));
             }
 
-            foreach (KeyValuePair<int, decimal> kvp in summedTransactions)
+            //IDictionary<string, decimal> cachedStockPrices = new Dictionary<string, decimal>();
+
+            List<LeaderboardBalance> result = new List<LeaderboardBalance>();
+
+
+            foreach (KeyValuePair<UserModel, IList<StockTransaction>> kvp in userTransactions)
             {
-                LeaderboardBalance newBalance = new LeaderboardBalance()
+                LeaderboardBalance balance = new LeaderboardBalance();
+                balance.UserId = kvp.Key.Id;
+                balance.UserName = kvp.Key.Username;
+
+                decimal runningBalance = 0.0M;
+
+                foreach (StockTransaction transaction in kvp.Value)
                 {
-                    UserName = userDao.GetUser(kvp.Key).Username,
-                    CurrentBalance = kvp.Value
-                };
-                result.Add(newBalance);
+                    runningBalance += transaction.NetValue;
+                }
+
+                balance.CurrentBalance = runningBalance;
+
+                IList<OwnedStocksModel> ownedStocks = ownedHelper.GetOwnedStocksByUserAndGame(kvp.Key.Id, gameId);
+
+                decimal runningStockValue = 0.0M;
+
+                foreach (OwnedStocksModel ownedstock in ownedStocks)
+                {
+                    runningStockValue += ownedstock.CurrentSharePrice * ownedstock.NumberOfShares;
+                }
+
+                balance.CurrentStockValue = runningStockValue;
+                balance.CurrentTotalPortfolioValue = balance.CurrentStockValue + balance.CurrentBalance;
+
+                result.Add(balance);
             }
+
+            result.Sort((a, b) => b.CurrentTotalPortfolioValue.CompareTo(a.CurrentTotalPortfolioValue));
 
             return result;
         }

@@ -69,7 +69,7 @@
           <li
             v-for="leaderboard in game.leaderboardData"
             v-bind:key="leaderboard.userName"
-          >{{leaderboard.userName}}: {{formatCurrency(leaderboard.currentBalance)}}</li>
+          >{{leaderboard.userName}}: cash: {{formatCurrency(leaderboard.currentBalance)}} | stock value: {{formatCurrency(leaderboard.currentStockValue)}} | total portfolio value: {{formatCurrency(leaderboard.currentTotalPortfolioValue)}}</li>
         </ol>
       </div>
     </div>
@@ -179,6 +179,7 @@ export default {
     }
     this.getData();
     this.getTransactionData();
+    setInterval( this.refreshData(), 3000)
     // this.buildTransactionLineData();
   },
   //   }  mounted() {
@@ -303,6 +304,9 @@ export default {
         transactionData.push(transactionBalance);
       });
       return transactionData;
+    },
+    refreshData() {
+      console.log("hi")
     }
   },
   computed: {

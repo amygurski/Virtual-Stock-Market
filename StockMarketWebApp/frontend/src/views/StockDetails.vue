@@ -10,9 +10,12 @@
               <th scope="row">Name</th>
               <th scope="row">Volume</th>
               <th scope="row">Net Change</th>
-              <th scope="row">1-Year Change</th>
-              <th scope="row">52 Week Range</th>
-              <th scope="row">Revenue</th>
+              <th scope="row">6 Month Change</th>
+              <th scope="row">6 Month Range</th>
+              <th scope="row">Average Volume</th>
+              <th scope="row">Average Daily Volume</th>
+              <th scope="row">Yesterdays Open</th>
+              <th scope="row">Yesterdays Close</th>
               <th scope="row"></th>
             </tr>
           </thead>

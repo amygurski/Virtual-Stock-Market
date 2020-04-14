@@ -31,6 +31,10 @@ namespace StockMarketApi.BackgroundJobs
             SellOffStocks();
         }
 
+        public void UpdateStockDataFromAPI()
+        {
+
+        }
         public void SellOffStocks()
         {
             //get all games that need to be processed

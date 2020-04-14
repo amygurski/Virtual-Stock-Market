@@ -16,7 +16,7 @@ namespace StockHistoryCreator
             //Get in correct format for API
             //string startDate = sixMonthsAgo.ToString("yyyyMMdd");
 
-            string startDate = "20200410";
+            string startDate = "20200409";
             //This request will get the past 6 months of data from today
             string apiRequest = $"https://marketdata.websol.barchart.com/getHistory.csv?apikey=f32669fc5614fbd62719ba6543de5576&type=dailyContinue&startDate={startDate}&symbol=";
             //to just get closed day:

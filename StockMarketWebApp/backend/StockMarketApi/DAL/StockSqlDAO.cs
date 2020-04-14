@@ -82,7 +82,7 @@ namespace StockMarketApi.DAL
         }
 
         /// <summary>
-        /// CURRENTLY NOTE USED
+        /// CURRENTLY NOT USED - All 6 months history for all stocks
         /// Gets 6 month stock history
         /// </summary>
         /// <returns></returns>
@@ -184,13 +184,15 @@ namespace StockMarketApi.DAL
             //Subtract 6 months
             DateTime startDate = DateTime.Today.AddMonths(-6);
 
+            //This SQL query gets the info needed for our research stock view
+            //It returns the name of company, current share price, and percent daily change from the current stock info
+            //and the six month high and six month low as computed values from the stocks table
             string sql = @"select stock_history.stock_symbol, stocks.name_of_company, stocks.current_share_price, stocks.percent_daily_change, MAX(daily_high) AS six_month_high, MIN(daily_low) AS six_month_low
                         from stock_history
                         join stocks
                         on stock_history.stock_symbol = stocks.stock_symbol
-                        where trading_day >= '2019-10-14'
+                        where trading_day >= @startdate
                         group by stock_history.stock_symbol, stocks.name_of_company, stocks.current_share_price, stocks.percent_daily_change";
-
 
             try
             {
@@ -204,10 +206,7 @@ namespace StockMarketApi.DAL
 
                     while (reader.Read())
                     {
-                        SixMonthHighLowModel stock = new SixMonthHighLowModel();
-                        stock.StockSymbol = Convert.ToString(reader["stock_symbol"]);
-                        stock.SixMonthLow = Convert.ToDouble(reader["six_month_low"]);
-                        stock.SixMonthHigh = Convert.ToDouble(reader["six_month_high"]);
+                        result.Add(MapRowToResearchStockModel(reader));
                     }
                 }
             }
@@ -229,6 +228,20 @@ namespace StockMarketApi.DAL
             stock.ClosePrice = Convert.ToDouble(reader["close_price"]);
             stock.DailyLow = Convert.ToDouble(reader["daily_low"]);
             stock.Volume = Convert.ToInt32(reader["volume"]);
+
+            return stock;
+        }
+
+        private ResearchStocksAPIModel MapRowToResearchStockModel(SqlDataReader reader)
+        {
+            ResearchStocksAPIModel stock = new ResearchStocksAPIModel();
+
+            stock.StockSymbol = Convert.ToString(reader["stock_symbol"]);
+            stock.CompanyName = Convert.ToString(reader["name_of_company"]);
+            stock.CurrentPrice = Convert.ToDouble(reader["current_share_price"]);
+            stock.PercentChange = Convert.ToDouble(reader["percent_daily_change"]);
+            stock.SixMonthHigh = Convert.ToDouble(reader["six_month_high"]);
+            stock.SixMonthLow = Convert.ToDouble(reader["six_month_low"]);
 
             return stock;
         }

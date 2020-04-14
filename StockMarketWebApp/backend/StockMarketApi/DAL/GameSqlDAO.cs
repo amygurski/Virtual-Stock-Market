@@ -200,6 +200,29 @@ namespace StockMarketApi.DAL
                 EndDate = Convert.ToDateTime(reader["end_date"])
             };
         }
+
+        public void UpdateTransactionsEndGame(int id)
+        {
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("UPDATE games SET is_completed = 1 WHERE id = @id", conn);
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    cmd.ExecuteNonQuery();
+
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            return;
+        }
     }
+
 }
 

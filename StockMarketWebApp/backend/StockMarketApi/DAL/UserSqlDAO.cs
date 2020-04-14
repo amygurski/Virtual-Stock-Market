@@ -142,6 +142,33 @@ namespace StockMarketApi.DAL
             }
         }
 
+        public IList<UserModel> GetUsersByGame(int gameId)
+        {
+            IList<UserModel> users = new List<UserModel>();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("SELECT * FROM USERS join user_game on users.id = user_game.user_id WHERE game_id = @gameId;", conn);
+                    cmd.Parameters.AddWithValue("@gameId", gameId);
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        users.Add(MapRowToUser(reader));
+                    }
+                }
+
+                return users;
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+        }
+
         /// <summary>
         /// Updates the user in the database.
         /// </summary>

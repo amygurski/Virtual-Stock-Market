@@ -9,6 +9,7 @@ using StockMarketApi.DAL;
 using StockMarketApi.Models.ApiInputModels.StockTransactions;
 using StockMarketApi.Models.ApiReturnModels;
 using StockMarketApi.Models.DatabaseModels;
+using StockMarketApi.ScheduledJobs;
 
 namespace StockMarketApi.Controllers
 {
@@ -21,13 +22,15 @@ namespace StockMarketApi.Controllers
         private readonly IUserDAO userDao;
         private readonly ITransactionDAO transactionDao;
         private readonly IStockDAO stockDao;
+        private readonly IGameEnd gameEnd;
 
-        public TransactionsController(IGameDAO gameDao, IUserDAO userDao, ITransactionDAO transactDao, IStockDAO stockDao)
+        public TransactionsController(IGameDAO gameDao, IUserDAO userDao, ITransactionDAO transactDao, IStockDAO stockDao, IGameEnd gameEnd)
         {
             this.gameDao = gameDao;
             this.userDao = userDao;
             this.transactionDao = transactDao;
             this.stockDao = stockDao;
+            this.gameEnd = gameEnd;
         }
 
         [HttpPost("GetByGameAndUser")]
@@ -71,6 +74,12 @@ namespace StockMarketApi.Controllers
             }
         }
 
-        //[HttpPost("GetTransactionChartData")]
+        [HttpGet("TestEndGameProcedure")]
+        public IActionResult CloseTransactions()
+        {
+            gameEnd.SellOffStocks();
+
+            return new JsonResult(1);
+        }
     }
 }

@@ -18,6 +18,7 @@ using Microsoft.IdentityModel.Tokens;
 using StockMarketApi.DAL;
 using StockMarketApi.HelperMethods;
 using StockMarketApi.Providers.Security;
+using StockMarketApi.ScheduledJobs;
 
 namespace StockMarketApi
 {
@@ -101,6 +102,8 @@ namespace StockMarketApi
             services.AddTransient<IStockDAO>(m => new StockSqlDAO(Configuration.GetConnectionString("Default")));
 
             services.AddTransient<IOwnedStocksHelper, OwnedStocksHelper>();
+
+            services.AddTransient<IGameEnd, GameEnd>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 

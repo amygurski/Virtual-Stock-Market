@@ -26,6 +26,13 @@ namespace StockMarketApi.DAL
         UserModel GetUser(int id);
 
         /// <summary>
+        /// Retrieves a list of users from the system by game id.
+        /// </summary>
+        /// <param name="gameId"></param>
+        /// <returns></returns>
+        IList<UserModel> GetUsersByGame(int gameId);
+
+        /// <summary>
         /// Creates a new user.
         /// </summary>
         /// <param name="user"></param>

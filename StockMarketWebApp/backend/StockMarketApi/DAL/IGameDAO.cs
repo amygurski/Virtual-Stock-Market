@@ -30,5 +30,7 @@ namespace StockMarketApi.DAL
         IList<GameModel> GetMyGames(int userId);
 
         bool JoinGame(int userId, int gameId);
+
+        void UpdateTransactionsEndGame(int id);
     }
 }

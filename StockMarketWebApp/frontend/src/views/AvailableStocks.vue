@@ -19,7 +19,7 @@
               <td>{{stock.stockSymbol}}</td>
               <td>{{stock.companyName}}</td>
               <td>{{ formatCurrency(stock.currentPrice) }}</td>
-              <td>{{ stock.percentChange.toFixed(3) }}%</td>
+              <td>{{ stock.percentChange.toFixed(3) }}% <i class="fas fa-2x" v-bind:class="{'fa-caret-up': stock.percentChange > 0 , 'fa-caret-down': stock.percentChange < 0 }"></i></td>
               <td>
                 <router-link
                   :to="{ name: 'confirm-purchase', params: {stockSymbol: stock.stockSymbol, gameId: gameId} }"
@@ -116,6 +116,13 @@ export default {
 </script>
 
 <style scoped>
+.fa-caret-up {
+  color: green;
+}
+.fa-caret-down {
+  color: red;
+}
+
 .research-background {
   background-color: darkgray;
   background-image: url(/images/register-login-background.jpg);

@@ -12,18 +12,22 @@ namespace StockMarketApi.BackgroundJobs
 {
     public class ScheduledJobs : IScheduledJobs
     {
-        private IUserDAO userDao;
-        private IGameDAO gameDao;
-        private ITransactionDAO transactionDao;
-        private IOwnedStocksHelper ownedHelper;
+        private readonly IUserDAO userDao;
+        private readonly IGameDAO gameDao;
+        private readonly ITransactionDAO transactionDao;
+        private readonly IOwnedStocksHelper ownedHelper;
+        private readonly IStockAPIDAO stockAPIDao;
+        private readonly IStockDAO stockDao;
 
-        public ScheduledJobs(IUserDAO userDao, IGameDAO gameDao, ITransactionDAO transactionDao, IOwnedStocksHelper ownedHelper)
+        public ScheduledJobs(IUserDAO userDao, IGameDAO gameDao, ITransactionDAO transactionDao, IOwnedStocksHelper ownedHelper, IStockAPIDAO stockAPIDao, IStockDAO stockDao)
 
         {
             this.userDao = userDao;
             this.gameDao = gameDao;
             this.transactionDao = transactionDao;
             this.ownedHelper = ownedHelper;
+            this.stockAPIDao = stockAPIDao;
+            this.stockDao = stockDao;
         }
 
         public void ProcessGameEnd()
@@ -33,8 +37,18 @@ namespace StockMarketApi.BackgroundJobs
 
         public void UpdateStockDataFromAPI()
         {
+            IList<StockModel> newStockInfo = stockAPIDao.GetCurrentStockPrices();
+
+            if (newStockInfo.Count > 0)
+            {
+                foreach (StockModel stock in newStockInfo)
+                {
+                    stockDao.UpdateStock(stock);
+                }
+            }
 
         }
+
         public void SellOffStocks()
         {
             //get all games that need to be processed

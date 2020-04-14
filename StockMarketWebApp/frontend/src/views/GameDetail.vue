@@ -150,6 +150,7 @@ export default {
     this.ApiModel.gameid = this.$route.params.id;
     this.getData();
     this.getTransactionData();
+    setInterval( this.refreshData(), 3000)
     // this.buildTransactionLineData();
   },
   //   }  mounted() {
@@ -247,6 +248,9 @@ export default {
         transactionData.push(transactionBalance);
       });
       return transactionData;
+    },
+    refreshData() {
+      console.log("hi")
     }
   },
   computed: {

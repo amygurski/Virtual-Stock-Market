@@ -1,7 +1,7 @@
 <template>
   <div class="text-center research-background">
+    <input type="text" id="search" v-model="search" placeholder="Search Stocks..." />
     <div id="research-container">
-      <input type="text" v-model="search" placeholder="Search Stocks" />
       <div class="table-responsive">
         <h1>Available Stocks</h1>
         <table class="table table-hover table-dark">
@@ -88,7 +88,10 @@ export default {
   computed: {
     filteredData() {
       const filter = new RegExp(this.search, "i");
-      return this.data.filter(stock => stock.companyName.match(filter) || stock.stockSymbol.match(filter));
+      return this.data.filter(
+        stock =>
+          stock.companyName.match(filter) || stock.stockSymbol.match(filter)
+      );
     }
   }
 };
@@ -113,5 +116,13 @@ export default {
   margin: auto;
   padding: 25px;
   width: 60%;
+}
+#search {
+  margin: 20px;
+border: 10px solid #343a40;
+border-radius: 10px;
+padding: 10px;
+width: 12%;
+font-size: 125%;
 }
 </style>

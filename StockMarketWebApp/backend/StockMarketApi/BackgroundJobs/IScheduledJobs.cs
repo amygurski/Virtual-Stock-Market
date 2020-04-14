@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace StockMarketApi.ScheduledJobs
+namespace StockMarketApi.BackgroundJobs
 {
-    public interface IGameEnd
+    public interface IScheduledJobs
     {
         void SellOffStocks();
     }

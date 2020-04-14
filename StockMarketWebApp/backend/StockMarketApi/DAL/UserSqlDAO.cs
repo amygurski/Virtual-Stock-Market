@@ -23,6 +23,7 @@ namespace StockMarketApi.DAL
             this.connectionString = connectionString;
         }
 
+
         /// <summary>
         /// Saves the user to the database.
         /// </summary>

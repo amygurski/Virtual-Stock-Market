@@ -6,25 +6,29 @@ using System.Threading.Tasks;
 using StockMarketApi.DAL;
 using StockMarketApi.HelperMethods;
 using StockMarketApi.Models.ApiReturnModels;
+using Hangfire;
 
-namespace StockMarketApi.ScheduledJobs
+namespace StockMarketApi.BackgroundJobs
 {
-    public class GameEnd: IGameEnd
+    public class ScheduledJobs : IScheduledJobs
     {
         private IUserDAO userDao;
         private IGameDAO gameDao;
         private ITransactionDAO transactionDao;
         private IOwnedStocksHelper ownedHelper;
-        private IStockDAO stockDao;
 
-        public GameEnd(IUserDAO userDao, IGameDAO gameDao, ITransactionDAO transactionDao, IOwnedStocksHelper ownedHelper, IStockDAO stockDao)
+        public ScheduledJobs(IUserDAO userDao, IGameDAO gameDao, ITransactionDAO transactionDao, IOwnedStocksHelper ownedHelper)
 
         {
             this.userDao = userDao;
             this.gameDao = gameDao;
             this.transactionDao = transactionDao;
             this.ownedHelper = ownedHelper;
-            this.stockDao = stockDao;
+        }
+
+        public void ProcessGameEnd()
+        {
+            BackgroundJob.Enqueue(() => SellOffStocks());
         }
 
         public void SellOffStocks()
@@ -60,10 +64,10 @@ namespace StockMarketApi.ScheduledJobs
                         transactionDao.AddNewTransaction(finalTransaction);
 
                         //sell all the stocks a user has
-                        
+
                     }
                 }
-                gameDao.UpdateTransactionsEndGame(game.Id);    
+                gameDao.UpdateTransactionsEndGame(game.Id);
             }
         }
     }

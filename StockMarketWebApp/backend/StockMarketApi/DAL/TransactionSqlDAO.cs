@@ -17,6 +17,7 @@ namespace StockMarketApi.DAL
             this.connectionString = connectionString;
         }
 
+
         public int AddNewTransaction(TransactionModel model)
         {
             int transactionId;

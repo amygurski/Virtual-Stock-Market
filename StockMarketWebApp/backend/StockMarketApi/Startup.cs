@@ -5,6 +5,8 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Hangfire;
+using Hangfire.SqlServer;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -15,10 +17,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using StockMarketApi.BackgroundJobs;
 using StockMarketApi.DAL;
 using StockMarketApi.HelperMethods;
 using StockMarketApi.Providers.Security;
-using StockMarketApi.ScheduledJobs;
 
 namespace StockMarketApi
 {
@@ -82,28 +84,34 @@ namespace StockMarketApi
                     };
                 });
 
-            // Required to hit the API from external sources, maybe?
-            //services.AddCors(options =>
-            //{
-            //    options.AddPolicy(MyAllowSpecificOrigins,
-            //        builder =>
-            //        {
-            //            builder.AllowAnyOrigin();
-            //        });
-            //});
+            // Setup Hangfire for background job processing
+            services.AddHangfire(configuration => configuration
+                .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+                .UseSimpleAssemblyNameTypeSerializer()
+                .UseRecommendedSerializerSettings()
+                .UseSqlServerStorage(Configuration.GetConnectionString("HangfireDB"), new SqlServerStorageOptions
+                {
+                    CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+                    SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+                    QueuePollInterval = TimeSpan.Zero,
+                    UseRecommendedIsolationLevel = true,
+                    UsePageLocksOnDequeue = true,
+                    DisableGlobalLocks = true
+                }));
+            services.AddHangfireServer();
 
             // Dependency Injection configuration
             services.AddSingleton<ITokenGenerator>(tk => new JwtGenerator(Configuration["JwtSecret"]));
             services.AddSingleton<IPasswordHasher>(ph => new PasswordHasher());
-            services.AddTransient<IUserDAO>(m => new UserSqlDAO(Configuration.GetConnectionString("Default")));
-            services.AddTransient<IGameDAO>(m => new GameSqlDAO(Configuration.GetConnectionString("Default")));
-            services.AddTransient<ITransactionDAO>(m => new TransactionSqlDAO(Configuration.GetConnectionString("Default")));
-            services.AddTransient<IStockAPIDAO>(m => new StockAPIDAO(Configuration.GetConnectionString("Default")));
-            services.AddTransient<IStockDAO>(m => new StockSqlDAO(Configuration.GetConnectionString("Default")));
+            services.AddTransient<IUserDAO>(sp => new UserSqlDAO(Configuration.GetConnectionString("Default")));
+            services.AddTransient<IGameDAO>(sp => new GameSqlDAO(Configuration.GetConnectionString("Default")));
+            services.AddTransient<ITransactionDAO>(sp => new TransactionSqlDAO(Configuration.GetConnectionString("Default")));
+            services.AddTransient<IStockAPIDAO>(sp => new StockAPIDAO(Configuration.GetConnectionString("Default")));
+            services.AddTransient<IStockDAO>(sp => new StockSqlDAO(Configuration.GetConnectionString("Default")));
 
-            services.AddTransient<IOwnedStocksHelper, OwnedStocksHelper>();
+            services.AddTransient<IOwnedStocksHelper>(sp => new OwnedStocksHelper(sp.GetService<ITransactionDAO>(), sp.GetService<IStockDAO>()));
 
-            services.AddTransient<IGameEnd, GameEnd>();
+            services.AddTransient<IScheduledJobs>(sp => new ScheduledJobs(sp.GetService<IUserDAO>(), sp.GetService<IGameDAO>(), sp.GetService<ITransactionDAO>(), sp.GetService<IOwnedStocksHelper>()));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
@@ -132,7 +140,7 @@ namespace StockMarketApi
         /// </summary>
         /// <param name="app"></param>
         /// <param name="env"></param>
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IBackgroundJobClient backgroundJobs)
         {
             if (env.IsDevelopment())
             {
@@ -143,6 +151,10 @@ namespace StockMarketApi
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            // Setup Hangfire Dashboard
+            app.UseHangfireDashboard();
+            backgroundJobs.Enqueue(() => Console.WriteLine("Hello world from Hangfire!"));
 
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
             // specifying the Swagger JSON endpoint.

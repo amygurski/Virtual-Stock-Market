@@ -16,6 +16,7 @@ namespace StockMarketApi.DAL
             this.connectionString = connectionString;
         }
 
+
         public IList<CurrentStocksModel> GetCurrentStocks()
         {
             List<CurrentStocksModel> result = new List<CurrentStocksModel>();

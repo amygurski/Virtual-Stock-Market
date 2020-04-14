@@ -1,5 +1,6 @@
 <template>
   <div class="text-center research-background">
+    <input type="text" id="search" v-model="search" placeholder="Search Stocks..." />
     <div id="research-container">
       <div class="table-responsive">
         <h1>Research Stocks</h1>
@@ -9,27 +10,31 @@
               <th scope="col">Ticker Symbol</th>
               <th scope="col">Name</th>
               <th scope="col">Current Price</th>
-              <th scope="col">Net Change</th>
               <th scope="col">Percent Change</th>
-              <th scope="col">6 Month Low</th>
-              <th scope="col">6 Month High</th>
-              <th scope="col">Number Of Trades</th>
+              <th scope="col">Six Month Low</th>
+              <th scope="col">Six Month High</th>
               <th scope="col"></th>
             </tr>
           </thead>
           <tbody>
-            <tr v-bind:key="stock.stockSymbol" v-for="stock in data">
+            <tr v-bind:key="stock.stockSymbol" v-for="stock in filteredData">
               <td>{{stock.stockSymbol}}</td>
               <td>{{stock.companyName}}</td>
               <td>{{ formatCurrency(stock.currentPrice) }}</td>
-              <td>{{stock.netChange}}</td>
-              <td>{{ stock.percentChange.toFixed(3) }}%</td>
-              <td>{{stock.low}}</td>
-              <td>{{stock.high}}</td>
-              <td>{{stock.volume}}</td>
               <td>
-                <router-link :to="{ name: 'stock-details' }">
-                  <button type="button" class="btn btn-primary btn-rounded btn-sm m-0">View Details</button>
+                {{ stock.percentChange.toFixed(3) }}% &nbsp;
+                <i
+                  class="fas fa-2x"
+                  v-bind:class="{'fa-caret-up': stock.percentChange > 0 , 'fa-caret-down': stock.percentChange < 0 }"
+                ></i>
+              </td>
+              <td>{{formatCurrency(stock.sixMonthLow) }}</td>
+              <td>{{formatCurrency(stock.sixMonthHigh) }}</td>
+              <td>
+                <router-link
+                  :to="{name: 'stock-details', params: {stockSymbol: stock.stockSymbol}}"
+                >
+                  <button type="button" class="btn btn-primary btn-rounded btn-sm m-0">Stock Details</button>
                 </router-link>
               </td>
             </tr>
@@ -48,8 +53,9 @@ export default {
   mixins: [HelperMixin],
   data() {
     return {
+      search: "",
       stock: Object,
-      data: Array,
+      data: [],
       user: Object,
       gameId: Number
     };
@@ -63,7 +69,7 @@ export default {
   methods: {
     getData() {
       // vue-resource example
-      fetch(`${process.env.VUE_APP_REMOTE_API}/stocks/getstockhistory`, {
+      fetch(`${process.env.VUE_APP_REMOTE_API}/stocks/research`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -80,15 +86,31 @@ export default {
           console.log("Error", e);
         });
     }
+  },
+  computed: {
+    filteredData() {
+      const filter = new RegExp(this.search, "i");
+      return this.data.filter(
+        stock =>
+          stock.companyName.match(filter) || stock.stockSymbol.match(filter)
+      );
+    }
   }
 };
 </script>
 
 <style scoped>
+.fa-caret-up {
+  color: green;
+}
+.fa-caret-down {
+  color: red;
+}
+
 .research-background {
   background-color: darkgray;
   background-image: url(/images/register-login-background.jpg);
-  padding-top: 5%;
+  padding-top: 3%;
   position: fixed;
   overflow: auto;
   height: 100%;
@@ -103,5 +125,13 @@ export default {
   margin: auto;
   padding: 25px;
   width: 60%;
+}
+#search {
+  margin: 20px;
+  border: 10px solid #343a40;
+  border-radius: 10px;
+  padding: 10px;
+  width: 12%;
+  font-size: 125%;
 }
 </style>

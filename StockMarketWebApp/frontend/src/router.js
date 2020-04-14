@@ -11,7 +11,7 @@ import CreateGame from '@/views/CreateGame.vue'
 import JoinGameDetail from '@/views/JoinGameDetail.vue'
 import GameDetail from '@/views/GameDetail.vue'
 import AdminControlPanel from '@/views/AdminControlPanel.vue'
-import ResearchIndex from '@/views/ResearchIndex.vue'
+import ResearchStocks from '@/views/ResearchStocks.vue'
 import StockDetails from '@/views/StockDetails.vue'
 import OwnedStocks from '@/views/OwnedStocks'
 import SellStock from '@/views/SellStock'
@@ -109,7 +109,7 @@ const router = new Router({
     },
     {
       path: "/stocks/research",
-      component: ResearchIndex,
+      component: ResearchStocks,
       meta: {
         requiresAuth: false
       }

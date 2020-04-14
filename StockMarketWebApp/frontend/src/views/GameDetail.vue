@@ -1,43 +1,45 @@
 <template>
   <div id="gamedetail-container">
-    <div class="gamedetail text-center">
-      <h1>Hi {{user.sub}}!</h1>
-      <div class="card-container">
-        <div class="card text-white bg-dark detail-card">
-          <div class="card-header">Game Id: {{game.gameId}}</div>
-          <div class="card-body">
-            <h5 class="card-title">Creator: {{game.creatorUsername}}</h5>
-            <p class="card-text">{{game.description}}</p>
-          </div>
-        </div>
-        <div class="card text-white bg-dark detail-card">
-          <div class="card-header">Your Balance: {{ formatCurrency(computedCurrentBalance) }}</div>
-          <div class="card-body">
-            <h5 class="card-title">The remainder of funds</h5>
-            <p class="card-text">You're doing great!</p>
-          </div>
-        </div>
-        <div class="card text-white bg-dark detail-card">
-          <div class="card-header">Leaderboard</div>
-          <div class="card-body">
-            <ol class="card-text">
-              <li
-                v-for="leaderboard in game.leaderboardData"
-                v-bind:key="leaderboard.userName"
-              >{{leaderboard.userName}}: {{formatCurrency(leaderboard.currentBalance)}}</li>
-            </ol>
-          </div>
+    <div class="row">
+      <div class="card-background text-center" id="game-actions">
+        <h1>Hi {{user.sub}}!</h1>
+        <h2>{{game.name}}</h2>
+        <p>{{game.description}}</p>
+        <div class="button-group">
+          <router-link :to="{name: 'available-stocks', params: {id: game.gameId}}">
+            <button
+              type="button"
+              class="btn btn-primary btn-rounded btn-block buysell-button"
+            >Buy Stocks</button>
+          </router-link>
+          <router-link :to="{name: 'owned-stocks', params: {id: game.gameId}}">
+            <button type="button" class="btn btn-danger btn-rounded buysell-button">Sell Stocks</button>
+          </router-link>
+          <modal name="hello-world">hello, world!</modal>
+          <button
+            id="show-modal"
+            class="btn btn-secondary btn-rounded buysell-button"
+            @click="show"
+          >Invite Players</button>
+          <!-- <router-link :to="{name: 'owned-stocks', params: {id: game.gameId}}">
+            <button
+              type="button"
+              class="btn btn-secondary btn-rounded buysell-button"
+            >Invite Players</button>
+          </router-link>-->
         </div>
       </div>
-      <div class="buysell-container">
-        <router-link :to="{name: 'available-stocks', params: {id: game.gameId}}">
-          <button type="button" class="btn btn-primary btn-rounded buysell-button">Buy Stocks</button>
-        </router-link>
-        <router-link :to="{name: 'owned-stocks', params: {id: game.gameId}}">
-          <button type="button" class="btn btn-primary btn-rounded buysell-button">Sell Stocks</button>
-        </router-link>
+      <div class="card-background text-center" id="leaderboard">
+        <h1>Leaderboard</h1>
+        <ol class="card-text">
+          <li
+            v-for="leaderboard in game.leaderboardData"
+            v-bind:key="leaderboard.userName"
+          >{{leaderboard.userName}}: {{formatCurrency(leaderboard.currentBalance)}}</li>
+        </ol>
       </div>
     </div>
+<<<<<<< HEAD
     <div class="chart-container">
       
       <line-chart-reactive
@@ -47,8 +49,11 @@
       />
 
     </div>
+=======
+    <div class="card-background chart-container"></div>
+>>>>>>> 35ad37d697978044122875a7ab3f960cd2266442
     <owned-stocks-list v-bind:gameId="this.id" v-bind:user="this.user" v-bind:token="this.token"></owned-stocks-list>
-    <div class="gamedetail" id="transaction-table-container">
+    <div class="card-background" id="transaction-table-container">
       <h3 id="transaction-history-header" class="text-center">Transaction History</h3>
       <table class="table table-hover table-dark detail-table">
         <thead class="thead-dark">
@@ -82,14 +87,21 @@
 <script>
 import HelperMixin from "@/mixins/HelperMixins.js";
 import OwnedStocksList from "@/Components/OwnedStocksList.vue";
+<<<<<<< HEAD
 import LineChartReactive from "@/Components/LineChartReactive.vue";
+=======
+>>>>>>> 35ad37d697978044122875a7ab3f960cd2266442
 
 export default {
   name: "game-detail",
   mixins: [HelperMixin],
+
   components: {
     OwnedStocksList,
+<<<<<<< HEAD
     LineChartReactive,
+=======
+>>>>>>> 35ad37d697978044122875a7ab3f960cd2266442
   },
   data() {
     return {
@@ -155,6 +167,12 @@ export default {
           console.log("Error", e);
         });
     },
+    show() {
+      this.$modal.show("hello-world");
+    },
+    hide() {
+      this.$modal.hide("hello-world");
+    },
     getTransactionData() {
       fetch(`${process.env.VUE_APP_REMOTE_API}/transactions/getbygameanduser`, {
         method: "POST",
@@ -177,6 +195,7 @@ export default {
         });
     },
     buildTransactionLineData() {
+<<<<<<< HEAD
       this.transactions.forEach( transaction => {
         transaction.rawDate = new Date(transaction.transactionDate)
       })
@@ -193,6 +212,12 @@ export default {
         }
       )
       this.transactionLineLoaded = true;
+=======
+      let groomedLabelData = this.buildTransactionLabels();
+      this.transactions.sort();
+      this.transactionLineRawData = groomedLabelData;
+      this.transactionLineData.label = groomedLabelData.formattedDates;
+>>>>>>> 35ad37d697978044122875a7ab3f960cd2266442
     },
     buildTransactionLabels() {
       let formattedDatesArr = [];
@@ -210,6 +235,7 @@ export default {
         formattedDatesArr.push(this.formatDateAndTime(transaction.rawDate));
       });
 
+<<<<<<< HEAD
       return formattedDatesArr;
     },
     buildTransactionDataPoints() {
@@ -220,6 +246,13 @@ export default {
         transactionData.push(transactionBalance);
       })
       return transactionData
+=======
+      return {
+        firstDate: rawDatesArr[0],
+        rawDates: rawDatesArr,
+        formattedDates: formattedDatesArr
+      };
+>>>>>>> 35ad37d697978044122875a7ab3f960cd2266442
     }
   },
   computed: {
@@ -236,13 +269,13 @@ export default {
     },
     computedDateTest: function() {
       return new Date(this.transactions[0].transactionDate);
-    },
+    }
   }
 };
 </script>
 
 <style scoped>
-.card-container {
+/* .card-container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -250,10 +283,54 @@ export default {
 }
 .detail-card {
   width: 25%;
-}
-#transaction-table-container {
+} */
+
+.chart-container {
+  width: 75%;
   margin-top: 5%;
 }
+
+.btn-primary {
+  margin-bottom: 5px;
+}
+
+.btn-secondary {
+  margin-left: 5px;
+}
+
+#header {
+  width: 25%;
+  padding: 0px;
+}
+
+#leaderboard {
+  width: 50%;
+}
+h1 {
+  color: #67ddfb;
+}
+h2 {
+  color: white;
+}
+
+.card-background {
+  padding: 25px;
+  margin: auto;
+  border-radius: 25px;
+  border: 2px solid black;
+  background-color: #343a40;
+  color: white;
+}
+
+#transaction-table-container {
+  width: 75%;
+  margin-top: 5%;
+}
+
+#transaction-history-header {
+  margin-bottom: 20px;
+}
+
 #gamedetail-container {
   background: linear-gradient(
       rgba(255, 255, 255, 0.25),
@@ -269,7 +346,7 @@ export default {
   height: 100%;
 }
 
-.gamedetail {
+/* .gamedetail {
   width: 75%;
   padding: 25px;
   margin: auto;
@@ -277,12 +354,7 @@ export default {
   border: 2px solid rgba(0, 0, 0, 0.05);
   background-color: #343a40;
   color: white;
-}
-
-.buysell-button {
-  width: 30%;
-  margin: 25px 25px 0px 25px;
-}
+} */
 
 ul {
   padding: 0px;

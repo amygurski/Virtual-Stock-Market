@@ -24,7 +24,7 @@
               <router-link
                 :to="{ name: 'sell-stock', params: {gameId: gameId, ownedModel: stock } }"
               >
-                <button type="button" class="btn btn-primary btn-rounded btn-sm m-0">Sell Stock</button>
+                <button type="button" class="btn btn-danger btn-rounded btn-sm m-0">Sell Stock</button>
               </router-link>
             </td>
           </tr>
@@ -86,5 +86,7 @@ export default {
 </script>
 
 <style scoped>
-
+#owned-stocks-container {
+  margin-top: 5%;
+}
 </style>

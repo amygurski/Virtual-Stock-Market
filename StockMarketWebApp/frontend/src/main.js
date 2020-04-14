@@ -8,6 +8,8 @@ import VModal from 'vue-js-modal'
 Vue.config.productionTip = false
 Vue.use(VModal)
 
+Vue.use(VModal)
+
 new Vue({
   router,
   render: h => h(App)

@@ -18,7 +18,7 @@
             <td>{{stock.stockSymbol}}</td>
             <td>{{stock.companyName}}</td>
             <td>{{stock.numberOfShares}}</td>
-            <td>{{ formatCurrency(stock.currentSharePrice) }}</td>
+            <td>{{ formatCurrency(stock.currentSharePrice) }} &nbsp; <i class="fas fa-2x" v-bind:class="{'fa-caret-up': stock.percentChange > 0 , 'fa-caret-down': stock.percentChange < 0 }"></i></td>
             <td>{{ formatCurrency(stock.avgPurchasedPrice) }}</td>
             <td>
               <router-link
@@ -86,6 +86,13 @@ export default {
 </script>
 
 <style scoped>
+.fa-caret-up {
+  color: green;
+}
+.fa-caret-down {
+  color: red;
+}
+
 #owned-stocks-container {
   margin-top: 5%;
 }

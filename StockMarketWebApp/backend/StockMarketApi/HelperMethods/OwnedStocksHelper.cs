@@ -47,6 +47,7 @@ namespace StockMarketApi.HelperMethods
                     ownedStock.StockSymbol = kvp.Value[0].StockSymbol;
                     ownedStock.CompanyName = kvp.Value[0].CompanyName;
                     ownedStock.CurrentSharePrice = stockDao.GetStockBySymbol(kvp.Key).CurrentPrice;
+                    ownedStock.PercentChange = stockDao.GetStockBySymbol(kvp.Key).PercentChange;
 
                     int numShares = 0;
                     decimal netTotalPriceBought = 0.0M;

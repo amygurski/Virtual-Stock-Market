@@ -43,7 +43,7 @@
       
       <line-chart-reactive
       v-if="transactionLineLoaded"
-      :chartdata="transactionLineData"
+      :chartData="transactionLineData"
       :options="transactionLineOptions"
       />
 
@@ -91,7 +91,7 @@ export default {
 
   components: {
     OwnedStocksList,
-    LineChartReactive,
+    LineChartReactive
   },
   data() {
     return {
@@ -121,14 +121,14 @@ export default {
       }
     };
   },
-  mounted() {
+  created() {
     this.id = this.$route.params.id;
     this.token = this.$attrs.token;
     this.user = this.$attrs.user;
     this.ApiModel.username = this.user.sub;
     this.ApiModel.gameid = this.$route.params.id;
     this.getData();
-    this.getTransactionData().jsonData;
+    this.getTransactionData();
     // this.buildTransactionLineData();
   },
   //   }  mounted() {

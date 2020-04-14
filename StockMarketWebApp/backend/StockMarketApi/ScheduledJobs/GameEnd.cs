@@ -41,7 +41,7 @@ namespace StockMarketApi.ScheduledJobs
                 //use transactionDAO to sell all of these stocks
                foreach(OwnedStocksModel stock in expiredStocks)
                 {
-                    transactionDao.AddNewTransaction();
+                    //transactionDao.AddNewTransaction();
                 }
 
                 //sell all the stocks a user has

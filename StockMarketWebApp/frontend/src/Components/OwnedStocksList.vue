@@ -48,10 +48,10 @@ export default {
       token: String,
       apiModel: {
         userName: '',
-        gameId: '',
+        gameId: ''
       }
-    };
-  },
+      }
+    },
   mounted() {
     this.token = this.$attrs.token;
     this.user = this.$attrs.user;

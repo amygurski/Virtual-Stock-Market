@@ -11,7 +11,7 @@ export default {
   mixins: [reactiveProp],
   // Store chartdata and options in props these will be passed in from the caller
   props: {
-    chartdata: {
+    chartData: {
       type: Object,
       default: null
     },
@@ -22,7 +22,7 @@ export default {
   },
   mounted() {
     // this.chartdata is created in the mixin and contains all the data needed to build the chart.
-    this.renderChart(this.chartdata, this.options);
+    this.renderChart(this.chartData, this.options);
   }
 };
 </script>

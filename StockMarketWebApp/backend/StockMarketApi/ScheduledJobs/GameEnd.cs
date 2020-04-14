@@ -35,7 +35,7 @@ namespace StockMarketApi.ScheduledJobs
 
 
                 //use transactionDAO to sell all of these stocks
-                transactionDao.AddNewTransaction();
+                //transactionDao.AddNewTransaction();
 
             }
         }

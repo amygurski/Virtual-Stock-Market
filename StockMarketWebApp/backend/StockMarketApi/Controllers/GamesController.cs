@@ -157,7 +157,28 @@ namespace StockMarketApi.Controllers
             {
                 int userId = userDao.GetUser(apiModel.UserName).Id;
 
-                gameDao.JoinGame(userId, apiModel.GameId);
+                IList<UserModel> currentPlayers = userDao.GetUsersByGame(apiModel.GameId);
+
+                bool found = false;
+                foreach (UserModel players in currentPlayers)
+                {
+                    if (userId == players.Id)
+                    {
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (!found)
+                {
+                    gameDao.JoinGame(userId, apiModel.GameId);
+                }
+                else
+                {
+                    return new BadRequestObjectResult(ModelState);
+                }
+
+
 
                 GameModel newGame = gameDao.GetGameById(apiModel.GameId);
 

@@ -15,6 +15,8 @@ namespace StockMarketApi.DAL
 
         IList<StockHistoryModel> GetAllStocksHistory();
 
+        IList<ResearchStocksAPIModel> GetStocksResearch();
+
         void SaveStock(StockModel stock);
 
         void UpdateStock(StockModel stock);

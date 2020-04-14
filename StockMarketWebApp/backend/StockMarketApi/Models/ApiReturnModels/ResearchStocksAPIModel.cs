@@ -11,8 +11,8 @@ namespace StockMarketApi.Models.ApiReturnModels
 
         //From stocks table
         public string CompanyName { get; set; } 
-        public decimal CurrentPrice { get; set; } 
-        public decimal PercentChange { get; set; }
+        public double CurrentPrice { get; set; } 
+        public double PercentChange { get; set; }
 
         //From 6 month stock history table
         public double SixMonthHigh { get; set; }

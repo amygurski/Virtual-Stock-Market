@@ -4,12 +4,12 @@
     <div id="research-container">
       <div class="table-responsive">
         <h1>Available Stocks</h1>
-        <table class="table table-hover table-dark">
+        <table class="table table-hover table-dark" data-pagination="true" data-toggle="table" data-search="true">
           <thead class="thead-dark">
             <tr>
               <th scope="col">Ticker Symbol</th>
               <th scope="col">Name</th>
-              <th scope="col">Current Price</th>
+              <th @click="sort('currentPrice')">Current Price</th>
               <th scope="col">Daily Percent Change</th>
               <th scope="col"></th>
             </tr>
@@ -55,7 +55,9 @@ export default {
       stock: Object,
       data: [],
       user: Object,
-      gameId: Number
+      gameId: Number,
+      currentSort:'name',
+  currentSortDir:'asc'
     };
   },
   mounted() {
@@ -83,6 +85,12 @@ export default {
         .catch(e => {
           console.log("Error", e);
         });
+    },
+    sort(s) {
+      if(s === this.currentSort) {
+        this.currentSortDir = this.currentSortDir ==='asc'?'desc':'asc';
+      }
+      this.currentSort = s;
     }
   },
   computed: {
@@ -93,6 +101,16 @@ export default {
           stock.companyName.match(filter) || stock.stockSymbol.match(filter)
       );
     }
+    // sortedData() {
+    //   // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+    //   return this.data.sort((a,b) => {
+    //     let modifier = 1;
+    //     if (this.currentSortDir === 'desc') modifier = -1;
+    //     if(a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
+    //     if(a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
+    //     return 0;
+    //   });
+    // }
   }
 };
 </script>
@@ -119,10 +137,10 @@ export default {
 }
 #search {
   margin: 20px;
-border: 10px solid #343a40;
-border-radius: 10px;
-padding: 10px;
-width: 12%;
-font-size: 125%;
+  border: 10px solid #343a40;
+  border-radius: 10px;
+  padding: 10px;
+  width: 12%;
+  font-size: 125%;
 }
 </style>

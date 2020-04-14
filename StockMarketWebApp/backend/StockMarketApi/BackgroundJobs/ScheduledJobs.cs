@@ -28,7 +28,7 @@ namespace StockMarketApi.BackgroundJobs
 
         public void ProcessGameEnd()
         {
-            BackgroundJob.Enqueue(() => SellOffStocks());
+            SellOffStocks();
         }
 
         public void SellOffStocks()

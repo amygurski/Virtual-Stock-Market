@@ -14,5 +14,9 @@ namespace StockMarketApi.DAL
         CurrentStocksModel GetStockBySymbol(string symbol);
 
         IList<StockHistoryModel> GetAllStocksHistory();
+
+        void SaveStock(StockModel stock);
+
+        void UpdateStock(StockModel stock);
     }
 }

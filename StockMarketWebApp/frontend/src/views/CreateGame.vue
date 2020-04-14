@@ -24,6 +24,18 @@
             required
           />
         </div>
+                <div class="form-group">
+          <label for="enddate">End Time</label>
+          <input
+            type="time"
+            placeholder="16:30:00"
+            step="300"
+            id="endtime"
+            class="form-control"
+            v-model="game.endTime"
+            required
+          />
+        </div>
 
         <div class="form-group">
           <label for="name" class="sr-only">Name</label>

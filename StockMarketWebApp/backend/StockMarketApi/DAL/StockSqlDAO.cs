@@ -118,6 +118,60 @@ namespace StockMarketApi.DAL
             return result;
         }
 
+        public void UpdateStock(StockModel stock)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand(@"UPDATE stocks 
+                                                      SET current_share_price = @currentPrice,
+                                                          percent_daily_change = @percentChange
+                                                      WHERE stock_symbol = @stockSymbol", conn);
+                    cmd.Parameters.AddWithValue("@stock_symbol", stock.Symbol);
+                    cmd.Parameters.AddWithValue("@current_share_price", stock.LastPrice);
+                    cmd.Parameters.AddWithValue("@percent_daily_change", stock.PercentChange);
+
+                    cmd.ExecuteScalar();
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+
+        }
+
+        /// <summary>
+        /// Saves a stock to the database
+        /// </summary>
+        /// <param name="stock"></param>
+        public void SaveStock(StockModel stock)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand(@"INSERT INTO stocks (stock_symbol, name_of_company, current_share_price, percent_daily_change) 
+                                                      VALUES (@stock_symbol, @name_of_company, @current_share_price, @percent_daily_change);", conn);
+                    cmd.Parameters.AddWithValue("@stock_symbol", stock.Symbol);
+                    cmd.Parameters.AddWithValue("@name_of_company", stock.Name);
+                    cmd.Parameters.AddWithValue("@current_share_price", stock.LastPrice);
+                    cmd.Parameters.AddWithValue("@percent_daily_change", stock.PercentChange);
+
+                    cmd.ExecuteScalar();
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+
+            //return stockId;
+        }
+
         /// <summary>
         /// Get info for research stocks view where user can see some preliminary details aboutt he current stock
         /// </summary>
@@ -194,5 +248,7 @@ namespace StockMarketApi.DAL
                 PercentChange = Convert.ToDecimal(reader["percent_daily_change"])
             };
         }
+
+
     }
 }

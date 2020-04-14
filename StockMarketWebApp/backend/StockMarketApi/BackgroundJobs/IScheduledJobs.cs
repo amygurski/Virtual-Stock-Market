@@ -8,5 +8,6 @@ namespace StockMarketApi.BackgroundJobs
     public interface IScheduledJobs
     {
         void SellOffStocks();
+        void ProcessGameEnd();
     }
 }

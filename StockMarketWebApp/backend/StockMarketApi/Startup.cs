@@ -140,7 +140,7 @@ namespace StockMarketApi
         /// </summary>
         /// <param name="app"></param>
         /// <param name="env"></param>
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IBackgroundJobClient backgroundJobs)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IBackgroundJobClient backgroundJobs, IScheduledJobs scheduledJobs)
         {
             if (env.IsDevelopment())
             {
@@ -155,6 +155,7 @@ namespace StockMarketApi
             // Setup Hangfire Dashboard
             app.UseHangfireDashboard();
             backgroundJobs.Enqueue(() => Console.WriteLine("Hello world from Hangfire!"));
+            RecurringJob.AddOrUpdate(() => scheduledJobs.ProcessGameEnd(), "2/5 * * * *");
 
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
             // specifying the Swagger JSON endpoint.

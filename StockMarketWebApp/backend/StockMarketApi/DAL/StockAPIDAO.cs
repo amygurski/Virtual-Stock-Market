@@ -72,43 +72,11 @@ namespace StockMarketApi.DAL
 
                     //Add the stock to the list of stocks to be returned
                     allStocks.Add(stock);
-
-                    //Save stocks to database
-                    SaveStock(stock);
                 }
             }
 
             return allStocks;
         }
 
-        //TODO: Move to separate DAO for SQL
-        /// <summary>
-        /// Saves a stock to the database
-        /// </summary>
-        /// <param name="stock"></param>
-        public void SaveStock(StockModel stock)
-        {
-            try
-            {
-                using (SqlConnection conn = new SqlConnection(connectionString))
-                {
-                    conn.Open();
-                    SqlCommand cmd = new SqlCommand(@"INSERT INTO stocks (stock_symbol, name_of_company, current_share_price, percent_daily_change) 
-                                                      VALUES (@stock_symbol, @name_of_company, @current_share_price, @percent_daily_change);", conn);
-                    cmd.Parameters.AddWithValue("@stock_symbol", stock.Symbol);
-                    cmd.Parameters.AddWithValue("@name_of_company", stock.Name);
-                    cmd.Parameters.AddWithValue("@current_share_price", stock.LastPrice);
-                    cmd.Parameters.AddWithValue("@percent_daily_change", stock.PercentChange);
-
-                    cmd.ExecuteScalar();
-                }
-            }
-            catch (SqlException ex)
-            {
-                throw ex;
-            }
-
-            //return stockId;
-        }
     }
 }

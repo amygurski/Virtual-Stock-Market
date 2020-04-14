@@ -5,7 +5,7 @@
         <h1>Hi {{user.sub}}!</h1>
         <h2>{{game.name}}</h2>
         <p>{{game.description}}</p>
-        <div class="button-group" v-if="game.isCompleted == false" >
+        <div class="button-group" v-if="game.isCompleted == false">
           <router-link :to="{name: 'available-stocks', params: {id: game.gameId}}">
             <button
               type="button"
@@ -13,14 +13,29 @@
             >Buy Stocks</button>
           </router-link>
           <router-link :to="{name: 'owned-stocks', params: {id: game.gameId}}">
-            <button type="button" class="btn btn-danger btn-rounded buysell-button">Sell Stocks</button>
+            <button
+              type="button"
+              class="btn btn-danger btn-rounded btn-block buysell-button"
+            >Sell Stocks</button>
           </router-link>
-          <modal name="hello-world">hello, world!</modal>
-          <button
+          <div class="form-group"> 
+            <label for="name" class="sr-only">Name</label>
+            <input
+              type="text"
+              id="name"
+              class="form-control"
+              placeholder="Username"
+              required
+              autofocus
+            />
+            <button type="button" class="btn btn-secondary btn-rounded">Invite Players</button>
+          </div>
+          <!-- <modal name="hello-world">hello, world!</modal> -->
+          <!-- <button
             id="show-modal"
             class="btn btn-secondary btn-rounded buysell-button"
             @click="show"
-          >Invite Players</button>
+          >Invite Players</button>-->
           <!-- <router-link :to="{name: 'owned-stocks', params: {id: game.gameId}}">
             <button
               type="button"
@@ -28,7 +43,9 @@
             >Invite Players</button>
           </router-link>-->
         </div>
-        <div v-else><P>Sorry, the game is over. Check the Leaderboard to see who won!</P></div>
+        <div v-else>
+          <P>Sorry, the game is over. Check the Leaderboard to see who won!</P>
+        </div>
       </div>
       <div class="card-background text-center" id="leaderboard">
         <h1>Leaderboard</h1>
@@ -40,16 +57,17 @@
         </ol>
       </div>
     </div>
-    <div class="chart-container">
-      
+    <div class="card-background chart-container text-center">
+      <h1>Cash Balance</h1>
       <line-chart-reactive
-      v-if="transactionLineLoaded"
-      :chartData="transactionLineData"
-      :options="transactionLineOptions"
+        v-if="transactionLineLoaded"
+        :chartData="transactionLineData"
+        :options="transactionLineOptions"
       />
-
     </div>
+
     <owned-stocks-list v-bind:gameId="this.id" v-bind:user="this.user" v-bind:token="this.token"></owned-stocks-list>
+
     <div class="card-background" id="transaction-table-container">
       <h3 id="transaction-history-header" class="text-center">Transaction History</h3>
       <table class="table table-hover table-dark detail-table">
@@ -109,15 +127,17 @@ export default {
       transactionLineLoaded: false,
       transactionLineData: {
         labels: Array,
-        datasets: [],
+        datasets: []
       },
       transactionLineOptions: {
         scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true
-                }
-            }]
+          yAxes: [
+            {
+              ticks: {
+                beginAtZero: true
+              }
+            }
+          ]
         }
       }
     };
@@ -137,8 +157,8 @@ export default {
   //   },
   methods: {
     openModal() {
-            this.modalOpen = !this.modalOpen;
-        },  
+      this.modalOpen = !this.modalOpen;
+    },
     getData() {
       // vue-resource example
       fetch(`${process.env.VUE_APP_REMOTE_API}/games/${this.id}`, {
@@ -178,7 +198,7 @@ export default {
           return response.json();
         })
         .then(jsonData => {
-          this.transactions = jsonData
+          this.transactions = jsonData;
           this.buildTransactionLineData();
         })
         .catch(e => {
@@ -186,21 +206,19 @@ export default {
         });
     },
     buildTransactionLineData() {
-      this.transactions.forEach( transaction => {
-        transaction.rawDate = new Date(transaction.transactionDate)
-      })
+      this.transactions.forEach(transaction => {
+        transaction.rawDate = new Date(transaction.transactionDate);
+      });
 
       this.transactions.sort((a, b) => {
-        return a.rawDate - b.rawDate
-      })
+        return a.rawDate - b.rawDate;
+      });
 
       this.transactionLineData.labels = this.buildTransactionLabels();
-      this.transactionLineData.datasets.push(
-        {
-          label: 'Cash Balance',
-          data: this.buildTransactionDataPoints()
-        }
-      )
+      this.transactionLineData.datasets.push({
+        label: "Cash Balance",
+        data: this.buildTransactionDataPoints()
+      });
       this.transactionLineLoaded = true;
     },
     buildTransactionLabels() {
@@ -224,11 +242,11 @@ export default {
     buildTransactionDataPoints() {
       let transactionData = [];
       let transactionBalance = 0;
-      this.transactions.forEach( transaction => {
+      this.transactions.forEach(transaction => {
         transactionBalance += transaction.netValue;
         transactionData.push(transactionBalance);
-      })
-      return transactionData
+      });
+      return transactionData;
     }
   },
   computed: {

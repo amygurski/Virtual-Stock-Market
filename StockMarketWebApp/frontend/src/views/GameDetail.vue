@@ -53,7 +53,7 @@
             Congratulations to the winner:
             <strong>{{game.leaderboardData[0].userName}}!</strong>
           </h5>
-          <h6>Final Standings:</h6>
+          <!-- <h6>Final Standings:</h6> -->
         </div>
       </div>
       <div class="card-background text-center" id="leaderboard">

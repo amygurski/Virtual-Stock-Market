@@ -69,6 +69,14 @@ namespace StockMarketApi.Controllers
             return new JsonResult(stocks);
         }
 
+        //[HttpGet("research/{symbol}")]
+        //public IActionResult GetStockResearchDetail(string symbol)
+        //{
+
+        //}
+
+       
+
         // Original code for ownedStocks has been moved to a helper method preserving this in case of issues
 
 

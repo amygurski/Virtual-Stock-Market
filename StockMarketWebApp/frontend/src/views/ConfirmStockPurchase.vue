@@ -51,12 +51,14 @@
         <!-- <p>Do you still want to buy this stock?</p> -->
         <div class="button-group">
           <button
+            :disabled="this.currentBalance < (postApiModel.numberOfShares * stock.currentPrice) || (postApiModel.numberOfShares * stock.currentPrice) <= 0"
             class="btn btn-primary purchase-buttons"
+            placeholder="1"
             type="submit"
             v-on:click.prevent="buildStockObject()"
           >Purchase Stock</button>
 
-          <router-link :to="{name: 'available-stocks', params: {id: gameId}}">
+          <router-link :to="{name: 'available-stocks', params: {id: gameId, currentBalance: currentBalance}}">
             <button class="btn btn-secondary purchase-buttons" type="cancel">Cancel</button>
           </router-link>
         </div>
@@ -77,6 +79,7 @@ export default {
       token: String,
       stock: Object,
       gameId: Number,
+      currentBalance: Number,
       stockSymbol: String,
       postApiModel: {
         userName: String,
@@ -93,6 +96,7 @@ export default {
     this.user = this.$attrs.user;
     this.gameId = this.$route.params.gameId;
     this.stockSymbol = this.$route.params.stockSymbol;
+    this.currentBalance = this.$route.params.currentBalance;
     this.getStockData();
   },
   methods: {
@@ -151,6 +155,7 @@ export default {
       this.purchaseStock();
     }
   }
+  
 };
 </script>
 

@@ -18,7 +18,7 @@
         <h2>{{game.name}}</h2>
         <p>{{game.description}}</p>
         <div class="button-group" v-if="game.isCompleted == false">
-          <router-link :to="{name: 'available-stocks', params: {id: game.gameId}}">
+          <router-link :to="{name: 'available-stocks', params: {id: game.gameId, currentBalance: this.computedCurrentBalance}}">
             <button
               type="button"
               class="btn btn-primary btn-rounded btn-block buysell-button"
@@ -91,9 +91,7 @@
         v-if="transactionLineLoaded"
         :chartData="transactionLineData"
         :options="transactionLineOptions"
-        :styles="lineChartStyles"
       />
-      
     </div>
 
     <owned-stocks-list v-bind:gameId="this.id" v-bind:user="this.user" v-bind:token="this.token"></owned-stocks-list>
@@ -122,8 +120,8 @@
             <td v-if="transaction.stockSymbol === 'COMFEE' || transaction.stockSymbol === 'SYSTRN'">N/A</td>
             <td v-else-if="transaction.isPurchase">Buy</td>
             <td v-else>Sell</td>
-            <td v-if="transaction.netValue > 0" style="color: #90ee90">{{formatCurrency(transaction.netValue)}}</td>
-            <td v-else style="color:#f8d7da">{{formatCurrency(transaction.netValue)}}</td>
+            <td v-if="transaction.netValue > 0" style="color: green">{{formatCurrency(transaction.netValue)}}</td>
+            <td v-else style="color: red">{{formatCurrency(transaction.netValue)}}</td>
           </tr>
         </tbody>
       </table>
@@ -187,7 +185,7 @@ export default {
       transactionLineLoaded: false,
       transactionLineData: {
         labels: Array,
-        datasets: [],
+        datasets: []
       },
       transactionLineOptions: {
         scales: {
@@ -197,13 +195,8 @@ export default {
                 beginAtZero: true
               }
             }
-          ],
-          xAxes: [{
-            display: false
-          }]
-        },
-        maintainAspectRatio: false,
-        responsive: true,
+          ]
+        }
       }
     };
   },
@@ -325,11 +318,7 @@ export default {
       this.transactionLineData.labels = this.buildTransactionLabels();
       this.transactionLineData.datasets.push({
         label: "Cash Balance",
-        data: this.buildTransactionDataPoints(),
-        backgroundColor: "rgba(237, 227, 47, 0.35)",
-        borderColor: "rgba(36, 35, 26, 1)",
-        pointBackgroundColor: "rgba(251, 255, 0, 1)",
-        pointBorderColor: "rgba(36, 35, 26, 1)"
+        data: this.buildTransactionDataPoints()
       });
       this.transactionLineLoaded = true;
     },
@@ -376,15 +365,8 @@ export default {
       }
       return balance;
     },
-    // TODO: Remove this I think
     computedDateTest: function() {
       return new Date(this.transactions[0].transactionDate);
-    },
-    lineChartStyles() {
-      return {
-        height: '800px',
-        position: 'relative',
-      }
     }
   }
 };
@@ -415,8 +397,7 @@ export default {
 
 .chart-container {
   width: 75%;
-  margin-top: 3%;
-  /* max-height: 750px; */
+  margin-top: 5%;
 }
 
 .btn-primary {

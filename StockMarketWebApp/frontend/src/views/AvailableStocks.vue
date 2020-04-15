@@ -33,7 +33,7 @@
               </td>
               <td>
                 <router-link
-                  :to="{ name: 'confirm-purchase', params: {stockSymbol: stock.stockSymbol, gameId: gameId} }"
+                  :to="{ name: 'confirm-purchase', params: {stockSymbol: stock.stockSymbol, gameId: gameId, currentBalance: currentBalance} }"
                 >
                   <button type="button" class="btn btn-primary btn-rounded btn-sm m-0">Buy Stock</button>
                 </router-link>
@@ -67,14 +67,16 @@ export default {
       data: [],
       user: Object,
       gameId: Number,
-      currentSort: "name",
-      currentSortDir: "asc"
+      currentBalance: Number,
+      currentSort:'name',
+  currentSortDir:'asc'
     };
   },
   mounted() {
     this.token = this.$attrs.token;
     this.user = this.$attrs.user;
     this.gameId = this.$route.params.id;
+    this.currentBalance = this.$route.params.currentBalance;
     this.getData();
   },
   methods: {
@@ -112,6 +114,7 @@ export default {
           stock.companyName.match(filter) || stock.stockSymbol.match(filter)
       );
     }
+        
     // sortedData() {
     //   // eslint-disable-next-line vue/no-side-effects-in-computed-properties
     //   return this.data.sort((a,b) => {

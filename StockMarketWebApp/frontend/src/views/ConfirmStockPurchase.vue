@@ -35,6 +35,11 @@
                 />
               </td>
             </tr>
+            <tr>
+              <td>Transaction fee:</td>
+              <td>$19.95</td>
+            </tr>
+
             <!-- <tr>
               <td align="right"><h4>Transaction cost:</h4></td>
               <td><h4>{{ formatCurrency(postApiModel.numberOfShares * stock.currentPrice)}}</h4></td>
@@ -42,7 +47,7 @@
           </tbody>
         </table>
         <div class="alert alert-primary">
-          <h4>The transaction cost will be {{formatCurrency(postApiModel.numberOfShares * stock.currentPrice)}}.</h4>
+          <h5>The total transaction cost will be {{formatCurrency((postApiModel.numberOfShares * stock.currentPrice) + 19.95)}}.</h5>
         </div>
         <!-- <div class="row">Stock Sym: {{stock.stockSymbol}}</div>
         <div class="row">Stock Price: {{stock.currentPrice}}</div>-->
@@ -170,6 +175,8 @@ h1 {
   overflow: auto;
   width: 100%;
   height: 100%;
+  padding-top: 60px;
+  padding-bottom: 220px;
 }
 
 #creategame {

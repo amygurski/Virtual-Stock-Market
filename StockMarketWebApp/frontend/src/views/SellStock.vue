@@ -44,16 +44,29 @@
                 />
               </td>
             </tr>
+            <tr>
+              <td>Transaction fee:</td>
+              <td>$19.95</td>
+            </tr>
           </tbody>
         </table>
-        <div v-if="ownedModel.currentSharePrice > ownedModel.avgPurchasedPrice" class="alert alert-info">
-          <h4 >You will make {{formatCurrency((ownedModel.currentSharePrice-ownedModel.avgPurchasedPrice)*postApiModel.numberOfShares)}} in stock value from this sale.</h4>
+        <div
+          v-if="ownedModel.currentSharePrice > ownedModel.avgPurchasedPrice"
+          class="alert alert-info"
+        >
+          <h5>You will make {{formatCurrency((ownedModel.currentSharePrice-ownedModel.avgPurchasedPrice)*postApiModel.numberOfShares)}} in stock value from this sale.</h5>
         </div>
         <div v-else class="alert alert-danger">
-          <h4>You will lose {{formatCurrency((ownedModel.avgPurchasedPrice-ownedModel.currentSharePrice)*postApiModel.numberOfShares)}} in stock value from this sale.</h4>
+          <h5>You will lose {{formatCurrency((ownedModel.avgPurchasedPrice-ownedModel.currentSharePrice)*postApiModel.numberOfShares)}} in stock value from this sale.</h5>
         </div>
-        <div class="alert alert-success"> 
-          <h5>{{formatCurrency(postApiModel.numberOfShares * ownedModel.currentSharePrice)}} will be returned to your balance.</h5>
+        <div
+          v-if="(postApiModel.numberOfShares * ownedModel.currentSharePrice) > 19.95"
+          class="alert alert-success"
+        >
+          <h5>{{formatCurrency((postApiModel.numberOfShares * ownedModel.currentSharePrice)-19.95)}} will be returned to your balance.</h5>
+        </div>
+        <div v-else class="alert alert-danger">
+          <h5>{{formatCurrency(19.95 - (postApiModel.numberOfShares * ownedModel.currentSharePrice))}} will be deducted from your balance.</h5>
         </div>
         <div class="button-group">
           <button
@@ -169,6 +182,8 @@ h1 {
   overflow: auto;
   height: 100%;
   width: 100%;
+  padding-top: 60px;
+  padding-bottom: 220px;
 }
 #sell-stocks-container {
   border: 2px solid black;

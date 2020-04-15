@@ -142,7 +142,7 @@ namespace StockMarketApi
         /// </summary>
         /// <param name="app"></param>
         /// <param name="env"></param>
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IBackgroundJobClient backgroundJobs, IScheduledJobs scheduledJobs)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IScheduledJobs scheduledJobs)
         {
             if (env.IsDevelopment())
             {

@@ -40,7 +40,6 @@ namespace StockMarketApi.Controllers
         [HttpGet("currentgames")]
         public IActionResult AllActiveGames()
         {
-            stockHistoryAPIDao.GetLastCloseStockHistory();
             // TODO: Refactor with SQL Join Statement
             IList<GameModel> unformattedCurrentGames = gameDao.GetAllActiveGames();
             IList<GameAPIModel> formattedGames = new List<GameAPIModel>();

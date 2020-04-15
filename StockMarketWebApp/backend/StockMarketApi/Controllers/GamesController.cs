@@ -22,13 +22,15 @@ namespace StockMarketApi.Controllers
         private readonly IUserDAO userDao;
         private readonly ITransactionDAO transactionDao;
         private readonly IOwnedStocksHelper ownedHelper;
+        private readonly IStockHistoryAPIDAO stockHistoryAPIDao;
 
-        public GamesController(IGameDAO gameDao, IUserDAO userDao, ITransactionDAO transactionDao, IOwnedStocksHelper ownedHelper)
+        public GamesController(IGameDAO gameDao, IUserDAO userDao, ITransactionDAO transactionDao, IOwnedStocksHelper ownedHelper, IStockHistoryAPIDAO stockHistoryAPIDao)
         {
             this.gameDao = gameDao;
             this.userDao = userDao;
             this.transactionDao = transactionDao;
             this.ownedHelper = ownedHelper;
+            this.stockHistoryAPIDao = stockHistoryAPIDao;
         }
 
         /// <summary>
@@ -38,6 +40,7 @@ namespace StockMarketApi.Controllers
         [HttpGet("currentgames")]
         public IActionResult AllActiveGames()
         {
+            stockHistoryAPIDao.GetLastCloseStockHistory();
             // TODO: Refactor with SQL Join Statement
             IList<GameModel> unformattedCurrentGames = gameDao.GetAllActiveGames();
             IList<GameAPIModel> formattedGames = new List<GameAPIModel>();

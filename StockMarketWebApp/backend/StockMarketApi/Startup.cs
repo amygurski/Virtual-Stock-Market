@@ -106,12 +106,14 @@ namespace StockMarketApi
             services.AddTransient<IUserDAO>(sp => new UserSqlDAO(Configuration.GetConnectionString("Default")));
             services.AddTransient<IGameDAO>(sp => new GameSqlDAO(Configuration.GetConnectionString("Default")));
             services.AddTransient<ITransactionDAO>(sp => new TransactionSqlDAO(Configuration.GetConnectionString("Default")));
-            services.AddTransient<IStockAPIDAO>(sp => new StockAPIDAO(Configuration.GetConnectionString("Default")));
             services.AddTransient<IStockDAO>(sp => new StockSqlDAO(Configuration.GetConnectionString("Default")));
 
-            services.AddTransient<IOwnedStocksHelper>(sp => new OwnedStocksHelper(sp.GetService<ITransactionDAO>(), sp.GetService<IStockDAO>()));
+            services.AddTransient<IStockAPIDAO>(sp => new StockAPIDAO());            
+            services.AddTransient<IStockHistoryAPIDAO>(sp => new StockHistoryAPIDAO());
 
-            services.AddTransient<IScheduledJobs>(sp => new ScheduledJobs(sp.GetService<IUserDAO>(), sp.GetService<IGameDAO>(), sp.GetService<ITransactionDAO>(), sp.GetService<IOwnedStocksHelper>(), sp.GetService<IStockAPIDAO>(), sp.GetService<IStockDAO>()));
+            services.AddTransient<IOwnedStocksHelper>(sp => new OwnedStocksHelper(sp.GetService<ITransactionDAO>(), sp.GetService<IStockDAO>()));
+            services.AddTransient<IScheduledJobs>(sp => new ScheduledJobs(sp.GetService<IUserDAO>(), sp.GetService<IGameDAO>(), sp.GetService<ITransactionDAO>(), 
+                                                    sp.GetService<IOwnedStocksHelper>(), sp.GetService<IStockAPIDAO>(), sp.GetService<IStockDAO>(), sp.GetService<IStockHistoryAPIDAO>()));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
@@ -154,7 +156,7 @@ namespace StockMarketApi
 
             // Setup Hangfire Dashboard
             app.UseHangfireDashboard();
-            backgroundJobs.Enqueue(() => Console.WriteLine("Hello world from Hangfire!"));
+            RecurringJob.AddOrUpdate(() => scheduledJobs.UpdateStockHistoryDataFromAPI(), "9 18 ? * *", TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"));
             RecurringJob.AddOrUpdate(() => scheduledJobs.ProcessGameEnd(), "2/5 * * * *", TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"));
             RecurringJob.AddOrUpdate(() => scheduledJobs.UpdateStockDataFromAPI(), "0/15 7-18 ? * *", TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"));
 

@@ -20,5 +20,9 @@ namespace StockMarketApi.DAL
         void SaveStock(StockModel stock);
 
         void UpdateStock(StockModel stock);
+
+        void AddHistoryEntry(StockHistoryModel historyModel);
+
+        bool CheckForDuplicateHistoryEntry(DateTime date, string symbol);
     }
 }

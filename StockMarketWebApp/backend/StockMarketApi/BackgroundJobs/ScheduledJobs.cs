@@ -18,8 +18,9 @@ namespace StockMarketApi.BackgroundJobs
         private readonly IOwnedStocksHelper ownedHelper;
         private readonly IStockAPIDAO stockAPIDao;
         private readonly IStockDAO stockDao;
+        private readonly IStockHistoryAPIDAO stockHistoryAPIDao;
 
-        public ScheduledJobs(IUserDAO userDao, IGameDAO gameDao, ITransactionDAO transactionDao, IOwnedStocksHelper ownedHelper, IStockAPIDAO stockAPIDao, IStockDAO stockDao)
+        public ScheduledJobs(IUserDAO userDao, IGameDAO gameDao, ITransactionDAO transactionDao, IOwnedStocksHelper ownedHelper, IStockAPIDAO stockAPIDao, IStockDAO stockDao, IStockHistoryAPIDAO stockHistoryAPIDao)
 
         {
             this.userDao = userDao;
@@ -28,6 +29,7 @@ namespace StockMarketApi.BackgroundJobs
             this.ownedHelper = ownedHelper;
             this.stockAPIDao = stockAPIDao;
             this.stockDao = stockDao;
+            this.stockHistoryAPIDao = stockHistoryAPIDao;
         }
 
         public void ProcessGameEnd()
@@ -46,7 +48,21 @@ namespace StockMarketApi.BackgroundJobs
                     stockDao.UpdateStock(stock);
                 }
             }
+        }
 
+        public void UpdateStockHistoryDataFromAPI()
+        {
+            IList<StockHistoryModel> newStockHistoryInfo = stockHistoryAPIDao.GetLastCloseStockHistory();
+
+            foreach (StockHistoryModel stockHistory in newStockHistoryInfo)
+            {
+                bool isDuplicate = stockDao.CheckForDuplicateHistoryEntry(stockHistory.TradingDay, stockHistory.StockSymbol);
+
+                if (!isDuplicate)
+                {
+                    stockDao.AddHistoryEntry(stockHistory);
+                }
+            }
         }
 
         public void SellOffStocks()

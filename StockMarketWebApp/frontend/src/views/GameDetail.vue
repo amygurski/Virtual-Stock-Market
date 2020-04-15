@@ -1,7 +1,8 @@
 <template>
   <div id="gamedetail-container">
     <div
-      class="alert alert-dismissible fade show"
+      class="alert alert-dismissible fade show text-center"
+      id="alert-message"
       v-bind:class="{'alert-success': alertSuccess, 'alert-danger': !alertSuccess }"
       role="alert"
       v-if="alertMessage"
@@ -46,53 +47,42 @@
               @click="this.addUserToGame"
             >Invite Players</button>
           </div>
-          <!-- <modal name="hello-world">hello, world!</modal> -->
-          <!-- <button
-            id="show-modal"
-            class="btn btn-secondary btn-rounded buysell-button"
-            @click="show"
-          >Invite Players</button>-->
-          <!-- <router-link :to="{name: 'owned-stocks', params: {id: game.gameId}}">
-            <button
-              type="button"
-              class="btn btn-secondary btn-rounded buysell-button"
-            >Invite Players</button>
-          </router-link>-->
         </div>
         <div v-else>
-          <P>Sorry, the game is over. Check the Leaderboard to see who won!</P>
+          <h5 v-if="game.leaderboardData[0]">
+            Congratulations to the winner:
+            <strong>{{game.leaderboardData[0].userName}}!</strong>
+          </h5>
+          <h6>Final Standings:</h6>
         </div>
       </div>
       <div class="card-background text-center" id="leaderboard">
-         <div class="table-responsive">
-        <h1>Leaderboard</h1>
-        <table class="table table-hover table-dark">
-          <thead class="thead-dark">
-            <tr>
-              <th scope="col">Rank</th>
-              <th scope="col">Name</th>
-              <th scope="col">Cash</th>
-              <th scope="col">Stock Value</th>
-              <th scope="col">Total Portfolio Value</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-bind:key="leaderboard.userName" v-for="(leaderboard, index) in game.leaderboardData">
-              <td>{{index+1}}</td>
-              <td>{{leaderboard.userName}}</td>
-              <td>{{formatCurrency(leaderboard.currentBalance)}}</td>
-              <td>{{ formatCurrency(leaderboard.currentStockValue) }}</td>
-              <td>{{ formatCurrency(leaderboard.currentTotalPortfolioValue) }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-        <!-- <ol class="card-text">
-          <li
-            v-for="leaderboard in game.leaderboardData"
-            v-bind:key="leaderboard.userName"
-          >{{leaderboard.userName}}: cash: {{formatCurrency(leaderboard.currentBalance)}} | stock value: {{formatCurrency(leaderboard.currentStockValue)}} | total portfolio value: {{formatCurrency(leaderboard.currentTotalPortfolioValue)}}</li>
-        </ol> -->
+        <div class="table-responsive">
+          <h1>Leaderboard</h1>
+          <table class="table table-hover table-dark">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">Rank</th>
+                <th scope="col">Name</th>
+                <th scope="col">Cash</th>
+                <th scope="col">Stock Value</th>
+                <th scope="col">Total Portfolio Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                v-bind:key="leaderboard.userName"
+                v-for="(leaderboard, index) in game.leaderboardData"
+              >
+                <td>{{index+1}}</td>
+                <td>{{leaderboard.userName}}</td>
+                <td>{{formatCurrency(leaderboard.currentBalance)}}</td>
+                <td>{{ formatCurrency(leaderboard.currentStockValue) }}</td>
+                <td>{{ formatCurrency(leaderboard.currentTotalPortfolioValue) }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
     <div class="card-background chart-container text-center">
@@ -135,6 +125,28 @@
       </table>
     </div>
   </div>
+
+  <!-- Preserving old code -->
+
+  <!-- <modal name="hello-world">hello, world!</modal> -->
+  <!-- <button
+            id="show-modal"
+            class="btn btn-secondary btn-rounded buysell-button"
+            @click="show"
+  >Invite Players</button>-->
+  <!-- <router-link :to="{name: 'owned-stocks', params: {id: game.gameId}}">
+            <button
+              type="button"
+              class="btn btn-secondary btn-rounded buysell-button"
+            >Invite Players</button>
+  </router-link>-->
+
+  <!-- <ol class="card-text">
+          <li
+            v-for="leaderboard in game.leaderboardData"
+            v-bind:key="leaderboard.userName"
+          >{{leaderboard.userName}}: cash: {{formatCurrency(leaderboard.currentBalance)}} | stock value: {{formatCurrency(leaderboard.currentStockValue)}} | total portfolio value: {{formatCurrency(leaderboard.currentTotalPortfolioValue)}}</li>
+  </ol>-->
 </template>
 
 <script>
@@ -201,7 +213,7 @@ export default {
     }
     this.getData();
     this.getTransactionData();
-    setInterval( this.refreshData(), 3000)
+    setInterval(this.refreshData(), 3000);
     // this.buildTransactionLineData();
   },
   //   }  mounted() {
@@ -225,6 +237,7 @@ export default {
         })
         .then(jsonData => {
           this.game = jsonData;
+          this.checkForGameEnd();
         })
         .catch(e => {
           console.log("Error", e);
@@ -279,6 +292,13 @@ export default {
           console.log("Error", e);
         });
     },
+    checkForGameEnd() {
+      if (this.game.isCompleted) {
+        this.alertMessage =
+          "This game has ended, check the results to see how you did!";
+        this.alertSuccess = false;
+      }
+    },
     cleanUpInvite() {
       this.inviteUserAPI.username = null;
       this.alertMessage = "User Successfully Added To Game.";
@@ -328,7 +348,7 @@ export default {
       return transactionData;
     },
     refreshData() {
-      console.log("hi")
+      console.log("hi");
     }
   },
   computed: {
@@ -351,12 +371,9 @@ export default {
 </script>
 
 <style scoped>
-#actions-leaderboard-row {
-  display: flex;
-  width: 75%;
-  margin: auto;
+#alert-message {
+  margin-bottom: 12px;
 }
-
 
 .form-group,
 .btn {
@@ -394,22 +411,68 @@ export default {
   padding: 0px;
 }
 
-#leaderboard {
-  width: 50%;
+.card-background {
+  padding: 25px;
+  margin: 0 auto;
+  margin-bottom: 60px;
+  border-radius: 25px;
+  border: 2px solid black;
+  background-color: #343a40;
+  color: white;
 }
+
+#actions-leaderboard-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-direction: row;
+  width: 75%;
+  margin: 0 auto;
+  margin-bottom: 60px;
+}
+
+ @media only screen and (max-width: 1562px) {
+  #game-actions.card-background {
+    margin: 0 auto;
+    margin-bottom: 10px;
+  }
+
+  #leaderboard.card-background {
+    margin: auto;
+    min-width: 625px;
+    max-width: 100%;
+  }
+} 
+
+@media only screen and (min-width: 1563px) {
+  #game-actions.card-background {
+    margin: 0;
+    margin-bottom: 10px;
+  }
+
+  #leaderboard.card-background {
+    margin: 0;
+    margin-left: 80px;
+    min-width: 625px;
+    flex-grow: 1;
+    /* align-items: flex-start; */
+  }
+}
+
+@media only screen and (max-width: 1430px) {
+
+
+  #leaderboard.card-background {
+    flex-grow: 1;
+    max-width: 100%;
+  }
+}
+
 h1 {
   color: #67ddfb;
 }
 h2 {
-  color: white;
-}
-
-.card-background {
-  padding: 25px;
-  margin: auto;
-  border-radius: 25px;
-  border: 2px solid black;
-  background-color: #343a40;
   color: white;
 }
 
@@ -429,8 +492,8 @@ h2 {
     ),
     url(/Images/Join-Game-Background.png);
   background-size: cover;
-  padding-top: 5%;
-  padding-bottom: 10%;
+  padding-top: 60px;
+  padding-bottom: 220px;
   position: fixed;
   overflow: auto;
   width: 100%;
@@ -460,7 +523,7 @@ li {
 }
 
 #owned-stocks-header {
-  margin-bottom: 500px;
+  margin-bottom: 25%;
 }
 
 #owned-stocks-container {

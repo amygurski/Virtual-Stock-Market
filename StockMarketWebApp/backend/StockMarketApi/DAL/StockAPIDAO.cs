@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using StockMarketApi.Models.ApiInputModels.Games;
+using StockMarketApi.Models.ApiInputModels.StockTransactions;
 using StockMarketApi.Models.DatabaseModels;
 using System;
 using System.Collections.Generic;
@@ -18,12 +18,6 @@ namespace StockMarketApi.DAL
     public class StockAPIDAO : IStockAPIDAO
     {
         //To add stocks to our database
-        private readonly string connectionString;
-
-        public StockAPIDAO(string connectionString)
-        {
-            this.connectionString = connectionString;
-        }
 
         /// <summary>
         /// Get current stock prices from public API

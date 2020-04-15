@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace StockMarketApi.Models.ApiInputModels.Games
+namespace StockMarketApi.Models.ApiInputModels.StockTransactions
 {
     /// <summary>
     /// Model for barchart public API

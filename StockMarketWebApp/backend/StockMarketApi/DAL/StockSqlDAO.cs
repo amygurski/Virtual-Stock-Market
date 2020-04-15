@@ -180,6 +180,7 @@ namespace StockMarketApi.DAL
 
         }
 
+        // TODO: This is not being used, remove?
         /// <summary>
         /// Saves a stock to the database
         /// </summary>
@@ -255,6 +256,62 @@ namespace StockMarketApi.DAL
             return result;
         }
 
+        public bool CheckForDuplicateHistoryEntry(DateTime date, string symbol)
+        {
+            List<StockHistoryModel> entries = new List<StockHistoryModel>();
+           
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("select * from stock_history where trading_day = @date AND stock_symbol = @stockSymbol", conn);
+                    cmd.Parameters.AddWithValue("@date", date);
+                    cmd.Parameters.AddWithValue("@stockSymbol", symbol);
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        entries.Add(MapRowToStockHistory(reader));
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+
+            return entries.Count > 0;
+        }
+
+        public void AddHistoryEntry(StockHistoryModel historyModel)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand(@"INSERT INTO stock_history
+                          (stock_symbol, trading_day, open_price, daily_high, daily_low, close_price, volume) 
+                   VALUES (@stockSymbol, @tradingDay, @openPrice, @dailyHigh, @dailyLow, @closePrice, @volume);", conn);
+                    cmd.Parameters.AddWithValue("@stockSymbol", historyModel.StockSymbol);
+                    cmd.Parameters.AddWithValue("@tradingDay", historyModel.TradingDay);
+                    cmd.Parameters.AddWithValue("@openPrice", historyModel.OpenPrice);
+                    cmd.Parameters.AddWithValue("@dailyHigh", historyModel.DailyHigh);
+                    cmd.Parameters.AddWithValue("@dailyLow", historyModel.DailyLow);
+                    cmd.Parameters.AddWithValue("@closePrice", historyModel.ClosePrice);
+                    cmd.Parameters.AddWithValue("@volume", historyModel.Volume);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+        }
+
         private StockHistoryModel MapRowToStockHistory(SqlDataReader reader)
         {
             StockHistoryModel stock = new StockHistoryModel();
@@ -298,7 +355,5 @@ namespace StockMarketApi.DAL
                 PercentChange = Convert.ToDecimal(reader["percent_daily_change"])
             };
         }
-
-
     }
 }

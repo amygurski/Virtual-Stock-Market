@@ -10,7 +10,7 @@
               <th scope="col">Ticker Symbol</th>
               <th scope="col">Name</th>
               <th scope="col">Current Price</th>
-              <th scope="col">Percent Change</th>
+              <th scope="col">Daily Change %</th>
               <th scope="col">Six Month Low</th>
               <th scope="col">Six Month High</th>
               <th scope="col"></th>

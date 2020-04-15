@@ -12,5 +12,7 @@ namespace StockMarketApi.BackgroundJobs
         void ProcessGameEnd();
 
         void UpdateStockDataFromAPI();
+
+        void UpdateStockHistoryDataFromAPI();
     }
 }

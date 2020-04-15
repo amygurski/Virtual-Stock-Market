@@ -29,9 +29,7 @@
               <td>{{ formatCurrency(stock.currentPrice) }}</td>
               <td>
                 {{ stock.percentChange.toFixed(3) }}% &nbsp;
-                <i
-                  class="fas fa-2x"
-                  v-bind:class="{'fa-caret-up': stock.percentChange > 0 , 'fa-caret-down': stock.percentChange < 0, 'fa-minus': stock.percentChange = 0 }"
+                <i class="fas fa-2x" v-bind:class="{'fa-caret-up': stock.percentChange > 0 , 'fa-caret-down': stock.percentChange < 0, 'fa-minus': stock.percentChange === 0 }"
                 ></i>
               </td>
               <td>{{formatCurrency(stock.sixMonthLow) }}</td>
@@ -113,7 +111,7 @@ export default {
   color: red;
 }
 .fa-minus {
-  color: plum;
+  color:blue;
 }
 .research-background {
   background-color: darkgray;

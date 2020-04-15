@@ -124,7 +124,7 @@ const router = new Router({
       }
     },
     {
-      path: "/research/details",
+      path: "/stocks/research/:stockSymbol",
       name: "stock-details",
       component: StockDetails,
       meta: {

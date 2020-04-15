@@ -18,7 +18,7 @@
             <td>{{stock.stockSymbol}}</td>
             <td>{{stock.companyName}}</td>
             <td>{{stock.numberOfShares}}</td>
-            <td>{{ formatCurrency(stock.currentSharePrice) }} &nbsp; <i class="fas fa-2x" v-bind:class="{'fa-caret-up': stock.percentChange > 0 , 'fa-caret-down': stock.percentChange < 0 }"></i></td>
+            <td>{{ formatCurrency(stock.currentSharePrice) }} &nbsp; <i v-bind:class="{'fas fa-2x fa-caret-up': stock.percentChange > 0 , 'fas fa-2x fa-caret-down': stock.percentChange < 0 }"></i></td>
             <td>{{ formatCurrency(stock.avgPurchasedPrice) }}</td>
             <td>
               <router-link

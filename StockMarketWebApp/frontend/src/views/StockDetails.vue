@@ -23,33 +23,26 @@
                 ></i>
               </td>
             </tr>
-                     <tr>
+            <tr>
               <th>Six Month Net Change</th>
               <td>{{formatCurrency(stock.netChangeSixMonths)}}</td>
             </tr>
-                     <tr>
+            <tr>
               <th>Six Month Low</th>
               <td>{{formatCurrency(stock.sixMonthLow)}}</td>
             </tr>
-             <tr>
+            <tr>
               <th>Six Month High</th>
               <td>{{formatCurrency(stock.sixMonthHigh)}}</td>
             </tr>
-             <tr>
+            <tr>
               <th>Previous Day Volume</th>
-                <td>{{stock.previousDayVolume}}</td>
+              <td>{{stock.previousDayVolume}}</td>
             </tr>
-            <!-- <th scope="row">Name</th>
-              <th scope="row">Current Price</th>
-              <th scope="row">Daily Change</th>
-              <th scope="row">6-Month Change</th>
-              <th scope="row">6-Month Low</th>
-              <th scope="row">6-Month High</th>
-              <th scope="row">Previous Day Volume</th>
-              <th scope="row">Average Daily Volume</th>
-              <th scope="row">Yesterdays Open</th>
-              <th scope="row">Yesterdays Close</th>
-            <th scope="row"></th>-->
+            <tr>
+              <th>Average Daily Volume</th>
+              <td>{{stock.averageDailyVolume.toFixed(0) }}</td>
+            </tr>
           </tbody>
         </table>
       </div>

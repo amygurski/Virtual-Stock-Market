@@ -17,14 +17,16 @@
           <label for="enddate">End Date</label>
           <input
             type="date"
-            value="Date.now;"
             id="enddate"
             class="form-control"
-            v-model="game.endDate"
+            placeholder="DateTime.Now"
+            v-model="endDate"
             required
           />
+          <!-- value="Date.now;" -->
+          <!-- v-model="game.endDate" -->
         </div>
-                <div class="form-group">
+        <div class="form-group">
           <label for="enddate">End Time</label>
           <input
             type="time"
@@ -32,10 +34,12 @@
             step="300"
             id="endtime"
             class="form-control"
-            v-model="game.endTime"
+            v-model="endTime"
             required
           />
+          <!-- v-model="game.endTime" -->
         </div>
+        <!-- <input type="hidden" id="combinedDateTime" v-model="this.game.endDate" /> -->
 
         <div class="form-group">
           <label for="name" class="sr-only">Name</label>
@@ -74,6 +78,8 @@ export default {
   name: "creategame",
   data() {
     return {
+      endDate: String,
+      endTime: String,
       user: Object,
       token: String,
       game: Object,
@@ -91,33 +97,38 @@ export default {
       userName: this.user.sub
     };
   },
-  methods: {
-    creategame() {
-      fetch(`${process.env.VUE_APP_REMOTE_API}/games/newgame`, {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          "Authorization": "Bearer " + this.token
-        },
-        body: JSON.stringify(this.game)
-      })
-        .then(response => {
-          if (response.ok) {
-            response.json().then(json => {
-              // gameResult = json
-              this.$router.push({
-                path: `/game-detail/${json.id}`
-              });
-            });
-          } else {
-            this.createGameErrors = true;
-          }
+  // computed: {
+  //   combinedDateTime: function() {
+  //     return this.endDate + "T" + this.endTime;
+  //   },
+    methods: {
+      creategame() {
+        this.game.endDate = this.endDate + 'T' + this.endTime;
+        fetch(`${process.env.VUE_APP_REMOTE_API}/games/newgame`, {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + this.token
+          },
+          body: JSON.stringify(this.game)
         })
+          .then(response => {
+            if (response.ok) {
+              response.json().then(json => {
+                // gameResult = json
+                this.$router.push({
+                  path: `/game-detail/${json.id}`
+                });
+              });
+            } else {
+              this.createGameErrors = true;
+            }
+          })
 
-        .then(err => console.error(err));
+          .then(err => console.error(err));
+      }
     }
-  }
 };
 </script>
 

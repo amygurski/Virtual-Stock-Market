@@ -122,8 +122,8 @@
             <td v-if="transaction.stockSymbol === 'COMFEE' || transaction.stockSymbol === 'SYSTRN'">N/A</td>
             <td v-else-if="transaction.isPurchase">Buy</td>
             <td v-else>Sell</td>
-            <td v-if="transaction.netValue > 0" style="color: green">{{formatCurrency(transaction.netValue)}}</td>
-            <td v-else style="color: red">{{formatCurrency(transaction.netValue)}}</td>
+            <td v-if="transaction.netValue > 0" style="color: #90ee90">{{formatCurrency(transaction.netValue)}}</td>
+            <td v-else style="color:#f8d7da">{{formatCurrency(transaction.netValue)}}</td>
           </tr>
         </tbody>
       </table>

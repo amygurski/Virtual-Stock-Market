@@ -4,11 +4,11 @@
     <div id="research-container">
       <div class="table-responsive">
         <!-- <h1>Research Stocks</h1> -->
-        <div class=header>
-        <h1>
-          Research Stocks</h1>
-           <h1 style="text:align-right">  <input type="text" id="search" v-model="search" placeholder="Search Stocks..." /> </h1>
-          
+        <div class="header">
+          <h1>Research Stocks</h1>
+          <h1 style="text:align-right">
+            <input type="text" id="search" v-model="search" placeholder="Search Stocks..." />
+          </h1>
         </div>
         <table class="table table-hover table-dark">
           <thead class="thead-dark">
@@ -29,7 +29,9 @@
               <td>{{ formatCurrency(stock.currentPrice) }}</td>
               <td>
                 {{ stock.percentChange.toFixed(3) }}% &nbsp;
-                <i class="fas fa-2x" v-bind:class="{'fa-caret-up': stock.percentChange > 0 , 'fa-caret-down': stock.percentChange < 0, 'fa-minus': stock.percentChange === 0 }"
+                <i
+                  class="fas fa-2x"
+                  v-bind:class="{'fa-caret-up': stock.percentChange > 0 , 'fa-caret-down': stock.percentChange < 0, 'fa-minus': stock.percentChange === 0 }"
                 ></i>
               </td>
               <td>{{formatCurrency(stock.sixMonthLow) }}</td>
@@ -111,7 +113,7 @@ export default {
   color: red;
 }
 .fa-minus {
-  color:blue;
+  color: blue;
 }
 .research-background {
   background-color: darkgray;
@@ -121,6 +123,8 @@ export default {
   overflow: auto;
   height: 100%;
   width: 100%;
+  padding-top: 60px;
+  padding-bottom: 220px;
 }
 #research-container {
   border: 2px solid black;

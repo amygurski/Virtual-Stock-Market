@@ -116,26 +116,42 @@ export default {
         });
     },
     addUserToGame() {
-    fetch(`${process.env.VUE_APP_REMOTE_API}/games/joingame`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + this.token
-      },
-      body: JSON.stringify(this.inviteUserAPI)
-    })
-      .then(response => {
-        if (response.ok) {
-          this.$router.push({name: 'game-detail', params: {id: this.game.gameId, alertMessage:"You have successfully joined this game. Have fun!", alertSuccess: true}})
-        } else {
-          this.$router.push({name: 'game-detail', params: {id: this.game.gameId, alertMessage:"You are already playing this game. Here's the details. Have fun!", alertSuccess: false}})
-        }
+      fetch(`${process.env.VUE_APP_REMOTE_API}/games/joingame`, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + this.token
+        },
+        body: JSON.stringify(this.inviteUserAPI)
       })
-      .catch(e => {
-        console.log("Error", e);
-      });
-  }
+        .then(response => {
+          if (response.ok) {
+            this.$router.push({
+              name: "game-detail",
+              params: {
+                id: this.game.gameId,
+                alertMessage:
+                  "You have successfully joined this game. Have fun!",
+                alertSuccess: true
+              }
+            });
+          } else {
+            this.$router.push({
+              name: "game-detail",
+              params: {
+                id: this.game.gameId,
+                alertMessage:
+                  "You are already playing this game. Here's the details. Have fun!",
+                alertSuccess: false
+              }
+            });
+          }
+        })
+        .catch(e => {
+          console.log("Error", e);
+        });
+    }
   }
 };
 </script>
@@ -156,6 +172,8 @@ h1 {
   overflow: auto;
   width: 100%;
   height: 100%;
+  padding-top: 60px;
+  padding-bottom: 220px;
 }
 
 #creategame {

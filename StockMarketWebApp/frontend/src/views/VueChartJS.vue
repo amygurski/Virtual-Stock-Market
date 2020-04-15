@@ -1,5 +1,5 @@
 <template>
-<p>Placeholder</p>
+  <p>Placeholder</p>
   <!-- <div class="container-chart text-center">
     <h1>Demo examples of vue-chartjs</h1>
     <div class="columns">
@@ -20,7 +20,7 @@
       </div>
       <div class="spacer"></div>
     </div>
-  </div> -->
+  </div>-->
 </template>
 
 <script>
@@ -108,6 +108,8 @@
   background-size: cover;
   padding-bottom: 10%;
   padding-top: 5%;
+  padding-top: 60px;
+  padding-bottom: 220px;
 }
 
 .columns {

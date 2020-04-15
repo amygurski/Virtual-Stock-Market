@@ -3,11 +3,11 @@
     <!-- <input type="text" id="search" v-model="search" placeholder="Search Stocks..." /> -->
     <div id="research-container">
       <div class="table-responsive">
-        <div class=header>
-        <h1>
-          Available Stocks</h1>
-           <h1 style="text:align-right">  <input type="text" id="search" v-model="search" placeholder="Search Stocks..." /> </h1>
-          
+        <div class="header">
+          <h1>Available Stocks</h1>
+          <h1 style="text:align-right">
+            <input type="text" id="search" v-model="search" placeholder="Search Stocks..." />
+          </h1>
         </div>
         <table class="table table-hover table-dark">
           <thead class="thead-dark">
@@ -24,7 +24,13 @@
               <td>{{stock.stockSymbol}}</td>
               <td>{{stock.companyName}}</td>
               <td>{{ formatCurrency(stock.currentPrice) }}</td>
-              <td>{{ stock.percentChange.toFixed(3) }}% <i class="fas fa-2x" v-bind:class="{'fa-caret-up': stock.percentChange > 0 , 'fa-caret-down': stock.percentChange < 0, 'fa-minus': stock.percentChange === 0 }"></i></td>
+              <td>
+                {{ stock.percentChange.toFixed(3) }}%
+                <i
+                  class="fas fa-2x"
+                  v-bind:class="{'fa-caret-up': stock.percentChange > 0 , 'fa-caret-down': stock.percentChange < 0, 'fa-minus': stock.percentChange === 0 }"
+                ></i>
+              </td>
               <td>
                 <router-link
                   :to="{ name: 'confirm-purchase', params: {stockSymbol: stock.stockSymbol, gameId: gameId} }"
@@ -61,8 +67,8 @@ export default {
       data: [],
       user: Object,
       gameId: Number,
-      currentSort:'name',
-  currentSortDir:'asc'
+      currentSort: "name",
+      currentSortDir: "asc"
     };
   },
   mounted() {
@@ -92,8 +98,8 @@ export default {
         });
     },
     sort(s) {
-      if(s === this.currentSort) {
-        this.currentSortDir = this.currentSortDir ==='asc'?'desc':'asc';
+      if (s === this.currentSort) {
+        this.currentSortDir = this.currentSortDir === "asc" ? "desc" : "asc";
       }
       this.currentSort = s;
     }
@@ -139,6 +145,8 @@ export default {
   overflow: auto;
   height: 100%;
   width: 100%;
+  padding-top: 60px;
+  padding-bottom: 220px;
 }
 #research-container {
   border: 2px solid black;

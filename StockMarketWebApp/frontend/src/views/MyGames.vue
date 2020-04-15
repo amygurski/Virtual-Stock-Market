@@ -2,7 +2,7 @@
   <div id="mygames-container">
     <div id="mygames" class="text-center">
       <div class="table-responsive">
-          <h1>My Games</h1>
+        <h1>My Games</h1>
         <table class="table table-hover table-dark" v-if="data">
           <thead class="thead-dark">
             <tr>
@@ -10,7 +10,7 @@
               <th scope="col">Game Name</th>
               <th scope="col">Date Created</th>
               <th scope="col">Game Ends</th>
-               <th scope="col"></th>
+              <th scope="col"></th>
             </tr>
           </thead>
           <tbody>
@@ -20,9 +20,9 @@
               <td>{{ game.dateCreated }}</td>
               <td>{{ game.endDate }}</td>
               <td>
-          <router-link :to="{name: 'game-detail', params: {id: game.gameId}}">
-                    <button type="button" class="btn btn-primary btn-rounded btn-sm m-0">View Game</button>
-            </router-link>
+                <router-link :to="{name: 'game-detail', params: {id: game.gameId}}">
+                  <button type="button" class="btn btn-primary btn-rounded btn-sm m-0">View Game</button>
+                </router-link>
               </td>
             </tr>
           </tbody>
@@ -44,21 +44,24 @@ export default {
   },
 
   mounted() {
-    this.token = this.$attrs.token
-    this.user = this.$attrs.user
+    this.token = this.$attrs.token;
+    this.user = this.$attrs.user;
     this.getData();
   },
 
   methods: {
     getData() {
       // vue-resource example
-      fetch(`${process.env.VUE_APP_REMOTE_API}/games/mygames/${this.user.sub}` , {
-        method: "GET",
-        headers: {
-          "Content-Type": 'application/json',
-          Authorization: "Bearer " + this.token
+      fetch(
+        `${process.env.VUE_APP_REMOTE_API}/games/mygames/${this.user.sub}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + this.token
+          }
         }
-      })
+      )
         .then(response => {
           return response.json();
         })
@@ -75,7 +78,11 @@ export default {
 
 <style scoped>
 #mygames-container {
-  background: linear-gradient(rgba(255,255,255,.25), rgba(255,255,255,.25)),url(/Images/Join-Game-Background.png);
+  background: linear-gradient(
+      rgba(255, 255, 255, 0.25),
+      rgba(255, 255, 255, 0.25)
+    ),
+    url(/Images/Join-Game-Background.png);
   background-size: cover;
   padding-top: 5%;
   padding-bottom: 10%;
@@ -83,6 +90,8 @@ export default {
   overflow: auto;
   width: 100%;
   height: 100%;
+  padding-top: 60px;
+  padding-bottom: 220px;
 }
 
 #mygames {
@@ -90,10 +99,8 @@ export default {
   padding: 25px;
   margin: auto;
   border-radius: 25px;
-  border: 2px solid rgba(0,0,0,0.05);
-  background-color:#343a40;
+  border: 2px solid rgba(0, 0, 0, 0.05);
+  background-color: #343a40;
   color: white;
 }
-
-
 </style>

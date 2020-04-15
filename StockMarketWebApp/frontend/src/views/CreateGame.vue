@@ -101,34 +101,34 @@ export default {
   //   combinedDateTime: function() {
   //     return this.endDate + "T" + this.endTime;
   //   },
-    methods: {
-      creategame() {
-        this.game.endDate = this.endDate + 'T' + this.endTime;
-        fetch(`${process.env.VUE_APP_REMOTE_API}/games/newgame`, {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + this.token
-          },
-          body: JSON.stringify(this.game)
-        })
-          .then(response => {
-            if (response.ok) {
-              response.json().then(json => {
-                // gameResult = json
-                this.$router.push({
-                  path: `/game-detail/${json.id}`
-                });
+  methods: {
+    creategame() {
+      this.game.endDate = this.endDate + "T" + this.endTime;
+      fetch(`${process.env.VUE_APP_REMOTE_API}/games/newgame`, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + this.token
+        },
+        body: JSON.stringify(this.game)
+      })
+        .then(response => {
+          if (response.ok) {
+            response.json().then(json => {
+              // gameResult = json
+              this.$router.push({
+                path: `/game-detail/${json.id}`
               });
-            } else {
-              this.createGameErrors = true;
-            }
-          })
+            });
+          } else {
+            this.createGameErrors = true;
+          }
+        })
 
-          .then(err => console.error(err));
-      }
+        .then(err => console.error(err));
     }
+  }
 };
 </script>
 
@@ -150,6 +150,8 @@ label {
   overflow: auto;
   width: 100%;
   height: 100%;
+  padding-top: 60px;
+  padding-bottom: 220px;
 }
 
 #creategame {

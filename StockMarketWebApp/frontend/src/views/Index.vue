@@ -1,33 +1,26 @@
 <template>
-
   <div class="text-center welcome-container">
-
     <div id="welcome">
-    
-      <h1 id="h1">Welcome to the <span class="headername">Virtual Stock Market</span>!</h1>
-      
+      <h1 id="h1">
+        Welcome to the
+        <span class="headername">Virtual Stock Market</span>!
+      </h1>
+
       <p class="spacer"></p>
 
-      <h5 id="question">
-        &nbsp;&nbsp;&nbsp;&nbsp; Want to practice trading, but don't want to risk your own money?
-        </h5>
+      <h5
+        id="question"
+      >&nbsp;&nbsp;&nbsp;&nbsp; Want to practice trading, but don't want to risk your own money?</h5>
 
-        <h5 id="summary">
-        &nbsp;&nbsp;&nbsp;&nbsp;Play games and practice with us!
-      </h5>
-      <h5 id="howto">
-        &nbsp;&nbsp;&nbsp;&nbsp;You can play by yourself or compete with friends.
-      </h5>
-    
+      <h5 id="summary">&nbsp;&nbsp;&nbsp;&nbsp;Play games and practice with us!</h5>
+      <h5 id="howto">&nbsp;&nbsp;&nbsp;&nbsp;You can play by yourself or compete with friends.</h5>
+    </div>
   </div>
-
-  </div>
-
 </template>
 <script>
 export default {
-  name: 'Index'
-}
+  name: "Index"
+};
 </script>
 
 <style scoped>
@@ -36,9 +29,13 @@ export default {
   font-weight: bold;
   font-style: italic;
 }
-.welcome-container{
+.welcome-container {
   /* background-color: darkgray; */
-  background: linear-gradient(rgba(255,255,255,.25), rgba(255,255,255,.25)), url(/images/WallStreet.jfif) no-repeat center center fixed;
+  background: linear-gradient(
+      rgba(255, 255, 255, 0.25),
+      rgba(255, 255, 255, 0.25)
+    ),
+    url(/images/WallStreet.jfif) no-repeat center center fixed;
   position: fixed;
   overflow: auto;
   height: 100%;
@@ -46,9 +43,11 @@ export default {
   background-size: cover;
   padding-top: 5%;
   /* padding: 200px 0px 25px 0px; */
+  padding-top: 60px;
+  padding-bottom: 220px;
 }
 
-#welcome{
+#welcome {
   border: 2px solid black;
   border-radius: 25px;
   background-image: none;
@@ -61,6 +60,4 @@ export default {
 h1 {
   padding-bottom: 25px;
 }
-
-
 </style>

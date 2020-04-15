@@ -44,19 +44,19 @@ export default {
   },
 
   mounted() {
-    this.token = this.$attrs.token
-    this.user = this.$attrs.user
+    this.token = this.$attrs.token;
+    this.user = this.$attrs.user;
     this.getData();
   },
 
   methods: {
     getData() {
-      console.log("token: " + this.token)
+      console.log("token: " + this.token);
       // vue-resource example
       fetch(`${process.env.VUE_APP_REMOTE_API}/games/currentgames`, {
         method: "GET",
         headers: {
-          "Content-Type": 'application/json',
+          "Content-Type": "application/json",
           Authorization: "Bearer " + this.token
         }
       })
@@ -87,6 +87,8 @@ export default {
   overflow: auto;
   width: 100%;
   height: 100%;
+  padding-top: 60px;
+  padding-bottom: 220px;
 }
 
 #joingame {

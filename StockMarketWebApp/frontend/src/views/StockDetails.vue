@@ -114,7 +114,7 @@ export default {
   color: red;
 }
 .fa-minus {
-  color:blue;
+  color: blue;
 }
 .detail-background {
   background-color: darkgray;
@@ -124,6 +124,8 @@ export default {
   overflow: auto;
   height: 100%;
   width: 100%;
+  padding-top: 60px;
+  padding-bottom: 220px;
 }
 #detail-container {
   border: 2px solid black;

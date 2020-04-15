@@ -2,10 +2,13 @@
   <div class="text-center owned-stocks-background">
     <!-- <div id="owned-stocks-container"> -->
 
-      <owned-stocks-list v-bind:user="this.user" v-bind:gameId="this.gameId" v-bind:token="this.token"></owned-stocks-list>
+    <owned-stocks-list
+      v-bind:user="this.user"
+      v-bind:gameId="this.gameId"
+      v-bind:token="this.token"
+    ></owned-stocks-list>
     <!-- </div> -->
   </div>
-  
 </template>
 
 <script>
@@ -25,8 +28,8 @@ export default {
       gameId: Number,
       token: String,
       apiModel: {
-        userName: '',
-        gameId: '',
+        userName: "",
+        gameId: ""
       }
     };
   },
@@ -37,7 +40,7 @@ export default {
     // this.apiModel.userName = this.user.sub;
     // this.apiModel.gameId = this.gameId;
     // this.ownedStock();
-  },
+  }
   // methods: {
   //   ownedStock() {
   //     fetch(`${process.env.VUE_APP_REMOTE_API}/stocks/owned`, {
@@ -60,8 +63,7 @@ export default {
   //       });
   //   }
   // }
-}
-
+};
 </script>
 
 <style scoped>
@@ -73,6 +75,8 @@ export default {
   overflow: auto;
   height: 100%;
   width: 100%;
+  padding-top: 60px;
+  padding-bottom: 220px;
 }
 #owned-stocks-container {
   border: 2px solid black;

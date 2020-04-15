@@ -11,7 +11,7 @@
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
-    <div class="row">
+    <div id="actions-leaderboard-row">
       <div class="card-background text-center" id="game-actions">
         <h1>Hi {{user.sub}}!</h1>
         <h2>{{game.name}}</h2>
@@ -83,13 +83,6 @@
               <td>{{formatCurrency(leaderboard.currentBalance)}}</td>
               <td>{{ formatCurrency(leaderboard.currentStockValue) }}</td>
               <td>{{ formatCurrency(leaderboard.currentTotalPortfolioValue) }}</td>
-              <td>
-                <router-link
-                  :to="{ name: 'sell-stock', params: {gameId: gameId, ownedModel: stock } }"
-                >
-                  <button type="button" class="btn btn-primary btn-rounded btn-sm m-0">Sell Stock</button>
-                </router-link>
-              </td>
             </tr>
           </tbody>
         </table>
@@ -358,6 +351,13 @@ export default {
 </script>
 
 <style scoped>
+#actions-leaderboard-row {
+  display: flex;
+  width: 75%;
+  margin: auto;
+}
+
+
 .form-group,
 .btn {
   margin-top: 10px;

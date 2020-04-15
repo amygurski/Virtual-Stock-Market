@@ -35,10 +35,15 @@
                 />
               </td>
             </tr>
-
-            <tr></tr>
+            <!-- <tr>
+              <td align="right"><h4>Transaction cost:</h4></td>
+              <td><h4>{{ formatCurrency(postApiModel.numberOfShares * stock.currentPrice)}}</h4></td>
+            </tr>-->
           </tbody>
         </table>
+        <div class="alert alert-primary">
+          <h4>The transaction cost will be {{formatCurrency(postApiModel.numberOfShares * stock.currentPrice)}}.</h4>
+        </div>
         <!-- <div class="row">Stock Sym: {{stock.stockSymbol}}</div>
         <div class="row">Stock Price: {{stock.currentPrice}}</div>-->
 
@@ -151,7 +156,7 @@ export default {
 
 <style scoped>
 h1 {
-  color:#67ddfb;
+  color: #cce5ff;
 }
 #creategame-container {
   background: linear-gradient(

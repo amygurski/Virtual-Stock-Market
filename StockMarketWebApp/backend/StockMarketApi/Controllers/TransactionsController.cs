@@ -81,8 +81,8 @@ namespace StockMarketApi.Controllers
                 GameId = gameId,
                 StockSymbol = "COMFEE",
                 NumberOfShares = 1,
-                TransactionSharePrice = 19.95M,
-                IsPurchase = true,
+                TransactionSharePrice = -19.95M,
+                IsPurchase = false,
                 NetTransactionChange = -19.95M
             };
             transactionDao.AddNewTransaction(newCommission);

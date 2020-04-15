@@ -50,6 +50,9 @@
       </li> -->
     </ul>
     <ul v-if="user" class="navbar-nav ml-auto">
+      <li class="greeting">
+        Welcome, {{user.sub}}!
+         </li>
       <li class="nav-item">
         <a v-on:click="logout" class="nav-link" id="logout-button">Logout</a>
       </li>

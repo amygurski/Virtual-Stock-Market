@@ -54,6 +54,7 @@
         </div>
         <div class="button-group">
           <button
+            :disabled="postApiModel.numberOfShares > ownedModel.numberOfShares"
             type="button"
             class="btn btn-primary btn-rounded sell-buttons"
             v-on:click.prevent="buildApiModel()"

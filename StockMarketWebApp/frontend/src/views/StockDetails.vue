@@ -8,11 +8,12 @@
             <tr>
               <th scope="row">Ticker Symbol</th>
               <th scope="row">Name</th>
-              <th scope="row">Volume</th>
-              <th scope="row">Net Change</th>
-              <th scope="row">6 Month Change</th>
-              <th scope="row">6 Month Range</th>
-              <th scope="row">Average Volume</th>
+              <th scope="row">Current Price</th>
+              <th scope="row">Daily Change</th>
+              <th scope="row">6-Month Change</th>
+              <th scope="row">6-Month Low</th>
+              <th scope="row">6-Month High</th>
+              <th scope="row">Previous Day Volume</th>
               <th scope="row">Average Daily Volume</th>
               <th scope="row">Yesterdays Open</th>
               <th scope="row">Yesterdays Close</th>
@@ -60,6 +61,6 @@ export default {
   color: white;
   margin: auto;
   padding: 25px;
-  width: 60%;
+  width: 75%;
 }
 </style>

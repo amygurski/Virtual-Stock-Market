@@ -62,6 +62,8 @@ namespace StockMarketApi.Controllers
                 }
 
                 int newId = transactionDao.AddNewTransaction(newTransaction);
+                AddCommissionFee(newTransaction.UserId, newTransaction.GameId);
+
                 // TODO 09a (Controller): Return CreatedAtRoute to return 201
                 return CreatedAtRoute("GetGame", new { id = newId }, newTransaction);
             }
@@ -71,5 +73,20 @@ namespace StockMarketApi.Controllers
             }
         }
 
+        private void AddCommissionFee(int userId, int gameId)
+        {
+            TransactionModel newCommission = new TransactionModel()
+            {
+                UserId = userId,
+                GameId = gameId,
+                StockSymbol = "COMFEE",
+                NumberOfShares = 1,
+                TransactionSharePrice = -19.95M,
+                IsPurchase = false,
+                NetTransactionChange = -19.95M
+            };
+            transactionDao.AddNewTransaction(newCommission);
+            return;
+        }
     }
 }

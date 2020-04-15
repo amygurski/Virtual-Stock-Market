@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StockMarketApi.DAL;
@@ -69,13 +70,57 @@ namespace StockMarketApi.Controllers
             return new JsonResult(stocks);
         }
 
-        //[HttpGet("research/{symbol}")]
-        //public IActionResult GetStockResearchDetail(string symbol)
-        //{
+        [HttpGet("research/{symbol}")]
+        public IActionResult GetStockResearchDetail(string symbol)
+        {
+            
+            List<StockHistoryModel> history = new List<StockHistoryModel>(stockDao.GetStockHistory(symbol));
 
-        //}
+            CurrentStocksModel current = stockDao.GetStockBySymbol(symbol);
 
-       
+            history.Sort((x, y) => DateTime.Compare(x.TradingDay, y.TradingDay));
+
+            ResearchStockDetailModel result = new ResearchStockDetailModel();
+
+            result.StockSymbol = current.StockSymbol;
+            result.CompanyName = current.CompanyName;
+            result.CurrentPrice = current.CurrentPrice;
+            result.DailyChange = current.PercentChange;
+            
+            double runningVolume = 0.0;
+            double low = double.MaxValue;
+            double high = 0.0;
+
+            foreach (StockHistoryModel date in history)
+            {
+                runningVolume += date.Volume;
+
+                if (date.DailyLow < low)
+                {
+                    low = date.DailyLow;
+                }
+
+                if (date.DailyHigh > high)
+                {
+                    high = date.DailyHigh;
+                }
+            }
+
+            result.NetChangeSixMonths = Convert.ToDouble(current.CurrentPrice) - history[0].OpenPrice;
+            result.SixMonthLow = low;
+            result.SixMonthHigh = high;
+            result.PreviousDayVolume = history[history.Count - 1].Volume;
+            if (history.Count > 0)
+            {
+                result.AverageDailyVolume = runningVolume / history.Count;
+            }
+            result.PreviousDayOpen = history[history.Count - 1].OpenPrice;
+            result.PreviousDayClose = history[history.Count - 1].ClosePrice;
+
+            return new JsonResult(result);
+        }
+
+
 
         // Original code for ownedStocks has been moved to a helper method preserving this in case of issues
 

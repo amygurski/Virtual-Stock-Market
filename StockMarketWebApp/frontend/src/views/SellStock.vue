@@ -47,10 +47,13 @@
           </tbody>
         </table>
         <div v-if="ownedModel.currentSharePrice > ownedModel.avgPurchasedPrice" class="alert alert-info">
-          <h4 >You will make {{formatCurrency((ownedModel.currentSharePrice-ownedModel.avgPurchasedPrice)*postApiModel.numberOfShares)}} from this sale.</h4>
+          <h4 >You will make {{formatCurrency((ownedModel.currentSharePrice-ownedModel.avgPurchasedPrice)*postApiModel.numberOfShares)}} in stock value from this sale.</h4>
         </div>
         <div v-else class="alert alert-danger">
-          <h4>You will lose {{formatCurrency((ownedModel.avgPurchasedPrice-ownedModel.currentSharePrice)*postApiModel.numberOfShares)}} from this sale.</h4>
+          <h4>You will lose {{formatCurrency((ownedModel.avgPurchasedPrice-ownedModel.currentSharePrice)*postApiModel.numberOfShares)}} in stock value from this sale.</h4>
+        </div>
+        <div class="alert alert-success"> 
+          <h5>{{formatCurrency(postApiModel.numberOfShares * ownedModel.currentSharePrice)}} will be returned to your balance.</h5>
         </div>
         <div class="button-group">
           <button

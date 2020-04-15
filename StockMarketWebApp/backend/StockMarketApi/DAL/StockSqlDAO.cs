@@ -122,7 +122,7 @@ namespace StockMarketApi.DAL
         /// Get 6 month stock history from single stock
         /// </summary>
         /// <returns></returns>
-        public List<StockHistoryModel> GetStockHistory(string stockSymbol)
+        public IList<StockHistoryModel> GetStockHistory(string stockSymbol)
         {
             List<StockHistoryModel> stockHistory = new List<StockHistoryModel>();
 

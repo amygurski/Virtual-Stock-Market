@@ -124,7 +124,7 @@ export default {
   color: white;
   margin: auto;
   padding: 25px;
-  width: 60%;
+  width: 75%;
 }
 #search {
   margin: 20px;

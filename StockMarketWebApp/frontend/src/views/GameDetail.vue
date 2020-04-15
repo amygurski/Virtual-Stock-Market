@@ -64,13 +64,42 @@
         </div>
       </div>
       <div class="card-background text-center" id="leaderboard">
+         <div class="table-responsive">
         <h1>Leaderboard</h1>
-        <ol class="card-text">
+        <table class="table table-hover table-dark">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">Rank</th>
+              <th scope="col">Name</th>
+              <th scope="col">Cash</th>
+              <th scope="col">Stock Value</th>
+              <th scope="col">Total Portfolio Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-bind:key="leaderboard.userName" v-for="(leaderboard, index) in game.leaderboardData">
+              <td>{{index+1}}</td>
+              <td>{{leaderboard.userName}}</td>
+              <td>{{formatCurrency(leaderboard.currentBalance)}}</td>
+              <td>{{ formatCurrency(leaderboard.currentStockValue) }}</td>
+              <td>{{ formatCurrency(leaderboard.currentTotalPortfolioValue) }}</td>
+              <td>
+                <router-link
+                  :to="{ name: 'sell-stock', params: {gameId: gameId, ownedModel: stock } }"
+                >
+                  <button type="button" class="btn btn-primary btn-rounded btn-sm m-0">Sell Stock</button>
+                </router-link>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+        <!-- <ol class="card-text">
           <li
             v-for="leaderboard in game.leaderboardData"
             v-bind:key="leaderboard.userName"
           >{{leaderboard.userName}}: cash: {{formatCurrency(leaderboard.currentBalance)}} | stock value: {{formatCurrency(leaderboard.currentStockValue)}} | total portfolio value: {{formatCurrency(leaderboard.currentTotalPortfolioValue)}}</li>
-        </ol>
+        </ol> -->
       </div>
     </div>
     <div class="card-background chart-container text-center">

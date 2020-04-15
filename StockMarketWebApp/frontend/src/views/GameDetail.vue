@@ -117,9 +117,11 @@
             <td>{{transaction.companyName}}</td>
             <td>{{transaction.numberOfShares}}</td>
             <td>{{formatCurrency(transaction.transactionPrice)}}</td>
-            <td v-if="transaction.isPurchase" style="color: green">Buy</td>
-            <td v-else style="color: red">Sell</td>
-            <td>{{formatCurrency(transaction.netValue)}}</td>
+            <td v-if="transaction.stockSymbol === 'COMFEE' || transaction.stockSymbol === 'SYSTRN'">N/A</td>
+            <td v-else-if="transaction.isPurchase">Buy</td>
+            <td v-else>Sell</td>
+            <td v-if="transaction.netValue > 0" style="color: green">{{formatCurrency(transaction.netValue)}}</td>
+            <td v-else style="color: red">{{formatCurrency(transaction.netValue)}}</td>
           </tr>
         </tbody>
       </table>

@@ -1,9 +1,15 @@
 <template>
   <div class="text-center research-background">
-    <input type="text" id="search" v-model="search" placeholder="Search Stocks..." />
+    <!-- <input type="text" id="search" v-model="search" placeholder="Search Stocks..." /> -->
     <div id="research-container">
       <div class="table-responsive">
-        <h1>Research Stocks</h1>
+        <!-- <h1>Research Stocks</h1> -->
+        <div class=header>
+        <h1>
+          Research Stocks</h1>
+           <h1 style="text:align-right">  <input type="text" id="search" v-model="search" placeholder="Search Stocks..." /> </h1>
+          
+        </div>
         <table class="table table-hover table-dark">
           <thead class="thead-dark">
             <tr>
@@ -25,7 +31,7 @@
                 {{ stock.percentChange.toFixed(3) }}% &nbsp;
                 <i
                   class="fas fa-2x"
-                  v-bind:class="{'fa-caret-up': stock.percentChange > 0 , 'fa-caret-down': stock.percentChange < 0 }"
+                  v-bind:class="{'fa-caret-up': stock.percentChange > 0 , 'fa-caret-down': stock.percentChange < 0, 'fa-minus': stock.percentChange = 0 }"
                 ></i>
               </td>
               <td>{{formatCurrency(stock.sixMonthLow) }}</td>
@@ -106,7 +112,9 @@ export default {
 .fa-caret-down {
   color: red;
 }
-
+.fa-minus {
+  color: plum;
+}
 .research-background {
   background-color: darkgray;
   background-image: url(/images/register-login-background.jpg);
@@ -128,10 +136,10 @@ export default {
 }
 #search {
   margin: 20px;
-  border: 10px solid #343a40;
+  /* border: 10px solid #343a40; */
   border-radius: 10px;
-  padding: 10px;
-  width: 12%;
-  font-size: 125%;
+  padding: 2.5px;
+  width: 40%;
+  font-size: 55%;
 }
 </style>

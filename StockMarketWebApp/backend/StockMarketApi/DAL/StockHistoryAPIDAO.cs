@@ -24,11 +24,11 @@ namespace StockMarketApi.DAL
 
             int currentStockIndex = 0;
             int currentApiKeyIndex = 0;
+            WebClient client = new WebClient();
+
             for (; currentApiKeyIndex < apiKeys.Length; currentApiKeyIndex++)
             {
                 string apiRequest = $"https://marketdata.websol.barchart.com/getHistory.json?apikey={apiKeys[currentApiKeyIndex]}&type=daily&symbol=";
-
-                WebClient client = new WebClient();
 
                 try
                 {

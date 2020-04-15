@@ -1,9 +1,9 @@
 <template>
   <div class="text-center owned-stocks-background">
-    <div id="owned-stocks-container">
+    <!-- <div id="owned-stocks-container"> -->
 
       <owned-stocks-list v-bind:user="this.user" v-bind:gameId="this.gameId" v-bind:token="this.token"></owned-stocks-list>
-    </div>
+    <!-- </div> -->
   </div>
   
 </template>

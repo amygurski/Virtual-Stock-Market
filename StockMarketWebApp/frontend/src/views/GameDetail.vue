@@ -18,7 +18,9 @@
         <h2>{{game.name}}</h2>
         <p>{{game.description}}</p>
         <div class="button-group" v-if="game.isCompleted == false">
-          <router-link :to="{name: 'available-stocks', params: {id: game.gameId, currentBalance: this.computedCurrentBalance}}">
+          <router-link
+            :to="{name: 'available-stocks', params: {id: game.gameId, currentBalance: this.computedCurrentBalance}}"
+          >
             <button
               type="button"
               class="btn btn-primary btn-rounded btn-block buysell-button"
@@ -91,6 +93,7 @@
         v-if="transactionLineLoaded"
         :chartData="transactionLineData"
         :options="transactionLineOptions"
+        :styles="lineChartStyles"
       />
     </div>
 
@@ -117,10 +120,15 @@
             <td>{{transaction.companyName}}</td>
             <td>{{transaction.numberOfShares}}</td>
             <td>{{formatCurrency(transaction.transactionPrice)}}</td>
-            <td v-if="transaction.stockSymbol === 'COMFEE' || transaction.stockSymbol === 'SYSTRN'">N/A</td>
+            <td
+              v-if="transaction.stockSymbol === 'COMFEE' || transaction.stockSymbol === 'SYSTRN'"
+            >N/A</td>
             <td v-else-if="transaction.isPurchase">Buy</td>
             <td v-else>Sell</td>
-            <td v-if="transaction.netValue > 0" style="color: green">{{formatCurrency(transaction.netValue)}}</td>
+            <td
+              v-if="transaction.netValue > 0"
+              style="color: green"
+            >{{formatCurrency(transaction.netValue)}}</td>
             <td v-else style="color: red">{{formatCurrency(transaction.netValue)}}</td>
           </tr>
         </tbody>
@@ -189,14 +197,17 @@ export default {
       },
       transactionLineOptions: {
         scales: {
-          yAxes: [
-            {
+          yAxes: [{
               ticks: {
                 beginAtZero: true
               }
-            }
-          ]
-        }
+            }],
+          xAxes: [{
+              display: false
+            }]
+        },
+        maintainAspectRatio: false,
+        responsive: true,
       }
     };
   },
@@ -315,7 +326,11 @@ export default {
       this.transactionLineData.labels = this.buildTransactionLabels();
       this.transactionLineData.datasets.push({
         label: "Cash Balance",
-        data: this.buildTransactionDataPoints()
+        data: this.buildTransactionDataPoints(),
+        backgroundColor: "rgba(237, 227, 47, 0.35)",
+        borderColor: "rgba(36, 35, 26, 1)",
+        pointBackgroundColor: "rgba(251, 255, 0, 1)",
+        pointBorderColor: "rgba(36, 35, 26, 1)"
       });
       this.transactionLineLoaded = true;
     },
@@ -364,6 +379,12 @@ export default {
     },
     computedDateTest: function() {
       return new Date(this.transactions[0].transactionDate);
+    },
+    lineChartStyles() {
+      return {
+        height: '800px',
+        position: 'relative',
+      }
     }
   }
 };
@@ -431,7 +452,7 @@ export default {
   margin-bottom: 60px;
 }
 
- @media only screen and (max-width: 1562px) {
+@media only screen and (max-width: 1562px) {
   #game-actions.card-background {
     margin: 0 auto;
     margin-bottom: 10px;
@@ -442,7 +463,7 @@ export default {
     min-width: 625px;
     max-width: 100%;
   }
-} 
+}
 
 @media only screen and (min-width: 1563px) {
   #game-actions.card-background {
@@ -460,8 +481,6 @@ export default {
 }
 
 @media only screen and (max-width: 1430px) {
-
-
   #leaderboard.card-background {
     flex-grow: 1;
     max-width: 100%;

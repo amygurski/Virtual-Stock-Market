@@ -71,5 +71,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="StockMarketDatabase.local.publish.xml" />
+    <None Include="Scripts\Script1.sql" />
   </ItemGroup>
 </Project>

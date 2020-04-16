@@ -1,13 +1,27 @@
 <template>
   <div id="register-container">
-    <div id="register" class="text-center">
+    <div id="register">
       <form class="form-register" @submit.prevent="register">
-        <h1 class="h3 mb-3 font-weight-normal">Create Account</h1>
-        <div
-          class="alert alert-danger"
+        <h1 class="h3 mb-3 font-weight-normal text-center">Create Account</h1>
+        <div class="alert alert-danger"
           role="alert"
           v-if="registrationErrors"
-        >There were problems registering this user.</div>
+        >There were problems registering this user. 
+        <ul v-if="errorObj.errors.length > 0">
+          <li v-bind:key="error.length" v-for="error in errorObj.errors">{{error}} </li>
+          </ul>
+        </div>
+        
+        <!-- <div
+          class="alert alert-danger"
+          role="alert"
+          v-if="user.password < 8"
+        >{{errorObj.errors[0]}} </div> -->
+    
+    <!-- <div class="alert alert-danger"
+          role="alert"
+          v-if="registrationErrors"
+        >{{errorObj.errors[0]}} {{errorObj.errors[1]}}</div> -->
 
         <div class="form-group">
           <label for="username" class="sr-only">Username</label>
@@ -86,7 +100,7 @@ export default {
         email: "",
         password: "",
         confirmPassword: "",
-        role: "user",
+        role: "user"
       },
       registrationErrors: false,
       errorObj: Object
@@ -107,13 +121,12 @@ export default {
             this.$router.push({
               path: "/login",
               query: { registration: "success" }
-
             });
           } else {
             this.registrationErrors = true;
-            response.json().then( json => {
-              this.errorObj = json
-            })
+            response.json().then(json => {
+              this.errorObj = json;
+            });
           }
         })
 
@@ -148,5 +161,9 @@ export default {
   border: 2px solid rgba(0, 0, 0, 0.05);
   background-color: #343a40;
   color: white;
+}
+ul {
+  padding: 0px 0px 0px 20px;
+  
 }
 </style>

@@ -76,7 +76,7 @@
               >
                 <td>{{index+1}}</td>
                 <td>{{leaderboard.userName}}</td>
-                <td>{{formatCurrency(leaderboard.currentBalance)}}</td>
+                <td>{{ formatCurrency(leaderboard.currentBalance) }}</td>
                 <td>{{ formatCurrency(leaderboard.currentStockValue) }}</td>
                 <td>{{ formatCurrency(leaderboard.currentTotalPortfolioValue) }}</td>
               </tr>
@@ -213,7 +213,7 @@ export default {
     if (this.$route.params.alertSuccess) {
       this.alertSuccess = this.$route.params.alertSuccess;
     }
-    this.getData();
+    this.getGameData();
     this.getTransactionData();
     setInterval(this.refreshData(), 3000);
     // this.buildTransactionLineData();
@@ -222,10 +222,7 @@ export default {
 
   //   },
   methods: {
-    openModal() {
-      this.modalOpen = !this.modalOpen;
-    },
-    getData() {
+    getGameData() {
       // vue-resource example
       fetch(`${process.env.VUE_APP_REMOTE_API}/games/${this.id}`, {
         method: "GET",

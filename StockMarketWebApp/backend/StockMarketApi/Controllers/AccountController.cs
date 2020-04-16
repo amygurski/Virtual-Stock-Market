@@ -38,6 +38,11 @@ namespace StockMarketApi.Controllers
         [HttpPost("register")]
         public IActionResult Register(RegisterModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return new BadRequestObjectResult(ModelState);
+            }
+
             // Does user already exist
             UserModel test = userDao.GetUser(model.Username);
             if (test != null)

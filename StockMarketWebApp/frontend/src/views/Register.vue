@@ -86,9 +86,10 @@ export default {
         email: "",
         password: "",
         confirmPassword: "",
-        role: "user"
+        role: "user",
       },
-      registrationErrors: false
+      registrationErrors: false,
+      errorObj: Object
     };
   },
   methods: {
@@ -106,9 +107,13 @@ export default {
             this.$router.push({
               path: "/login",
               query: { registration: "success" }
+
             });
           } else {
             this.registrationErrors = true;
+            response.json().then( json => {
+              this.errorObj = json
+            })
           }
         })
 

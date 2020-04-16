@@ -19,6 +19,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		database\DatabaseSetup.sql = database\DatabaseSetup.sql
 	EndProjectSection
 EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "StockMarketDatabase", "StockMarketDatabase\StockMarketDatabase.sqlproj", "{E2DFAB40-DC74-4981-A23A-136CAE23ECD0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,12 @@ Global
 		{8F604667-17C7-4905-9EDE-80FABCCD30EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F604667-17C7-4905-9EDE-80FABCCD30EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F604667-17C7-4905-9EDE-80FABCCD30EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2DFAB40-DC74-4981-A23A-136CAE23ECD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2DFAB40-DC74-4981-A23A-136CAE23ECD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2DFAB40-DC74-4981-A23A-136CAE23ECD0}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{E2DFAB40-DC74-4981-A23A-136CAE23ECD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2DFAB40-DC74-4981-A23A-136CAE23ECD0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2DFAB40-DC74-4981-A23A-136CAE23ECD0}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

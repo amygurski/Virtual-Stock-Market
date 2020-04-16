@@ -109,7 +109,7 @@ namespace StockMarketApi
             services.AddTransient<IStockDAO>(sp => new StockSqlDAO(Configuration.GetConnectionString("Default")));
 
             services.AddTransient<IStockAPIDAO>(sp => new StockAPIDAO());            
-            services.AddTransient<IStockHistoryAPIDAO>(sp => new StockHistoryAPIDAO());
+            services.AddTransient<IStockHistoryAPIDAO>(sp => new StockHistoryAPIDAO(sp.GetService<IStockDAO>()));
 
             services.AddTransient<IOwnedStocksHelper>(sp => new OwnedStocksHelper(sp.GetService<ITransactionDAO>(), sp.GetService<IStockDAO>()));
             services.AddTransient<IScheduledJobs>(sp => new ScheduledJobs(sp.GetService<IUserDAO>(), sp.GetService<IGameDAO>(), sp.GetService<ITransactionDAO>(), 
@@ -142,7 +142,7 @@ namespace StockMarketApi
         /// </summary>
         /// <param name="app"></param>
         /// <param name="env"></param>
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IScheduledJobs scheduledJobs)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IScheduledJobs scheduledJobs) // If we need this to add fire and forget jobs later: IBackgroundJobClient backgroundJobs
         {
             if (env.IsDevelopment())
             {
@@ -156,9 +156,10 @@ namespace StockMarketApi
 
             // Setup Hangfire Dashboard
             app.UseHangfireDashboard();
-            RecurringJob.AddOrUpdate(() => scheduledJobs.UpdateStockHistoryDataFromAPI(), "9 18 ? * *", TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"));
+            //RecurringJob.AddOrUpdate(() => scheduledJobs.UpdateStockHistoryDataFromAPI(), "9 6,18 ? * MON,TUE,WED,THU,FRI", TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"));
             RecurringJob.AddOrUpdate(() => scheduledJobs.ProcessGameEnd(), "2/5 * * * *", TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"));
-            RecurringJob.AddOrUpdate(() => scheduledJobs.UpdateStockDataFromAPI(), "0/15 7-18 ? * *", TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"));
+            //RecurringJob.AddOrUpdate(() => scheduledJobs.UpdateStockDataFromAPI(), "0/15 7-18 ? * *", TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"));
+
 
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
             // specifying the Swagger JSON endpoint.

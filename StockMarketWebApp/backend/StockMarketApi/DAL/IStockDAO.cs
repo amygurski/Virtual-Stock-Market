@@ -26,5 +26,7 @@ namespace StockMarketApi.DAL
         void AddHistoryEntry(StockHistoryModel historyModel);
 
         bool CheckForDuplicateHistoryEntry(DateTime date, string symbol);
+
+        IDictionary<string, string> GetNextMissingHistoryEntryAllStocksFormatted();
     }
 }

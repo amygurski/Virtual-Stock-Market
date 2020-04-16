@@ -312,6 +312,49 @@ namespace StockMarketApi.DAL
             }
         }
 
+        public IDictionary<string, string> GetNextMissingHistoryEntryAllStocksFormatted()
+        {
+            IDictionary<string, string> results = new Dictionary<string, string>();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    // This query should find the latest date for each stock
+                    string sql = @"
+                        select* from(
+                        select stock_symbol, trading_day,
+                        row_number() over(partition by stock_symbol order by trading_day desc) as rn
+                        from stock_history) t
+                        where t.rn = 1";
+
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        DateTime rawDate = Convert.ToDateTime(reader["trading_day"]);
+                        DateTime nextDate = rawDate.AddDays(1);
+
+                        if (nextDate.Date <= DateTime.Now.Date)
+                        {
+                            string formattedDate = nextDate.ToString("yyyyMMdd");
+                            string symbol = Convert.ToString(reader["stock_symbol"]);
+                            results[symbol] = formattedDate;
+                        }
+
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            return results;
+        }
+
         private StockHistoryModel MapRowToStockHistory(SqlDataReader reader)
         {
             StockHistoryModel stock = new StockHistoryModel();
@@ -355,5 +398,7 @@ namespace StockMarketApi.DAL
                 PercentChange = Convert.ToDecimal(reader["percent_daily_change"])
             };
         }
+
+
     }
 }

@@ -1,8 +1,14 @@
 # Final Capstone - Virtual Stock Market Game
 
-Virtual Stock Market game that allows users to research, buy, and sell stocks, and track their results. Users can create games and invite existing users to play or join existing games. Each player will receive a starting balance of $100,000 for investments. When the game ends the system will sell all owned stocks and the user with the highest ending balance wins.
+Virtual Stock Market game that allows users to buy and sell stocks and track their results. Each player receives a starting balance of $100,000 for investments when they start or join a game. The game gets live stock market data every 15 minutes and has 150 stocks so you can have fun seeing how your play investments would do in the real world. It also has 6 months of historical data (updated daily) to allow you to research stocks. Players can create games and play solo or invite existing players to play or join existing games.  When the game ends the system sells all owned stocks and the user with the highest ending balance wins.
 
-## User stories
+We deployed it to Azure so check it out here (be sure to register to play!): http://virtualstockmarket.azurewebsites.net/
+
+This was my final capstone project at Tech Elevator. It was run as a 2 week agile sprint with a product owner (Tech Elevator staff), scrum master (instructor), and a 4 student development team. We had daily standups and sprint reviews. It uses Vue for the front end and ASP.NET Core MVC for the backend. We used a Trello board to manage the project:
+
+![Trello Board](https://github.com/amygurski/Virtual-Stock-Market/blob/master/TrelloBoard.PNG)
+
+## Requirements (User stories)
 MVP:
 1. Login. As a Player, I can login so that I can play.
 2. Register. As a Player, I can register with the system so that I can log in and play.
